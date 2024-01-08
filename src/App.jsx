@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Layout from "./components/landing/Layout/Layout";
-import Login from "./components/client/login";
-import Register from "./components/client/register";
+import Login from "./components/client/Login";
+import Register from "./components/client/Register";
 import ForgotPassword from "./components/client/Forgotpassword";
 import ResetPassword from "./components/client/ResetPassword";
 function App() {
