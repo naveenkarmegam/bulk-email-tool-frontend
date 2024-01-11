@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import axios from "axios";
 import { server } from "../../server/server";
 import Loading from "../../utils/Loading";
+import OAuth from "./firebase/OAuth";
 
 const Register = () => {
   const navigate = useNavigate()
@@ -206,12 +207,7 @@ const Register = () => {
                          } 
                         </button>
 
-                          <button
-                            type="button"
-                            className="btn btn-google btn-user btn-block text-white"
-                          >
-                            <i className="bi bi-google" /> Login with Google
-                          </button>
+                       <OAuth />
                       </form>
                       <hr />
                       <div className="text-center">

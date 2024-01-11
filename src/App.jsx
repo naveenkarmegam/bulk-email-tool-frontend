@@ -13,9 +13,10 @@ import Settings from "./components/core/Settings";
 import Listing from "./components/core/Listing";
 import AddUser from "./components/core/helpers/AddUser";
 import AddTemplate from "./components/core/helpers/AddTemplate";
+import PrivateRoutes from "./components/client/auth/PrivateRoutes";
 function App() {
   return (
-    <Router> 
+    <Router>
       <Routes>
         <Route path="/" element={<LandLayout />} />
         <Route path="/login" element={<Login />} />
@@ -23,18 +24,18 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 
-        <Route path="/dashboard" element={<DashBoard />} />
-        <Route path="/list" element={<Listing />} />
-        <Route path="/campaign" element={<Campaign />} />
-        <Route path="/template" element={<Template />} />
-        <Route path="/service" element={<Service />} />
-        <Route path="/settings" element={<Settings />} />
-
-        <Route path="/add-user" element={<AddUser />} />
-        <Route path="/add-template" element={<AddTemplate />} />
-        
+        <Route element={<PrivateRoutes />}>
+          <Route path="/dashboard" element={<DashBoard />} />
+          <Route path="/list" element={<Listing />} />
+          <Route path="/campaign" element={<Campaign />} />
+          <Route path="/template" element={<Template />} />
+          <Route path="/service" element={<Service />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/add-user" element={<AddUser />} />
+          <Route path="/add-template" element={<AddTemplate />} />
+        </Route>
       </Routes>
-    </Router> 
+    </Router>
   );
 }
 
