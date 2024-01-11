@@ -1,9 +1,15 @@
 import { registerValidationSchema } from "./schema/validationSchema";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
+import axios from "axios";
+import { server } from "../../server/server";
+import Loading from "../../utils/Loading";
 
 const Register = () => {
+  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -15,7 +21,20 @@ const Register = () => {
     validationSchema: registerValidationSchema,
     onSubmit: async (values) => {
       try {
-      } catch (error) {}
+        setLoading(true)
+        setError(false)
+        const response = await axios.post(`/api/auth/register`,values)
+        setLoading(false)
+        if(response.status === 201){
+          // navigate('/login')
+          console.log(response.data)
+        }
+        console.log(response)
+      } catch (error) {
+        console.log(error)
+        setLoading(false)
+        setError(true)
+      }
     },
   });
 
@@ -41,6 +60,11 @@ const Register = () => {
                         </h1>
                       </div>
                       <form className="user" onSubmit={formik.handleSubmit}>
+                      {error && (
+                        <div className="alert alert-danger" role="alert">
+                          something went wrong
+                        </div>
+                      )}
                         <div className="form-group row">
                           <div className="col-sm-6 mb-3 mb-sm-0">
                             <input
@@ -177,23 +201,17 @@ const Register = () => {
                           className="btn btn-primary btn-user btn-block"
                           type="submit"
                         >
-                          Register Account
+                         {
+                          loading ? <Loading /> : 'Register Account'
+                         } 
                         </button>
-                        <hr />
-                        <div>
-                          <a
-                            href="index.html"
+
+                          <button
+                            type="button"
                             className="btn btn-google btn-user btn-block text-white"
                           >
                             <i className="bi bi-google" /> Login with Google
-                          </a>
-                          <a
-                            href="index.html"
-                            className="btn btn-facebook btn-user btn-block text-white"
-                          >
-                            <i className="bi bi-facebook" /> Login with Facebook
-                          </a>
-                        </div>
+                          </button>
                       </form>
                       <hr />
                       <div className="text-center">
