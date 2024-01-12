@@ -7,6 +7,8 @@ import {
   setSideBarToggle,
   sideBarToggle,
 } from "../../../redux/global/FunctionalSlice";
+import axios from "axios";
+import { logOutSuccess } from "../../../redux/global/userSlice";
 
 // import { Avatar } from "@mui/material";
 // import { deepOrange } from "@mui/material/colors";
@@ -41,9 +43,13 @@ const TobBar = () => {
   const removeSidebar = () => {
     dispatch(setSideBarToggle(sideBarToggle));
   };
-  const handleLogout = () => {
-    navigate("/login");
-    window.location.href = "/login";
+  const handleLogout = async () => {
+    try {
+      axios.get('/api/auth/logOut');
+      dispatch(logOutSuccess())
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return (

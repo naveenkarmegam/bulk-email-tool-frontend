@@ -24,7 +24,7 @@ const Settings = () => {
                   <img
                     src={currentUser.profilePicture}
                     alt="profile picture"
-                    className="card-img-top rounded-circle pb-4"
+                    className="card-img-top img-responsive  rounded-circle pb-4"
                     style={{ width: "10rem" }}
                   />
                 </div>

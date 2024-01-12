@@ -32,6 +32,7 @@ const Login = () => {
     onSubmit: async (values) => {
       try {
         dispatch(setLoading());
+        dispatch(setError());
         const response = await axios.post("/api/auth/login", values);
         if (response.status === 200) {
           dispatch(logInSuccess(response.data));

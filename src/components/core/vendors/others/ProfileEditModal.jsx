@@ -6,15 +6,21 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
+import { nanoid } from "@reduxjs/toolkit";
+import { updateProfileSucess,setLoading,setError } from "../../../../redux/global/userSlice";
 import { app } from "../../../client/firebase/firebase";
 import { userValidationSchema } from "../../helpers/schema/validationSchema";
-import { nanoid } from "@reduxjs/toolkit";
+import axios from "axios";
+import { useDispatch } from "react-redux";
 
 const ProfileEditModal = ({ currentUser }) => {
   const fileRef = useRef();
+  const dispatch = useDispatch()
   const [image, setImage] = useState(undefined);
   const [uploadingPercentage, setUploadingPercentage] = useState(0);
   const [imageError, setImageError] = useState(false);
+  const [changeImage, setchangeImage] = useState(null);
+
   const formik = useFormik({
     initialValues: {
       email: currentUser.email,
@@ -25,8 +31,18 @@ const ProfileEditModal = ({ currentUser }) => {
     validationSchema: userValidationSchema,
     onSubmit: async (values) => {
       try {
-        console.log(values);
-      } catch (error) {}
+        dispatch(setLoading())
+        dispatch(setError())
+        const updatedvalues = {...values,profilePicture:changeImage}
+        const response = await axios.patch(`/api/user/updateProfile/${currentUser._id}`,updatedvalues)
+        if(response.status===200){
+            dispatch(updateProfileSucess(response.data))
+            console.log(response.data)
+        }
+      } catch (error) {
+        console.log(error);
+        dispatch(setError(error.response.data));
+      }
     },
   });
 
@@ -45,8 +61,13 @@ const ProfileEditModal = ({ currentUser }) => {
       (error) => {
         setImageError(true);
       },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => console.log(url)); //url link will be come
+      async () => {
+        try {
+          const imgUrl = await getDownloadURL(uploadTask.snapshot.ref);
+          setchangeImage(imgUrl);
+        } catch (error) {
+          setImageError(true);
+        }
       }
     );
   };
@@ -73,7 +94,7 @@ const ProfileEditModal = ({ currentUser }) => {
         Edit
       </button>
       <div
-        className="modal fade"
+        className="modal fade "
         id="staticBackdrop"
         data-bs-backdrop="static"
         data-bs-keyboard="false"
@@ -97,19 +118,23 @@ const ProfileEditModal = ({ currentUser }) => {
             <div className="modal-body">
               <form className="user" onSubmit={formik.handleSubmit}>
                 <div className="text-center border-bottom border-dark mb-4">
-                  <img
-                    src={currentUser.profilePicture}
-                    alt="profile picture"
-                    className="card-img-top rounded-circle pb-4 "
-                    style={{ width: "10rem" }}
-                    onClick={() => fileRef.current.click()}
-                  />
-                  <span>
-                    <i
-                      className="bi bi-pencil pencil-icon text-white"
+                  <div className="profile-img-div">
+                    <img
+                      src={
+                        changeImage ? changeImage : currentUser.profilePicture
+                      }
+                      alt="profile picture"
+                      className="card-img-top img-responsive rounded-circle pb-4 mx-auto d-block"
+                      style={{ width: "10rem" }}
                       onClick={() => fileRef.current.click()}
-                    ></i>
-                  </span>
+                    />
+                    <span className="border-white d-block">
+                      <i
+                        className="bi bi-pencil pencil-icon text-white"
+                        onClick={() => fileRef.current.click()}
+                      ></i>
+                    </span>
+                  </div>
                   <input
                     type="file"
                     name="profilePicture"
@@ -201,6 +226,7 @@ const ProfileEditModal = ({ currentUser }) => {
                   <button
                     className="btn btn-primary btn-user  btn-block col-sm-5 col-md-6"
                     type="submit"
+                
                   >
                     UPDATE
                   </button>
