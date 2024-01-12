@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../layout/Layout";
 import { useFormik } from "formik";
-import { addUserValidationSchema } from "./schema/validationSchema";
+import { userValidationSchema } from "./schema/validationSchema";
 
 const AddTemplate = () => {
   const formik = useFormik({
@@ -10,7 +10,7 @@ const AddTemplate = () => {
       firstName: "",
       lastName: "",
     },
-    validationSchema: addUserValidationSchema,
+    validationSchema: userValidationSchema,
     onSubmit: async (values) => {
       try {
        formik.resetForm()
