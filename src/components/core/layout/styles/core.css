@@ -1,8 +1,22 @@
-.border-left-orange{
-    border-left: 4px solid #357bf5 !important;
+.border-left-orange {
+  border-left: 4px solid #357bf5 !important;
 }
 
-
-.form-control-profile{
-    border-radius: 50px !important;
+.form-control-profile {
+  border-radius: 50px !important;
 }
+
+.modal-body .user .pencil-icon {
+  position: relative;
+  right: 30px;
+  top: 30px;
+  background-color: rgb(0, 0, 0);
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.modal-body .user .pencil-icon:hover,
+.modal-body .user img:hover {
+  opacity: 0.8;
+}
+

@@ -20,15 +20,14 @@ const Settings = () => {
             </header>
             <main className="card-body ">
               <div className="row py-2 justify-content-center">
-                <div className="col-lg-6 text-center">
+                <div className="col-lg-6 text-center border-bottom border-dark mb-4">
                   <img
                     src={currentUser.profilePicture}
                     alt="profile picture"
-                    className="card-img-top rounded-circle"
+                    className="card-img-top rounded-circle pb-4"
                     style={{ width: "10rem" }}
                   />
                 </div>
-                <hr />
                 <div className="px-sm-5">
                   <div className="row py-2">
                     <div className="col-sm-3">
@@ -40,7 +39,7 @@ const Settings = () => {
                   </div>
                   <div className="row py-2">
                     <div className="col-sm-3">
-                      <h6  className="pb-0 mb-0">Last Name</h6>
+                      <h6 className="pb-0 mb-0">Last Name</h6>
                     </div>
                     <div className="col-sm-9">
                       <p className="p-0 m-0">{currentUser.lastName}</p>
@@ -48,7 +47,7 @@ const Settings = () => {
                   </div>
                   <div className="row py-2">
                     <div className="col-sm-3">
-                      <h6  className="pb-0 mb-0">E-mail</h6>
+                      <h6 className="pb-0 mb-0">E-mail</h6>
                     </div>
                     <div className="col-sm-9">
                       <p className="p-0 m-0">{currentUser.email}</p>
