@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./App.css";
 import LandLayout from "./components/landing/Layout/LandLayout";
 import Login from "./components/client/Login";
 import Register from "./components/client/Register";
@@ -11,9 +10,10 @@ import Template from "./components/core/Template";
 import Service from "./components/core/Service";
 import Settings from "./components/core/Settings";
 import Listing from "./components/core/Listing";
-import AddUser from "./components/core/helpers/AddUser";
+import AddRecipients from "./components/core/helpers/AddRecipients";
 import AddTemplate from "./components/core/helpers/AddTemplate";
 import PrivateRoutes from "./components/client/auth/PrivateRoutes";
+import ProfileEdit from "./components/core/vendors/others/ProfileEdit";
 function App() {
   return (
     <Router>
@@ -31,8 +31,9 @@ function App() {
           <Route path="/template" element={<Template />} />
           <Route path="/service" element={<Service />} />
           <Route path="/settings" element={<Settings />} />
-          <Route path="/add-user" element={<AddUser />} />
+          <Route path="/add-recipients" element={<AddRecipients />} />
           <Route path="/add-template" element={<AddTemplate />} />
+          <Route path="/edit-profile" element={<ProfileEdit/>} />
         </Route>
       </Routes>
     </Router>

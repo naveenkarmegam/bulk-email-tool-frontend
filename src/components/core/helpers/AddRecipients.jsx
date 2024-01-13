@@ -2,8 +2,9 @@ import React from "react";
 import Layout from "../layout/Layout";
 import { useFormik } from "formik";
 import { userValidationSchema } from "./schema/validationSchema";
+import axios from "axios";
 
-const AddUser = () => {
+const AddRecipients = () => {
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -13,8 +14,15 @@ const AddUser = () => {
     validationSchema: userValidationSchema,
     onSubmit: async (values) => {
       try {
-       formik.resetForm()
-      } catch (error) {   
+        const response = await axios.post(
+          "/api/recipient/add-recipient",
+          values
+        );
+        if ((response.status = 201)) {
+          console.log(response.data);
+        }
+      } catch (error) {
+        console.log(error);
       }
     },
   });
@@ -37,48 +45,47 @@ const AddUser = () => {
                     <h1 className="h4 text-gray-900 mb-4">Happy to Mailing</h1>
                   </header>
                   <form className="user" onSubmit={formik.handleSubmit}>
-
                     <div className="form-group p-0">
-                        <input
-                          type="text"
-                          className={`form-control form-control-user ${
-                            formik.touched.firstName && formik.errors.firstName
-                              ? "is-invalid"
-                              : ""
-                          }`}
-                          id="firstName"
-                          placeholder="firstName"
-                          name="firstName"
-                          value={formik.values.firstName}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                        />
-                        {formik.touched.firstName && formik.errors.firstName && (
-                          <span className="d-block ms-3 text-danger small invalid-feedback">
-                            {formik.errors.firstName}
-                          </span>
-                        )}
+                      <input
+                        type="text"
+                        className={`form-control form-control-user ${
+                          formik.touched.firstName && formik.errors.firstName
+                            ? "is-invalid"
+                            : ""
+                        }`}
+                        id="firstName"
+                        placeholder="firstName"
+                        name="firstName"
+                        value={formik.values.firstName}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                      />
+                      {formik.touched.firstName && formik.errors.firstName && (
+                        <span className="d-block ms-3 text-danger small invalid-feedback">
+                          {formik.errors.firstName}
+                        </span>
+                      )}
                     </div>
                     <div className="form-group p-0">
-                        <input
-                          type="text"
-                          className={`form-control form-control-user ${
-                            formik.touched.lastName && formik.errors.lastName
-                              ? "is-invalid"
-                              : ""
-                          }`}
-                          id="lastName"
-                          placeholder="lastName"
-                          name="lastName"
-                          value={formik.values.lastName}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                        />
-                        {formik.touched.lastName && formik.errors.lastName && (
-                          <span className="d-block ms-3 text-danger small invalid-feedback">
-                            {formik.errors.lastName}
-                          </span>
-                        )}
+                      <input
+                        type="text"
+                        className={`form-control form-control-user ${
+                          formik.touched.lastName && formik.errors.lastName
+                            ? "is-invalid"
+                            : ""
+                        }`}
+                        id="lastName"
+                        placeholder="lastName"
+                        name="lastName"
+                        value={formik.values.lastName}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                      />
+                      {formik.touched.lastName && formik.errors.lastName && (
+                        <span className="d-block ms-3 text-danger small invalid-feedback">
+                          {formik.errors.lastName}
+                        </span>
+                      )}
                     </div>
                     <div className="form-group p-0 ">
                       <input
@@ -120,4 +127,4 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+export default AddRecipients;

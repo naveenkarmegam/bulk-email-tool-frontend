@@ -2,9 +2,10 @@ import React from "react";
 import Layout from "./layout/Layout";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import ProfileEditModal from "./vendors/others/ProfileEditModal";
+import ProfileEditModal from "./vendors/others/ProfileEdit";
+import { selectUser } from "../../redux/app/state";
 const Settings = () => {
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser } = useSelector(selectUser);
   return (
     <Layout>
       <hgroup className="d-sm-flex align-items-center justify-content-center mb-4">
@@ -54,7 +55,9 @@ const Settings = () => {
                     </div>
                   </div>
                   <div className="d-gird text-center">
-                    <ProfileEditModal currentUser={currentUser} />
+                    <Link to={'/edit-profile'} className="btn btn-primary col-sm-6">
+                      Edit
+                    </Link>
                   </div>
                 </div>
               </div>

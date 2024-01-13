@@ -3,7 +3,7 @@ import Layout from "../layout/Layout";
 import { useFormik } from "formik";
 import { addUserValidationSchema } from "./schema/validationSchema";
 
-const EditUser = () => {
+const EditRecipients = () => {
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -120,4 +120,4 @@ const EditUser = () => {
   );
 };
 
-export default EditUser;
+export default EditRecipients;

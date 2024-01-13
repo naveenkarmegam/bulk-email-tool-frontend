@@ -27,7 +27,7 @@ const Register = () => {
         const response = await axios.post(`/api/auth/register`,values)
         setLoading(false)
         if(response.status === 201){
-          // navigate('/login')
+          navigate('/login')
           console.log(response.data)
         }
         console.log(response)

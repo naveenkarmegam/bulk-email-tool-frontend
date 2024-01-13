@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const FunctionalSlice = createSlice({
-  name: "funactionality",
+export const functionalSlice = createSlice({
+  name: "functionality",
   initialState: {
     sideBarToggle: true,
     greetings: "",
@@ -20,10 +20,9 @@ export const FunctionalSlice = createSlice({
 });
 
 export const {
-  sideBarToggle,
   setSideBarToggle,
   setGreetings,
-} = FunctionalSlice.actions;
+} = functionalSlice.actions;
 
 
-export default FunctionalSlice.reducer;
+export default functionalSlice.reducer;

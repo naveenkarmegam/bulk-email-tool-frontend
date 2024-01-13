@@ -22,7 +22,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    updateProfileSucess: (state, action) => {
+    updateProfileSuccess: (state, action) => {
       state.currentUser = action.payload;
       state.loading = false;
       state.error = false;
@@ -39,7 +39,7 @@ export const {
   setLoading,
   logInSuccess,
   setError,
-  updateProfileSucess,
+  updateProfileSuccess,
   logOutSuccess,
 } = userSlice.actions;
 

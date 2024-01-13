@@ -2,25 +2,34 @@ import React from "react";
 import Layout from "./layout/Layout";
 import { useFormik } from "formik";
 import { emailValidationSchema } from "./schema/validationSchema";
+import axios from "axios";
 
 const Campaign = () => {
   const formik = useFormik({
     initialValues: {
       content: "",
-      to: "",
+      recipients: "",
       subject: "",
     },
     validationSchema: emailValidationSchema,
     onSubmit: async (values) => {
       try {
-        formik.resetForm();
-      } catch (error) {}
+        values = {...values,recipients:values.recipients.trim().split(',')}
+        console.log(values)
+        const response = await axios.post('/api/mail/sendBulkMail',values);
+        if(response.status === 200){
+          console.log(response.data)
+        }
+  
+      } catch (error) {
+        console.log(error)
+      }
     },
   });
   return (
     <Layout>
       <hgroup className="row justify-content-center">
-        <div className="col-lg-6">
+        <div className="col-lg-8 col-xl-6">
           <div
             className="card o-hidden border-0 shadow-lg my-5"
             style={{ background: "#ddd" }}
@@ -30,27 +39,27 @@ const Campaign = () => {
                 <div className="p-5">
 
                   <header className="text-center">
-                    <h1 className="h4 text-gray-900 mb-4">Happy to Mailing</h1>
+                    <h1 className="h4 text-gray-900 mb-4">Happy recipients Mailing</h1>
                   </header>
                   <form className="user" onSubmit={formik.handleSubmit}>
                     <div className="form-group p-0">
                       <input
                         type="text"
                         className={`form-control form-control-user ${
-                          formik.touched.to && formik.errors.to
+                          formik.touched.recipients && formik.errors.recipients
                             ? "is-invalid"
                             : ""
                         }`}
-                        id="to"
-                        placeholder="to"
-                        name="to"
-                        value={formik.values.to}
+                        id="recipients"
+                        placeholder="recipients"
+                        name="recipients"
+                        value={formik.values.recipients}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                       />
-                      {formik.touched.to && formik.errors.to && (
+                      {formik.touched.recipients && formik.errors.recipients && (
                         <span className="d-block ms-3 text-danger small invalid-feedback">
-                          {formik.errors.to}
+                          {formik.errors.recipients}
                         </span>
                       )}
                     </div>

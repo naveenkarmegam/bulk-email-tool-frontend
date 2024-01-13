@@ -3,7 +3,6 @@ import Layout from "./layout/Layout";
 import { Link } from "react-router-dom";
 import { MaterialReactTable } from "material-react-table";
 import { data } from "./data";
-import { Typography } from "@mui/material";
 const Listing = () => {
   const columns = useMemo(() => [
     {
@@ -24,7 +23,7 @@ const Listing = () => {
       size:'120',
       Cell: ({ row }) => (
         <div className="d-flex justify-content-around">
-          <Link to={`/edit-order/${row.original.id}`} className="btn p-0 m-0">
+          <Link to={`/edit-recipients/${row.original.id}`} className="btn p-0 m-0">
             <i className="bi bi-pencil-square fs-5 text-primary" />
           </Link>
             <button
@@ -42,12 +41,12 @@ const Listing = () => {
       <hgroup className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800">Orders</h1>
         <Link
-          to={"/add-user"}
+          to={"/add-recipients"}
           className="p-0 px-2 py-1 m-0 btn bg-blue text-white shadow-sm"
         >
           {" "}
           <i className="bi bi-plus text-white p-0 m-0"></i>
-          Add User
+          Add recipients 
         </Link>
       </hgroup>
       <div className="row justify-content-center">

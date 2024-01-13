@@ -1,0 +1,20 @@
+import { combineReducers } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import  userReducer from '../global/userSlice';
+import  functionalReducer from '../global/functionalSlice';
+
+const userPersistConfig = {
+  key: 'user',
+  version: 1,
+  storage,
+};
+
+const persistedUserReducer = persistReducer(userPersistConfig, userReducer);
+
+const rootReducer = combineReducers({
+  user: persistedUserReducer,
+  functionality: functionalReducer,
+});
+
+export default rootReducer;

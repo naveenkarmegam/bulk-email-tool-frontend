@@ -12,16 +12,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "./styles/navbar.css";
 import ListIcon from "../vendors/Icons/ListIcon";
-import { setSideBarToggle } from "../../../redux/global/FunctionalSlice";
+import { setSideBarToggle } from "../../../redux/global/functionalSlice";
+import { selectFunctionality } from "../../../redux/app/state";
 const Sidebar = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const sideBarToggle = useSelector(
-    (state) => state.funactionality.sideBarToggle
-  );
-  const handleSidebar = () => {
-    dispatch(setSideBarToggle(!sideBarToggle));
-  };
+  const { sideBarToggle } = useSelector(selectFunctionality);
 
   let sidebarClasses = "";
   sidebarClasses += sideBarToggle
@@ -29,13 +25,14 @@ const Sidebar = () => {
     : "navbar-nav sidebar accordion toggled ";
 
   useEffect(() => {
-    window.addEventListener("resize", function () {
-      if (window.innerWidth < 496) {
-        dispatch(setSideBarToggle(true));
-      } else {
-        dispatch(setSideBarToggle(false));
-      }
-    });
+    const handleResize = () => {
+      const shouldToggleSidebar = window.innerWidth > 496;
+      dispatch(setSideBarToggle(shouldToggleSidebar));
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, [dispatch]);
 
   const navItems = [

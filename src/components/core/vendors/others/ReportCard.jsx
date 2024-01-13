@@ -1,5 +1,6 @@
 import React from "react";
-import { ClipLoader } from "react-spinners";
+import Loading from "../../../../utils/Loading";
+
 
 const ReportCard = ({ title, value, icon, loading }) => {
   loading = false
@@ -13,7 +14,7 @@ const ReportCard = ({ title, value, icon, loading }) => {
                 {/* {title} */} Naveen
               </div>
               <div className="h5 mb-0 font-weight-bold text-gray-800">
-                {loading ? <ClipLoader size={20} /> : 100}
+                {loading ? <Loading /> : 100}
               </div>
             </div>
             {/* <div className="col mr-2">

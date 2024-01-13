@@ -17,9 +17,10 @@ import {
   setLoading,
 } from "../../redux/global/userSlice";
 import OAuth from "./firebase/OAuth";
+import { selectUser } from "../../redux/app/state";
 const Login = () => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.user);
+  const { loading, error } = useSelector(selectUser);
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
@@ -46,8 +47,8 @@ const Login = () => {
   });
 
   return (
-    <div className="m-0 p-0  user-body h-100">
-      <article className="container ">
+    <div className="m-0 p-0  user-body ">
+      <article className="container py-4">
         <hgroup className="row justify-content-center">
           <div className="col-xl-10 col-lg-12 col-md-9">
             <div

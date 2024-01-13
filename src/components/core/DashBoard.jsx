@@ -4,7 +4,10 @@ import { Link } from "react-router-dom";
 import ReportCard from "./vendors/others/ReportCard";
 import LineChartOD from "./vendors/utils/LineChart";
 import PieChartOD from "./vendors/utils/PieChart";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/app/state";
 const DashBoard = () => {
+  const {currentUser} =useSelector(selectUser)
   return (
     <Layout>
       <hgroup className="d-sm-flex align-items-center justify-content-between mb-4">
@@ -12,7 +15,7 @@ const DashBoard = () => {
           <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
         </div>
         <div className="col-md-4 text-center">
-          <h3 className="h4 ">Welcome, Naveen</h3>
+          <h3 className="h4 ">Welcome, {currentUser.firstName}</h3>
         </div>
         <div className="col-md-4 text-end">
           <Link
