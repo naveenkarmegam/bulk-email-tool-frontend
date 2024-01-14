@@ -2,7 +2,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import userReducer from '../global/userSlice.js';
-import functionalReducer from '../global/functionalSlice.js';
+import {functionalSlice} from '../global/functionalSlice.js';
 import recipientsReducer from '../global/recipientsSlice.js'
 const userPersistConfig = {
   key: 'user',
@@ -14,7 +14,7 @@ const persistedUserReducer = persistReducer(userPersistConfig, userReducer);
 
 const rootReducer = combineReducers({
   user: persistedUserReducer,
-  functionality: functionalReducer,
+  functionality: functionalSlice.reducer,
   recipients:recipientsReducer
 });
 
