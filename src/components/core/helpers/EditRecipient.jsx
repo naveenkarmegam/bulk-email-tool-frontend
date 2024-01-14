@@ -1,31 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../layout/Layout";
 import { useFormik } from "formik";
-import { userValidationSchema } from "./schema/validationSchema";
-import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectRecipient } from "../../../redux/app/state";
+import { fetchRecipientById, updateRecipient } from "../../../redux/global/recipientsSlice";
 
-const AddRecipients = () => {
+const EditRecipient = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { selectedRecipient } = useSelector(selectRecipient);
   const formik = useFormik({
     initialValues: {
-      email: "",
-      firstName: "",
-      lastName: "",
+      email: selectedRecipient?.email || "",
+      firstName: selectedRecipient?.firstName || "",
+      lastName: selectedRecipient?.lastName || "",
     },
-    validationSchema: userValidationSchema,
+
     onSubmit: async (values) => {
-      try {
-        const response = await axios.post(
-          "/api/recipient/add-recipient",
-          values
-        );
-        if ((response.status = 201)) {
-          console.log(response.data);
-        }
-      } catch (error) {
-        console.log(error);
-      }
+     
+        dispatch(updateRecipient(id,values)).unwrap()
     },
   });
+
+  useEffect(() => {
+    dispatch(fetchRecipientById(id));
+  }, [dispatch, id]);
   return (
     <Layout>
       <hgroup className="row justify-content-center">
@@ -38,7 +38,7 @@ const AddRecipients = () => {
               <div className="row">
                 <div className="p-5">
                   <hgroup className="d-flex justify-content-center user-heading">
-                    <h1 className="text-center  h1">ADD USER</h1>
+                    <h1 className="text-center  h1">EDIT USER</h1>
                   </hgroup>
 
                   <header className="text-center">
@@ -127,4 +127,4 @@ const AddRecipients = () => {
   );
 };
 
-export default AddRecipients;
+export default EditRecipient;

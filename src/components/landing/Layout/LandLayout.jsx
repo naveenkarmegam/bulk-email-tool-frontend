@@ -13,45 +13,45 @@ import FooterBar from "../components/FooterBar";
 import Subscription from "../components/Subscription";
 
 const LandLayout = () => {
-  useEffect(() => {
-    // let preloader = document.querySelector('#preloader');
-    // if (preloader) {
-    //     window.addEventListener('load', () => {
-    //         preloader.remove();
-    //     });
-    // }
+  // useEffect(() => {
+  //   // let preloader = document.querySelector('#preloader');
+  //   // if (preloader) {
+  //   //     window.addEventListener('load', () => {
+  //   //         preloader.remove();
+  //   //     });
+  //   // }
 
-    let backtotop = document.querySelector(".back-to-top");
-    if (backtotop) {
-      const toggleBacktotop = () => {
-        if (window.scrollY > 100) {
-          backtotop.classList.add("active");
-        } else {
-          backtotop.classList.remove("active");
-        }
-      };
-      window.addEventListener("load", toggleBacktotop);
-      window.addEventListener("scroll", toggleBacktotop);
+  //   let backtotop = document.querySelector(".back-to-top");
+  //   if (backtotop) {
+  //     const toggleBacktotop = () => {
+  //       if (window.scrollY > 100) {
+  //         backtotop.classList.add("active");
+  //       } else {
+  //         backtotop.classList.remove("active");
+  //       }
+  //     };
+  //     window.addEventListener("load", toggleBacktotop);
+  //     window.addEventListener("scroll", toggleBacktotop);
 
-      let selectHeader = document.querySelector("#header");
-      if (selectHeader) {
-        const headerScrolled = () => {
-          if (window.scrollY > 100) {
-            selectHeader.classList.add("header-scrolled");
-          } else {
-            selectHeader.classList.remove("header-scrolled");
-          }
-        };
-        window.addEventListener("scroll", headerScrolled);
+  //     let selectHeader = document.querySelector("#header");
+  //     if (selectHeader) {
+  //       const headerScrolled = () => {
+  //         if (window.scrollY > 100) {
+  //           selectHeader.classList.add("header-scrolled");
+  //         } else {
+  //           selectHeader.classList.remove("header-scrolled");
+  //         }
+  //       };
+  //       window.addEventListener("scroll", headerScrolled);
 
-        return () => {
-          window.removeEventListener("load", toggleBacktotop);
-          window.removeEventListener("scroll", toggleBacktotop);
-          window.removeEventListener("scroll", headerScrolled);
-        };
-      }
-    }
-  }, []);
+  //       return () => {
+  //         window.removeEventListener("load", toggleBacktotop);
+  //         window.removeEventListener("scroll", toggleBacktotop);
+  //         window.removeEventListener("scroll", headerScrolled);
+  //       };
+  //     }
+  //   }
+  // }, []);
 
   return (
     <div className="m-0 p-0">

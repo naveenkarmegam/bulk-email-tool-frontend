@@ -1,9 +1,19 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import Layout from "./layout/Layout";
 import { Link } from "react-router-dom";
 import { MaterialReactTable } from "material-react-table";
 import { data } from "./data";
+import { fetchRecipient } from "../../redux/global/recipientsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectRecipient } from "../../redux/app/state";
+import Loading from "../../utils/Loading";
 const Listing = () => {
+
+const dispatch = useDispatch()
+const {recipients,status, error} =useSelector(selectRecipient)
+  useEffect(()=>{
+    dispatch(fetchRecipient())
+  },[dispatch])
   const columns = useMemo(() => [
     {
       accessorKey: "firstName",
@@ -23,7 +33,7 @@ const Listing = () => {
       size:'120',
       Cell: ({ row }) => (
         <div className="d-flex justify-content-around">
-          <Link to={`/edit-recipients/${row.original.id}`} className="btn p-0 m-0">
+          <Link to={`/update-recipient/${row.original._id}`} className="btn p-0 m-0">
             <i className="bi bi-pencil-square fs-5 text-primary" />
           </Link>
             <button
@@ -36,12 +46,14 @@ const Listing = () => {
       ),
     },
   ]);
+
+
   return (
     <Layout>
       <hgroup className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800">Orders</h1>
         <Link
-          to={"/add-recipients"}
+          to={"/add-recipient"}
           className="p-0 px-2 py-1 m-0 btn bg-blue text-white shadow-sm"
         >
           {" "}
@@ -58,24 +70,26 @@ const Listing = () => {
               </h6>
             </header>
             <main className="d-flex justify-content-center">
-              <MaterialReactTable
-                columns={columns}
-                data={data}
-                enableGlobalFilterModes
-                enableColumnFilters={false}
-                // enableColumnPinning
-                enableRowSelection
-                enableStickyHeader
-                enableRowNumbers={true}
-                initialState={{
-                  density: "compact",
-                  pagination: { pageSize: 5, pageIndex: 0 },
-                }}
-                muiPaginationProps={{
-                  showRowsPerPage: true,
-                  shape: "rounded",
-                }}
-              />
+            {
+              status==='loading' ? <Loading /> : status === 'failed' ? <p>{error}</p> : <MaterialReactTable
+              columns={columns}
+              data={recipients}
+              enableGlobalFilterModes
+              enableColumnFilters={false}
+              // enableColumnPinning
+              enableRowSelection
+              enableStickyHeader
+              enableRowNumbers={true}
+              initialState={{
+                density: "compact",
+                pagination: { pageSize: 5, pageIndex: 0 },
+              }}
+              muiPaginationProps={{
+                showRowsPerPage: true,
+                shape: "rounded",
+              }}
+            />
+            }
             </main>
           </article>
         </div>
