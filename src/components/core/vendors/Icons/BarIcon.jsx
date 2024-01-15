@@ -7,7 +7,6 @@ const BarIcon = ({className,handleSidebar,id}) => {
     height={24}
     viewBox="0 0 24 24"
     style={{ fill: "none" }}
-    xmlns="http://www.w3.org/2000/svg"
     className={className}
     onClick={handleSidebar}
     

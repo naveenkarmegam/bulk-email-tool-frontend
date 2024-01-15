@@ -25,4 +25,4 @@ export const {
 } = functionalSlice.actions;
 
 
-export const functionalReducer = functionalSlice.reducer;
+export default functionalSlice.reducer;
