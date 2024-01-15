@@ -1,30 +1,52 @@
 import React, { useEffect } from "react";
 import Layout from "../layout/Layout";
 import { useFormik } from "formik";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRecipient } from "../../../redux/app/state";
-import { fetchRecipientById, updateRecipient } from "../../../redux/global/recipientsSlice";
+import axios from "axios";
+import { updateRecipientFailure, updateRecipientStart, updateRecipientSuccess } from "../../../redux/global/recipientsSlice";
+import Loading from "../../../utils/Loading";
+import { recipientValidationSchema } from "./schema/validationSchema";
+import { toast } from "react-toastify";
 
 const EditRecipient = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { selectedRecipient } = useSelector(selectRecipient);
+  const navigate = useNavigate()
+  const { loading,error } = useSelector(selectRecipient);
   const formik = useFormik({
     initialValues: {
-      email: selectedRecipient?.email || "",
-      firstName: selectedRecipient?.firstName || "",
-      lastName: selectedRecipient?.lastName || "",
+      email: "",
+      firstName: "",
+      lastName: "",
     },
-
+    validationSchema:recipientValidationSchema,
     onSubmit: async (values) => {
-     
-        dispatch(updateRecipient(id,values)).unwrap()
+      try {
+        dispatch(updateRecipientStart());
+        const response = await axios.patch(`/api/recipient/update-recipient/${id}`,values)
+        dispatch(updateRecipientSuccess(response.data))
+        toast.success(response.data.message,{theme:'colored',type:'success'})
+        navigate('/list')
+      } catch (error) {
+        const {data} = error.response
+        dispatch(updateRecipientFailure(data))
+        toast.error(data.message, { type: "error", theme: "colored" });
+      }
     },
   });
 
+  const getRecipientById = async ()=>{
+    try {
+      const response = await axios.get(`/api/recipient/get-recipient/${id}`)
+      formik.setValues(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   useEffect(() => {
-    dispatch(fetchRecipientById(id));
+    getRecipientById()
   }, [dispatch, id]);
   return (
     <Layout>
@@ -113,7 +135,9 @@ const EditRecipient = () => {
                         className="btn btn-primary btn-user btn-block col-sm-5 col-md-6"
                         type="submit"
                       >
-                        ADD
+                       {
+                        loading ? <Loading isLoading={loading} /> : 'Update'
+                       }
                       </button>
                     </div>
                   </form>

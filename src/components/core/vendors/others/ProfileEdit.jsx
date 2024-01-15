@@ -19,14 +19,14 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../layout/Layout";
 import { selectUser } from "../../../../redux/app/state";
-import Loading from "../../../../utils/Loading"
-import LeftArrow from "../Icons/LeftArrow"
+import Loading from "../../../../utils/Loading";
+import LeftArrow from "../Icons/LeftArrow";
 
 const ProfileEdit = () => {
   const fileRef = useRef();
   const dispatch = useDispatch();
-  const { currentUser ,loading, error } = useSelector(selectUser);
-  const navigate = useNavigate()
+  const { currentUser, loading, error } = useSelector(selectUser);
+  const navigate = useNavigate();
   const [image, setImage] = useState(undefined);
   const [uploadingPercentage, setUploadingPercentage] = useState(0);
   const [imageError, setImageError] = useState(false);
@@ -51,10 +51,9 @@ const ProfileEdit = () => {
         );
         if (response.status === 200) {
           dispatch(updateProfileSuccess(response.data));
-          navigate('/settings')
+          navigate("/settings");
         }
       } catch (error) {
-        console.log(error);
         dispatch(setError(error.response.data));
       }
     },
@@ -93,8 +92,8 @@ const ProfileEdit = () => {
 
   return (
     <Layout>
-      <Link to={'/settings'}>
-      <LeftArrow />
+      <Link to={"/settings"}>
+        <LeftArrow />
       </Link>
       <hgroup className="row justify-content-center">
         <div className="col-lg-6">
@@ -225,9 +224,7 @@ const ProfileEdit = () => {
                         className="btn btn-primary btn-user btn-block col-sm-5 col-md-6"
                         type="submit"
                       >
-                       {
-                        loading ? <Loading /> : 'Update'
-                       }
+                        {loading ? <Loading /> : "Update"}
                       </button>
                     </div>
                   </form>

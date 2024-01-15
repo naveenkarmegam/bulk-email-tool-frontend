@@ -3,6 +3,7 @@ import Layout from "./layout/Layout";
 import { useFormik } from "formik";
 import { emailValidationSchema } from "./schema/validationSchema";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Campaign = () => {
   const formik = useFormik({
@@ -23,6 +24,11 @@ const Campaign = () => {
   
       } catch (error) {
         console.log(error)
+        toast.error(error.response.data.message,{
+          type: 'error',
+          autoClose: 5000,
+          theme: "colored"
+        })
       }
     },
   });

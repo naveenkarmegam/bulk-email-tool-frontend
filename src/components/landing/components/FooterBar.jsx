@@ -24,20 +24,20 @@ const FooterBar = () => {
             <h4>Navigation Links</h4>
             <ul>
               <li>
-                <i className="bx bx-chevron-right" /> <a href="#">Home</a>
+              <i className="bi bi-chevron-right fs-6"></i> <a href="#">Home</a>
               </li>
               <li>
-                <i className="bx bx-chevron-right" /> <a href="#">About us</a>
+                <i className="bi bi-chevron-right fs-6"></i> <a href="#">About us</a>
               </li>
               <li>
-                <i className="bx bx-chevron-right" /> <a href="#">Services</a>
+                <i className="bi bi-chevron-right fs-6"></i> <a href="#">Services</a>
               </li>
               <li>
-                <i className="bx bx-chevron-right" />{" "}
+                <i className="bi bi-chevron-right fs-6"></i>{" "}
                 <a href="#">Terms of service</a>
               </li>
               <li>
-                <i className="bx bx-chevron-right" />{" "}
+                <i className="bi bi-chevron-right fs-6"></i>{" "}
                 <a href="#">Privacy policy</a>
               </li>
             </ul>
@@ -46,21 +46,21 @@ const FooterBar = () => {
             <h4>Our Services</h4>
             <ul>
               <li>
-                <i className="bx bx-chevron-right" /> <a href="#">Web Design</a>
+                <i className="bi bi-chevron-right fs-6"></i> <a href="#">Web Design</a>
               </li>
               <li>
-                <i className="bx bx-chevron-right" />{" "}
+                <i className="bi bi-chevron-right fs-6"></i>{" "}
                 <a href="#">Web Development</a>
               </li>
               <li>
-                <i className="bx bx-chevron-right" />{" "}
+                <i className="bi bi-chevron-right fs-6"></i>{" "}
                 <a href="#">Product Management</a>
               </li>
               <li>
-                <i className="bx bx-chevron-right" /> <a href="#">Marketing</a>
+                <i className="bi bi-chevron-right fs-6"></i> <a href="#">Marketing</a>
               </li>
               <li>
-                <i className="bx bx-chevron-right" />{" "}
+                <i className="bi bi-chevron-right fs-6"></i>{" "}
                 <a href="#">Graphic Design</a>
               </li>
             </ul>
@@ -70,19 +70,19 @@ const FooterBar = () => {
             <p>Connect with us on social media for updates and news.</p>
             <div className="social-links mt-3">
               <a href="#" className="twitter">
-                <i className="bx bxl-twitter" />
+              <i className="bi bi-twitter fs-6"></i>
               </a>
               <a href="#" className="facebook">
-                <i className="bx bxl-facebook" />
+                <i className="bi bi-facebook fs-6" />
               </a>
               <a href="#" className="instagram">
-                <i className="bx bxl-instagram" />
+                <i className="bi bi-instagram fs-6" />
               </a>
               <a href="#" className="google-plus">
-                <i className="bx bxl-skype" />
+                <i className="bi bi-skype fs-6" />
               </a>
               <a href="#" className="linkedin">
-                <i className="bx bxl-linkedin" />
+                <i className="bi bi-linkedin fs-6" />
               </a>
             </div>
           </div>

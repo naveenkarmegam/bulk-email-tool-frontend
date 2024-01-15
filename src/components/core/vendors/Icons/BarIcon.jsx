@@ -1,40 +1,22 @@
-import React from 'react'
+import React from "react";
 
-const BarIcon = ({className,handleSidebar,id}) => {
+const BarIcon = ({ className, handleSidebar, id }) => {
   return (
     <svg
-    width={24}
-    height={24}
-    viewBox="0 0 24 24"
-    style={{ fill: "none" }}
-    className={className}
-    onClick={handleSidebar}
-    
+      fill="#fff"
+      version="1.1"
+      id="Layer_1"
+      width="24px"
+      height="24px"
+      viewBox="0 0 260 260"
+      xmlSpace="preserve"
+    >
+      <path
+        d="M130,2C59.3,2,2,59.3,2,130s57.3,128,128,128s128-57.3,128-128S200.7,2,130,2z M194,178H66v-16h128V178z M194,138H66v-16
+	h128V138z M194,98H66V82h128V98z"
+      />
+    </svg>
+  );
+};
 
->
-    <path
-        d="M21.97 15V9C21.97 4 19.97 2 14.97 2H8.96997C3.96997 2 1.96997 4 1.96997 9V15C1.96997 20 3.96997 22 8.96997 22H14.97C19.97 22 21.97 20 21.97 15Z"
-        stroke="#6B7280"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-    />
-    <path
-        d="M7.96997 2V22"
-        stroke="#6B7280"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-    />
-    <path
-        d="M14.97 9.44L12.41 12L14.97 14.56"
-        stroke="#6B7280"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-    />
-</svg>
-  )
-}
-
-export default BarIcon
+export default BarIcon;

@@ -11,15 +11,15 @@ const Frequently = () => {
         <div className="faq-list">
           <ul>
             <li>
-              <i className="bx bx-help-circle icon-help" />{" "}
+              <i className="bi bi-question-circle fs-6 icon-help" />{" "}
               <a
                 data-bs-toggle="collapse"
                 className="collapse"
                 data-bs-target="#faq-list-1"
               >
                 What is Bulk Mailer, and how does it work?{" "}
-                <i className="bx bx-chevron-down icon-show" />
-                <i className="bx bx-chevron-up icon-close" />
+                <i className="bi bi-chevron-double-down fs-5 icon-show" />
+                <i className="bi bi-chevron-double-up fs-5 icon-close" />
               </a>
               <div
                 id="faq-list-1"
@@ -35,15 +35,15 @@ const Frequently = () => {
               </div>
             </li>
             <li>
-              <i className="bx bx-help-circle icon-help" />{" "}
+              <i className="bi bi-question-circle fs-6 icon-help" />{" "}
               <a
                 data-bs-toggle="collapse"
                 data-bs-target="#faq-list-2"
                 className="collapsed"
               >
                 How can Bulk Mailer benefit my business or organization?{" "}
-                <i className="bx bx-chevron-down icon-show" />
-                <i className="bx bx-chevron-up icon-close" />
+                <i className="bi bi-chevron-double-down fs-5 icon-show" />
+                <i className="bi bi-chevron-double-up fs-5 icon-close" />
               </a>
               <div
                 id="faq-list-2"
@@ -59,15 +59,15 @@ const Frequently = () => {
               </div>
             </li>
             <li>
-              <i className="bx bx-help-circle icon-help" />{" "}
+              <i className="bi bi-question-circle fs-6 icon-help" />{" "}
               <a
                 data-bs-toggle="collapse"
                 data-bs-target="#faq-list-3"
                 className="collapsed"
               >
                 Is my data secure when using Bulk Mailer for email campaigns?{" "}
-                <i className="bx bx-chevron-down icon-show" />
-                <i className="bx bx-chevron-up icon-close" />
+                <i className="bi bi-chevron-double-down fs-5 icon-show" />
+                <i className="bi bi-chevron-double-up fs-5 icon-close" />
               </a>
               <div
                 id="faq-list-3"
@@ -85,15 +85,15 @@ const Frequently = () => {
             </li>
 
             <li>
-              <i className="bx bx-help-circle icon-help" />{" "}
+              <i className="bi bi-question-circle fs-6 icon-help" />{" "}
               <a
                 data-bs-toggle="collapse"
                 data-bs-target="#faq-list-4"
                 className="collapsed"
               >
                 Can I customize the email templates in Bulk Mailer for branding
-                purposes? <i className="bx bx-chevron-down icon-show" />
-                <i className="bx bx-chevron-up icon-close" />
+                purposes? <i className="bi bi-chevron-double-down fs-5 icon-show" />
+                <i className="bi bi-chevron-double-up fs-5 icon-close" />
               </a>
               <div
                 id="faq-list-4"

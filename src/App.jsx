@@ -35,7 +35,7 @@ function App() {
           <Route path="/add-recipient" element={<AddRecipient />} />
           <Route path="/update-recipient/:id" element={<EditRecipient />} />
           <Route path="/add-template" element={<AddTemplate />} />
-          <Route path="/edit-profile/:id" element={<ProfileEdit/>} />
+          <Route path="/edit-profile" element={<ProfileEdit/>} />
         </Route>
       </Routes>
     </Router>

@@ -2,6 +2,7 @@ import React from "react";
 import Sidebar from "./Sidebar";
 import TobBar from "./TobBar";
 import './styles/core.css'
+import { ToastContainer } from "react-toastify";
 const Layout = ({ children }) => (
   <main id="page-top" >
     <header id="wrapper" className="overflow-hidden" >
@@ -13,6 +14,7 @@ const Layout = ({ children }) => (
         </section>
       </article>
     </header>
+    <ToastContainer  />
   </main>
 );
 

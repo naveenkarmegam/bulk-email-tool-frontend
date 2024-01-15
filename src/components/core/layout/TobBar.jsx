@@ -9,6 +9,7 @@ import {
 import axios from "axios";
 import { logOutSuccess } from "../../../redux/global/userSlice";
 import { selectFunctionality, selectUser } from "../../../redux/app/state";
+import BarIcon from "../vendors/Icons/BarIcon";
 
 const TobBar = () => {
   const dispatch = useDispatch();
@@ -43,13 +44,13 @@ const TobBar = () => {
 
   return (
     <nav className="navbar navbar-expand bg-primary topbar mb-4 shadow px-4 ">
-      <button
+      <Link
         id="sidebarToggleTop"
-        className="btn btn-link  rounded-circle mr-3"
+        className="btn btn-link text-center rounded-circle m-0 p-2"
         onClick={() => dispatch(setSideBarToggle(!sideBarToggle))}
       >
-        <i className="ri-menu-line text-light" />
-      </button>
+        <BarIcon />
+      </Link>
       <div className="d-flex align-items-center justify-content-center w-100">
         <h6 className="m-0 text-light">{greetings}</h6>
       </div>
@@ -83,7 +84,7 @@ const TobBar = () => {
               className="dropdown-item justify-content-start text-dark"
               to={"/settings"}
             >
-              <i className="ri-user-fill text-dark pe-4"></i>
+              <i className="bi bi-person-fill fs-5 text-dark pe-4"></i>
               Profile
             </Link>
 
@@ -92,7 +93,7 @@ const TobBar = () => {
               className="dropdown-item  justify-content-start text-dark"
               onClick={handleLogout}
             >
-              <i className="ri-login-box-fill fa-2x text-dark pe-4"></i>
+              <i className="bi bi-box-arrow-in-left fs-5 text-dark pe-4"></i>
               Logout
             </Link>
           </div>

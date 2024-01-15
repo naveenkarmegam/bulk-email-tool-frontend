@@ -1,8 +1,8 @@
 import React from "react";
 
-const Loading = () => {
+const Loading = ({ isLoading }) => {
   return (
-    <div className="spinner-border " role="status">
+    <div className={`spinner-border ${isLoading ? 'visible' : 'invisible'}`} role="status">
       <span className="visually-hidden">Loading...</span>
     </div>
   );

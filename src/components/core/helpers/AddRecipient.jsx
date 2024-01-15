@@ -1,28 +1,50 @@
 import React from "react";
 import Layout from "../layout/Layout";
 import { useFormik } from "formik";
-import { userValidationSchema } from "./schema/validationSchema";
+import { recipientValidationSchema } from "./schema/validationSchema";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  addRecipientFailure,
+  addRecipientStart,
+  addRecipientSuccess,
+} from "../../../redux/global/recipientsSlice";
+import Loading from "../../../utils/Loading";
+import { selectRecipient } from "../../../redux/app/state";
+import { toast } from "react-toastify";
 
 const AddRecipient = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector(selectRecipient);
   const formik = useFormik({
     initialValues: {
       email: "",
       firstName: "",
       lastName: "",
     },
-    validationSchema: userValidationSchema,
+    validationSchema: recipientValidationSchema,
     onSubmit: async (values) => {
       try {
+        dispatch(addRecipientStart());
         const response = await axios.post(
           "/api/recipient/add-recipient",
           values
         );
-        if ((response.status = 201)) {
-          console.log(response.data);
-        }
+        dispatch(addRecipientSuccess(response.data));
+        toast.success(response.data.message, {
+          theme: "colored",
+          type: "success",
+          autoClose: 8000,
+        });
+
+        navigate("/list");
       } catch (error) {
         console.log(error);
+        const { data } = error.response;
+        dispatch(addRecipientFailure(error.response.data.message));
+        toast.error(data.message, { theme: "colored", autoClose: 5000 });
       }
     },
   });
@@ -113,7 +135,7 @@ const AddRecipient = () => {
                         className="btn btn-primary btn-user btn-block col-sm-5 col-md-6"
                         type="submit"
                       >
-                        ADD
+                        {loading ? <Loading isLoading={loading} /> : "ADD"}
                       </button>
                     </div>
                   </form>

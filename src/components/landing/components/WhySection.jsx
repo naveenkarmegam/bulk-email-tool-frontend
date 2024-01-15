@@ -26,8 +26,8 @@ const WhySection = () => {
                     data-bs-target="#accordion-list-1"
                   >
                     <span>01</span> Why choose Bulk Mailer for your email
-                    campaigns? <i className="bx bx-chevron-down icon-show" />
-                    <i className="bx bx-chevron-up icon-close" />
+                    campaigns? <i className="bi bi-chevron-down fs-5 icon-show" />
+                    <i className="bi bi-chevron-up fs-5 icon-close" />
                   </a>
                   <div
                     id="accordion-list-1"
@@ -49,8 +49,8 @@ const WhySection = () => {
                     className="collapsed"
                   >
                     <span>02</span> How can Bulk Mailer improve my campaign
-                    performance? <i className="bx bx-chevron-down icon-show" />
-                    <i className="bx bx-chevron-up icon-close" />
+                    performance? <i className="bi bi-chevron-down fs-5 icon-show" />
+                    <i className="bi bi-chevron-up fs-5 icon-close" />
                   </a>
                   <div
                     id="accordion-list-2"
@@ -73,8 +73,8 @@ const WhySection = () => {
                   >
                     <span>03</span> How does Bulk Mailer ensure the success of
                     my email marketing strategy?{" "}
-                    <i className="bx bx-chevron-down icon-show" />
-                    <i className="bx bx-chevron-up icon-close" />
+                    <i className="bi bi-chevron-down fs-5 icon-show" />
+                    <i className="bi bi-chevron-up fs-5 icon-close" />
                   </a>
                   <div
                     id="accordion-list-3"

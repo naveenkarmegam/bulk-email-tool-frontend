@@ -17,15 +17,15 @@ const About = () => {
             </p>
             <ul>
               <li>
-                <i className="ri-check-double-line" /> Easily manage and send
+                <i className="bi bi-check2-all" /> Easily manage and send
                 bulk emails
               </li>
               <li>
-                <i className="ri-check-double-line" /> Optimize your campaigns
+                <i className="bi bi-check2-all" /> Optimize your campaigns
                 for maximum impact
               </li>
               <li>
-                <i className="ri-check-double-line" /> Seamless integration with
+                <i className="bi bi-check2-all" /> Seamless integration with
                 your workflow
               </li>
             </ul>
