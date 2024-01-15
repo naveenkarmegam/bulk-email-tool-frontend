@@ -5,7 +5,7 @@ import "./styles/navbar.css";
 import {
   setGreetings,
   setSideBarToggle,
-} from "../../../redux/global/functionalSlice";
+} from "../../../redux/global/FunctionalSlice";
 import axios from "axios";
 import { logOutSuccess } from "../../../redux/global/userSlice";
 import { selectFunctionality, selectUser } from "../../../redux/app/state";

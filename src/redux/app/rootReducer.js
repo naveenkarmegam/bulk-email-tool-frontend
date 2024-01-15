@@ -2,7 +2,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import userReducer from '../global/userSlice';
-import functionalReducer from '../global/functionalSlice';
+import functionalReducer from '../global/FunctionalSlice';
 import recipientsReducer from '../global/recipientsSlice'
 const userPersistConfig = {
   key: 'user',

@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "./styles/navbar.css";
 import ListIcon from "../vendors/Icons/ListIcon";
-import { setSideBarToggle } from "../../../redux/global/functionalSlice";
+import { setSideBarToggle } from "../../../redux/global/FunctionalSlice";
 import { selectFunctionality } from "../../../redux/app/state";
 const Sidebar = () => {
   const location = useLocation();
