@@ -4,13 +4,22 @@ import { useFormik } from "formik";
 import { emailValidationSchema } from "./schema/validationSchema";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectRecipient } from "../../redux/app/state";
 
 const Campaign = () => {
+  const location = useLocation();
+  // const queryParams = new URLSearchParams(location.search);
+  const {recipientsEmail}=useSelector(selectRecipient)
+  const initialRecipients = recipientsEmail.join(',')|| "";
+  const initialSubject = location.state?.subject || "";
+  const initialContent = location.state?.content || "";
   const formik = useFormik({
     initialValues: {
-      content: "",
-      recipients: "",
-      subject: "",
+      content: initialSubject,
+      recipients: initialRecipients,
+      subject: initialContent,
     },
     validationSchema: emailValidationSchema,
     onSubmit: async (values) => {
@@ -37,8 +46,8 @@ const Campaign = () => {
       <hgroup className="row justify-content-center">
         <div className="col-lg-8 col-xl-6">
           <div
-            className="card o-hidden border-0 shadow-lg my-5"
-            style={{ background: "#ddd" }}
+            className="card o-hidden bg-warning border-0 shadow-lg my-5"
+            // style={{ background: "#ddd" }}
           >
             <main className="card-body p-0">
               <div className="row">
@@ -98,6 +107,8 @@ const Campaign = () => {
                             : ""
                         }`}
                         id="content"
+                        cols={30}
+                        rows={8}
                         placeholder="Enter the body of the mail"
                         name="content"
                         value={formik.values.content}

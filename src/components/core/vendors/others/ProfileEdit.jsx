@@ -98,8 +98,8 @@ const ProfileEdit = () => {
       <hgroup className="row justify-content-center">
         <div className="col-lg-6">
           <div
-            className="card o-hidden border-0 shadow-lg mt-3"
-            style={{ background: "  #ddd" }}
+            className="card o-hidden border-warning bg-gradient-info shadow-lg mt-3"
+            // style={{ background: "  #ddd" }}
           >
             <main className="card-body p-0">
               <div className="row">
@@ -221,7 +221,7 @@ const ProfileEdit = () => {
                     </div>
                     <div className="text-center">
                       <button
-                        className="btn btn-primary btn-user btn-block col-sm-5 col-md-6"
+                        className="btn btn-warning btn-user btn-block col-sm-5 col-md-6"
                         type="submit"
                       >
                         {loading ? <Loading /> : "Update"}

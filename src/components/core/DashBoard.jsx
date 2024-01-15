@@ -31,7 +31,7 @@ const DashBoard = () => {
           <ReportCard   />
           <ReportCard   />
       </div>
-      <article className="row ">
+      <article className="row">
         <div className="col-xl-8 col-lg-7 d-none d-md-block">
           <div className="card shadow">
             <header className="card-header py-3 text-center">

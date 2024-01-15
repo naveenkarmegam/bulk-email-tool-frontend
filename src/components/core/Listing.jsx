@@ -7,6 +7,7 @@ import {
   deleteRecipientStart,
   deleteRecipientSuccess,
   fetchRecipient,
+  setSelectedRecipientEmail,
 } from "../../redux/global/recipientsSlice";
 import Loading from "../../utils/Loading";
 import axios from "axios";
@@ -16,10 +17,6 @@ import { toast } from "react-toastify";
 const Listing = () => {
   const dispatch = useDispatch();
   const { recipients, loading, error } = useSelector(selectRecipient);
-
-  const [selectedRows, setSelectedRows] = useState([]);
-  const [selectedEmails, setSelectedEmails] = useState([]);
-  console.log("click the table head check box to select all", selectedRows);
   useEffect(() => {
     if (recipients.length === 0) {
       dispatch(fetchRecipient());
@@ -46,69 +43,43 @@ const Listing = () => {
     }
   };
 
-  const handleCheckboxChange = (rowId) => {
-    console.log(rowId);
-    const newSelectedRows = selectedRows.includes(rowId)
-      ? selectedRows.filter((id) => id !== rowId)
-      : [...selectedRows, rowId];
-
-    setSelectedRows(newSelectedRows);
-  };
-
-  const handleGetSelectedEmails = () => {
-    const selectedEmails = recipients
-      .filter((row) => selectedRows.includes(row._id))
-      .map((row) => row.email);
-
-    setSelectedEmails(selectedEmails);
-    // Use the selectedEmails state as needed (e.g., send to backend, display, etc.)
-    console.log("Selected Emails:", selectedEmails);
-  };
-
   const handleGetTotalEmails = () => {
     const allEmails = recipients.map((row) => row.email);
-    console.log("Total Emails:", allEmails);
+    dispatch(setSelectedRecipientEmail(allEmails))
   };
-
-  const columns = useMemo(() => [
-    { id: "firstName", label: "First-Name" },
-    { id: "lastName", label: "Last-Name" },
-    { id: "email", label: "E-mail" },
-    { id: "actions", label: "Actions", size: "120" },
-  ]);
 
   return (
     <Layout>
-      <hgroup className="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 className="h3 mb-0 text-gray-800">Recipients</h1>
-        <Link
-          to={"/add-recipient"}
-          className="p-0 px-2 py-1 m-0 btn bg-blue text-white shadow-sm"
-        >
-          <i className="bi bi-plus text-white p-0 m-0"></i>
-          Add recipients
-        </Link>
+      <hgroup className="row justify-content-around mb-4">
+        <div className="col-md-12">
+          <h1 className="h3 mb-0 text-gray-800 text-center">Recipients</h1>
+        </div>
+        <div className="col-md-6 mt-3 text-center">
+          <Link
+            to={"/add-recipient"}
+            className="m-2 btn bg-gradient-primary text-white shadow-sm "
+          >
+            <i className="bi bi-plus text-white"></i>
+            Add recipients
+          </Link>
+          <Link
+             to={"/campaign"}
+
+            className="btn bg-gradient-warning text-white shadow-sm "
+            onClick={handleGetTotalEmails}
+            disabled={recipients.length === 0}
+          >
+            <i className="bi bi-mailbox text-white px-2"></i>
+            Send Mail
+          </Link>
+        </div>
       </hgroup>
       <div className="row justify-content-center">
-        <div className="col-lg-9">
-          <main className="container table-responsive">
-            <table className="table table-bordered table-hover">
+        <div className="col-lg-10 col-xl-9 col-md-12">
+        <main className="container table-responsive core">
+            <table className="custom-table">
               <thead className="thead-dark">
                 <tr>
-                  <th scope="col">
-                    <input
-                      type="checkbox"
-                      checked={selectedRows.length === recipients.length}
-                      onChange={() => {
-                        const allRowIds = recipients.map((row) => row._id);
-                        setSelectedRows(
-                          selectedRows.length === recipients.length
-                            ? []
-                            : allRowIds
-                        );
-                      }}
-                    />
-                  </th>
                   <th scope="col">#</th>
                   <th scope="col">First-Name</th>
                   <th scope="col">Last-Name</th>
@@ -119,44 +90,27 @@ const Listing = () => {
               <tbody>
                 {recipients.map((row, index) => (
                   <tr key={row._id}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        checked={selectedRows.includes(row._id)}
-                        onChange={() => handleCheckboxChange(row._id)}
-                      />
-                    </td>
                     <th scope="row">{index + 1}</th>
                     <td>{row.firstName}</td>
                     <td>{row.lastName}</td>
                     <td>{row.email}</td>
-                    <td>
-                      <Link to={`/update-recipient/${row._id}`}>
-                        <i className="bi bi-pencil-square fs-5 text-primary" />
+                    <td className="action-buttons">
+                      <Link to={`/update-recipient/${row._id}`} className="btn btn-primary btn-sm">
+                        <i className="bi bi-pencil-square"></i> 
                       </Link>
-                      <Link onClick={() => handleDeleteOrder(row._id)}>
-                        <i className="bi bi-trash-fill fs-5 text-danger" />
-                      </Link>
+                      <button
+                        onClick={() => handleDeleteOrder(row._id)}
+                        className="btn btn-danger btn-sm m-1"
+                      >
+                        <i className="bi bi-trash-fill"></i>
+                      </button>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </main>
-          <div className="d-flex justify-content-between p-3">
-            <button
-              onClick={handleGetSelectedEmails}
-              disabled={selectedRows.length === 0}
-            >
-              Get Selected Emails
-            </button>
-            <button
-              onClick={handleGetTotalEmails}
-              disabled={recipients.length === 0}
-            >
-              Get Total Emails
-            </button>
-          </div>
+       
         </div>
       </div>
     </Layout>

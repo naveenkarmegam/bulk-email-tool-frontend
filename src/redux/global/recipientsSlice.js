@@ -16,7 +16,7 @@ const initialState = {
   recipients: [],
   loading: false,
   error: false,
-  selectedRecipient: null,
+  recipientsEmail: [],
 };
 const recipientsSlice = createSlice({
   name: "recipients",
@@ -66,6 +66,9 @@ const recipientsSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    setSelectedRecipientEmail: (state, action) => {
+      state.recipientsEmail = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -93,5 +96,6 @@ export const {
   deleteRecipientFailure,
   deleteRecipientStart,
   deleteRecipientSuccess,
+  setSelectedRecipientEmail,
 } = recipientsSlice.actions;
 export default recipientsSlice.reducer;

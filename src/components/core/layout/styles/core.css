@@ -23,7 +23,50 @@
   border-radius: 50%;
 }
 
-.modal-body .user .pencil-icon:hover,
-.modal-body .user img:hover {
-  opacity: 0.8;
+/* Listing.css */
+
+.core .custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+  border-bottom: 2px solid black;
+}
+
+.core .custom-table th,
+.core .custom-table td {
+  padding: 15px;
+  text-align: center;
+  
+}
+.core .custom-table thead{
+  padding: 15px;
+  text-align: center;
+  background-color: #37517e;
+}
+
+.core .custom-table thead {
+  color: #ffffff;
+}
+
+.core .custom-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.action-buttons button {
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.action-buttons button:hover {
+  background-color: #b01414;
+  color: #fff;
+}
+
+.card .card-head{
+  background-color:#37517e;
+}
+
+.ddd{
+  background-color: #e2e1e1;
 }

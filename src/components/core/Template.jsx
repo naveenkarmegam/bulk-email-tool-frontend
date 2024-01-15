@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useRef } from "react";
 import Layout from "./layout/Layout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Template = () => {
+  const subRef = useRef()
+  const contentRef = useRef()
+  const navigate = useNavigate()
+  const handleClick = ()=>{
+    const subject = subRef.current.innerText.trim();
+    const content = contentRef.current.innerText.trim();
+    navigate('/campaign', { state: { subject, content } });
+    console.log(subject,content)
+  }
   return (
     <Layout>
       <article className="d-sm-flex align-items-center justify-content-between mb-4">
@@ -27,27 +36,49 @@ const Template = () => {
         </section>
       </article>
       <article className="row">
-        <main className="col-lg-4 mb-4">
+        <main className="col-lg-4 col-md-6 mb-4">
           <div className="card shadow h-100">
-            <header className="card-header text-center py-3 mb-1">
+            <header className="card-header bg-blue text-white text-center py-3">
               <h6 className="m-0 font-weight-bold text-orange text-center">
                 Template Name
               </h6>
             </header>
-            <div className="card-body">
-              <p>
+            <div className="card-body ddd" >
+              <div className="border-bottom py-2 px-1">
+                <span>
+                  subject : 
+                </span>
+                <span ref={subRef}>
+                 &nbsp; write your subject here!!
+                </span>
+              </div>
+              <p ref={contentRef}>
                 Welcome to [Your Company Name]! We're thrilled to have you on
                 board. Here are some key features and information to help you
                 get started.
-              </p>
-              <p>
+              <br />
+              <br />
                 If you have any questions or need assistance, feel free to reach
                 out to our support team.
-              </p>
-              <p>
+              <br />
+              <br />
                 Best regards, <br />
                 The [Your Company Name] Team
               </p>
+              <div className="card-footer d-flex justify-content-around rounded-5 bg-gray-200">
+                <Link className="btn btn-primary"   onClick={handleClick}>
+                  use
+                </Link>
+                <Link className="btn btn-info">
+                  copy
+                </Link>
+                <Link className="btn btn-warning">
+                  edit
+                </Link>
+                <Link className="btn btn-danger">
+                  delete
+                </Link>
+              </div>
             </div>
           </div>
         </main>

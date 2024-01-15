@@ -15,6 +15,7 @@ import EditRecipient from "./components/core/helpers/EditRecipient";
 import AddTemplate from "./components/core/helpers/AddTemplate";
 import PrivateRoutes from "./components/client/auth/PrivateRoutes";
 import ProfileEdit from "./components/core/vendors/others/ProfileEdit";
+import SentHistory from "./components/core/SentHistory";
 function App() {
   return (
     <Router>
@@ -29,6 +30,7 @@ function App() {
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/list" element={<Listing />} />
           <Route path="/campaign" element={<Campaign />} />
+          <Route path="/sent" element={<SentHistory />} />
           <Route path="/template" element={<Template />} />
           <Route path="/service" element={<Service />} />
           <Route path="/settings" element={<Settings />} />

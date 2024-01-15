@@ -14,6 +14,7 @@ import "./styles/navbar.css";
 import ListIcon from "../vendors/Icons/ListIcon";
 import { setSideBarToggle } from "../../../redux/global/FunctionalSlice";
 import { selectFunctionality } from "../../../redux/app/state";
+import Sent from "../vendors/Icons/Sent";
 const Sidebar = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -37,11 +38,13 @@ const Sidebar = () => {
 
   const navItems = [
     { path: "/dashboard", icon: <DashIcon />, text: "Dashboard" },
-    { path: "/list", icon: <ListIcon />, text: "Listing" },
+    { path: "/list", icon: <ListIcon />, text: "Recipients" },
     { path: "/campaign", icon: <CampaignIcon />, text: "Campaign" },
+    { path: "/sent", icon: <Sent/>, text: "Sent Mails" },
     { path: "/template", icon: <TemplateIcon />, text: "Template" },
     { path: "/settings", icon: <SettingIcon />, text: "Setting" },
     { path: "/service", icon: <ServiceIcon />, text: "Service" },
+
     // { path: "/community", icon: <CommunityIcon />, text: "Community" },
     // { path: "/support", icon: <TutoIcon />, text: "Support" },
   ];

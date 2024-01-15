@@ -51,16 +51,16 @@ const AddRecipient = () => {
   return (
     <Layout>
       <hgroup className="row justify-content-center">
-        <div className="col-lg-6">
+        <div className="col-lg-8 col-xl-6 col-md-10">
           <div
-            className="card o-hidden border-0 shadow-lg my-5"
-            style={{ background: "  #ddd" }}
+            className="card o-hidden border-0 bg-primary shadow-lg my-5"
+            // style={{ background: "  #ddd" }}
           >
             <main className="card-body p-0">
               <div className="row">
                 <div className="p-5">
                   <hgroup className="d-flex justify-content-center user-heading">
-                    <h1 className="text-center  h1">ADD USER</h1>
+                    <h1 className="text-center text-white h3">ADD RECIPIENTS</h1>
                   </hgroup>
 
                   <header className="text-center">
@@ -132,7 +132,7 @@ const AddRecipient = () => {
                     </div>
                     <div className="text-center">
                       <button
-                        className="btn btn-primary btn-user btn-block col-sm-5 col-md-6"
+                        className="btn btn-google btn-user btn-block text-light col-sm-5 col-md-6"
                         type="submit"
                       >
                         {loading ? <Loading isLoading={loading} /> : "ADD"}
