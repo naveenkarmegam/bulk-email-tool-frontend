@@ -1,10 +1,9 @@
 .bg-grey {
-  background:#357bf5;
   width: Fill (232px);
   height: Hug (48px);
   padding: 12px;
   border-radius: 8px;
-  color:  #e5e7eb !important;
+  color:  #ffffff !important;
 }
 .bg-grey span{
   color:  #e5e7eb !important;
@@ -14,7 +13,7 @@ nav ul .bg-grey-h:hover{
   border-radius: 8px;
 }
 .bg-grey:hover{
-  background-color:  #357bf5 !important;
+  background-color:  var(--bg-color) !important;
 }
 .bg-blue {
   background-color: #357bf5!important;

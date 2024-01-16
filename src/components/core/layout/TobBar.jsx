@@ -43,7 +43,7 @@ const TobBar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand bg-primary topbar mb-4 shadow px-4 ">
+    <nav className="navbar navbar-expand bg-color topbar mb-4 shadow px-4 ">
       <Link
         id="sidebarToggleTop"
         className="btn btn-link text-center rounded-circle m-0 p-2"

@@ -9,14 +9,15 @@ import {
   fetchRecipient,
   setSelectedRecipientEmail,
 } from "../../redux/global/recipientsSlice";
-import Loading from "../../utils/Loading";
+
 import axios from "axios";
 import { selectRecipient } from "../../redux/app/state";
-import { toast } from "react-toastify";
+import AutoDismissAlert from "../../utils/AutoDismissAlert";
+
 
 const Listing = () => {
   const dispatch = useDispatch();
-  const { recipients, loading, error } = useSelector(selectRecipient);
+  const { recipients, error, success } = useSelector(selectRecipient);
   useEffect(() => {
     if (recipients.length === 0) {
       dispatch(fetchRecipient());
@@ -26,26 +27,19 @@ const Listing = () => {
   const handleDeleteOrder = async (recipientId) => {
     try {
       dispatch(deleteRecipientStart());
+      dispatch(deleteRecipientFailure(false));
       const response = await axios.delete(
         `/api/recipient/delete-recipient/${recipientId}`
       );
-      console.log(response);
       dispatch(deleteRecipientSuccess(response.data));
-      toast.success(response.data.message, {
-        theme: "colored",
-        type: "success",
-      });
     } catch (error) {
-      console.log(error);
-      const { data } = error.response;
-      dispatch(deleteRecipientFailure(data));
-      toast.error(data.message, { type: "error", theme: "colored" });
+      dispatch(deleteRecipientFailure(error.response.data));
     }
   };
 
   const handleGetTotalEmails = () => {
     const allEmails = recipients.map((row) => row.email);
-    dispatch(setSelectedRecipientEmail(allEmails))
+    dispatch(setSelectedRecipientEmail(allEmails));
   };
 
   return (
@@ -63,8 +57,7 @@ const Listing = () => {
             Add recipients
           </Link>
           <Link
-             to={"/campaign"}
-
+            to={"/campaign"}
             className="btn bg-gradient-warning text-white shadow-sm "
             onClick={handleGetTotalEmails}
             disabled={recipients.length === 0}
@@ -76,7 +69,13 @@ const Listing = () => {
       </hgroup>
       <div className="row justify-content-center">
         <div className="col-lg-10 col-xl-9 col-md-12">
-        <main className="container table-responsive core">
+          <div className="mx-3">
+            {success && <AutoDismissAlert message={success} type={"success"} />}
+            {error && (
+              <AutoDismissAlert message={error.message} type={"danger"} />
+            )}
+          </div>
+          <main className="container table-responsive core">
             <table className="custom-table">
               <thead className="thead-dark">
                 <tr>
@@ -95,8 +94,11 @@ const Listing = () => {
                     <td>{row.lastName}</td>
                     <td>{row.email}</td>
                     <td className="action-buttons">
-                      <Link to={`/update-recipient/${row._id}`} className="btn btn-primary btn-sm">
-                        <i className="bi bi-pencil-square"></i> 
+                      <Link
+                        to={`/update-recipient/${row._id}`}
+                        className="btn btn-primary btn-sm"
+                      >
+                        <i className="bi bi-pencil-square"></i>
                       </Link>
                       <button
                         onClick={() => handleDeleteOrder(row._id)}
@@ -110,7 +112,6 @@ const Listing = () => {
               </tbody>
             </table>
           </main>
-       
         </div>
       </div>
     </Layout>

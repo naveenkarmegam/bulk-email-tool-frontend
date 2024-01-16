@@ -12,15 +12,16 @@ import {
   updateProfileSuccess,
   setLoading,
   setError,
-} from "../../../../redux/global/userSlice";
-import { app } from "../../../client/firebase/firebase";
-import { userValidationSchema } from "../../helpers/schema/validationSchema";
+} from "../../../redux/global/userSlice";
+import { app } from "../../client/firebase/firebase";
+import { updateValidationSchema } from "./schema/validationSchema";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import Layout from "../../layout/Layout";
-import { selectUser } from "../../../../redux/app/state";
-import Loading from "../../../../utils/Loading";
-import LeftArrow from "../Icons/LeftArrow";
+import Layout from "../layout/Layout";
+import { selectUser } from "../../../redux/app/state";
+import Loading from "../../../utils/Loading";
+import LeftArrow from "../vendors/Icons/LeftArrow";
+import FieldConfig from "../vendors/utils/FieldConfig";
 
 const ProfileEdit = () => {
   const fileRef = useRef();
@@ -32,6 +33,12 @@ const ProfileEdit = () => {
   const [imageError, setImageError] = useState(false);
   const [changeImage, setChangeImage] = useState(currentUser.profilePicture);
 
+  const fieldConfig = [
+    { name: "firstName", placeholder: "First Name", type: "text" },
+    { name: "lastName", placeholder: "Last Name", type: "text" },
+    { name: "email", placeholder: "Email Address", type: "email" },
+  ];
+
   const formik = useFormik({
     initialValues: {
       email: currentUser.email,
@@ -39,7 +46,7 @@ const ProfileEdit = () => {
       lastName: currentUser.lastName,
       profilePicture: currentUser.profilePicture,
     },
-    validationSchema: userValidationSchema,
+    validationSchema: updateValidationSchema,
     onSubmit: async (values) => {
       try {
         dispatch(setLoading());
@@ -93,20 +100,14 @@ const ProfileEdit = () => {
   return (
     <Layout>
       <Link to={"/settings"}>
-        <LeftArrow />
+        <LeftArrow width={29} />
       </Link>
       <hgroup className="row justify-content-center">
         <div className="col-lg-6">
-          <div
-            className="card o-hidden border-warning bg-gradient-info shadow-lg mt-3"
-            // style={{ background: "  #ddd" }}
-          >
+          <div className="card o-hidden border-warning bg-color shadow-lg mt-3">
             <main className="card-body p-0">
               <div className="row">
-                <div className="p-5">
-                  <header className="text-center">
-                    <h1 className="h4 text-gray-900 mb-4">Happy to Mailing</h1>
-                  </header>
+                <div className="px-5 py-4">
                   <form className="user" onSubmit={formik.handleSubmit}>
                     <div className="text-center border-bottom border-dark mb-4">
                       <div className="profile-img-div">
@@ -155,70 +156,9 @@ const ProfileEdit = () => {
                         )}
                       </p>
                     </div>
-                    <div className="form-group p-0">
-                      <input
-                        type="text"
-                        className={`form-control form-control-user ${
-                          formik.touched.firstName && formik.errors.firstName
-                            ? "is-invalid"
-                            : ""
-                        }`}
-                        id="firstName"
-                        placeholder="firstName"
-                        name="firstName"
-                        value={formik.values.firstName}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                      {formik.touched.firstName && formik.errors.firstName && (
-                        <span className="d-block text-start ms-3 text-danger small invalid-feedback">
-                          {formik.errors.firstName}
-                        </span>
-                      )}
-                    </div>
-                    <div className="form-group p-0">
-                      <input
-                        type="text"
-                        className={`form-control form-control-user ${
-                          formik.touched.lastName && formik.errors.lastName
-                            ? "is-invalid"
-                            : ""
-                        }`}
-                        id="lastName"
-                        placeholder="lastName"
-                        name="lastName"
-                        value={formik.values.lastName}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                      {formik.touched.lastName && formik.errors.lastName && (
-                        <span className="d-block text-start ms-3 text-danger small invalid-feedback">
-                          {formik.errors.lastName}
-                        </span>
-                      )}
-                    </div>
-                    <div className="form-group p-0 ">
-                      <input
-                        className={`form-control form-control-user ${
-                          formik.touched.email && formik.errors.email
-                            ? "is-invalid"
-                            : ""
-                        }`}
-                        id="email"
-                        aria-describedby="emailHelp"
-                        placeholder="Enter Email Address..."
-                        name="email"
-                        value={formik.values.email}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        disabled
-                      />
-                      {formik.touched.email && formik.errors.email && (
-                        <span className="d-block text-start ms-3 text-danger small invalid-feedback">
-                          {formik.errors.email}
-                        </span>
-                      )}
-                    </div>
+                    {fieldConfig.map((field, index) => (
+                      <FieldConfig field={field} formik={formik} key={index} />
+                    ))}
                     <div className="text-center">
                       <button
                         className="btn btn-warning btn-user btn-block col-sm-5 col-md-6"

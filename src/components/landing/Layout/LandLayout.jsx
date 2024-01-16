@@ -21,17 +21,17 @@ const LandLayout = () => {
     //     });
     // }
 
-    let backtotop = document.querySelector(".back-to-top");
-    if (backtotop) {
-      const toggleBacktotop = () => {
+    let backToTop = document.querySelector(".back-to-top");
+    if (backToTop) {
+      const toggleBackToTop = () => {
         if (window.scrollY > 100) {
-          backtotop.classList.add("active");
+          backToTop.classList.add("active");
         } else {
-          backtotop.classList.remove("active");
+          backToTop.classList.remove("active");
         }
       };
-      window.addEventListener("load", toggleBacktotop);
-      window.addEventListener("scroll", toggleBacktotop);
+      window.addEventListener("load", toggleBackToTop);
+      window.addEventListener("scroll", toggleBackToTop);
 
       let selectHeader = document.querySelector("#header");
       if (selectHeader) {
@@ -45,8 +45,8 @@ const LandLayout = () => {
         window.addEventListener("scroll", headerScrolled);
 
         return () => {
-          window.removeEventListener("load", toggleBacktotop);
-          window.removeEventListener("scroll", toggleBacktotop);
+          window.removeEventListener("load", toggleBackToTop);
+          window.removeEventListener("scroll", toggleBackToTop);
           window.removeEventListener("scroll", headerScrolled);
         };
       }

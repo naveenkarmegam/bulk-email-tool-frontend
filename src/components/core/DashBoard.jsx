@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "./layout/Layout";
 import { Link } from "react-router-dom";
-import ReportCard from "./vendors/others/ReportCard";
+import ReportCard from "./helpers/ReportCard";
 import LineChartOD from "./vendors/utils/LineChart";
 import PieChartOD from "./vendors/utils/PieChart";
 import { useSelector } from "react-redux";
@@ -12,18 +12,13 @@ const DashBoard = () => {
     <Layout>
       <hgroup className="d-sm-flex align-items-center justify-content-between mb-4">
         <div className="col-md-4">
-          <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
+          
         </div>
         <div className="col-md-4 text-center">
           <h3 className="h4 ">Welcome, {currentUser.firstName}</h3>
         </div>
         <div className="col-md-4 text-end">
-          <Link
-            to={"/create-order"}
-            className="d-none d-sm-inline-block btn bg-orange text-white shadow-sm"
-          >
-            <i className="bi bi-plus" /> Create Order
-          </Link>
+        
         </div>
       </hgroup>
       <div className="row">
@@ -34,8 +29,8 @@ const DashBoard = () => {
       <article className="row">
         <div className="col-xl-8 col-lg-7 d-none d-md-block">
           <div className="card shadow">
-            <header className="card-header py-3 text-center">
-              <h6 className="m-0 font-weight-bold text-orange">
+            <header className="card-header py-3 text-center bg-color">
+              <h6 className="m-0 font-weight-bold text-white">
                 Earnings Overview
               </h6>
             </header>   
@@ -48,8 +43,8 @@ const DashBoard = () => {
         </div>
         <div className="col-xl-4 col-lg-5">
           <div className="card shadow mb-4">
-            <header className="card-header py-3 text-center">
-              <h6 className="m-0 font-weight-bold text-orange">
+            <header className="card-header py-3 text-center bg-color">
+              <h6 className="m-0 font-weight-bold text-white">
                 Revenue Sources
               </h6>
             </header>

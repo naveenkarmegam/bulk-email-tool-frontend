@@ -1,16 +1,16 @@
 import React from "react";
-import Loading from "../../../../utils/Loading";
+import Loading from "../../../utils/Loading";
 
 
 const ReportCard = ({ title, value, icon, loading }) => {
   loading = false
   return (
     <article className="col-xl-4 col-md-6 mb-4">
-      <section className="card border-left-orange shadow h-100 py-2">
+      <section className="card border-left-color shadow h-100 py-2">
         <main className="card-body mx-3">
           <div className="row no-gutters align-items-center">
             <div className="col mr-2">
-              <div className="text-xs font-weight-bold text-orange text-uppercase mb-1">
+              <div className="text-xs font-weight-bold text-color text-uppercase mb-1">
                 {/* {title} */} Naveen
               </div>
               <div className="h5 mb-0 font-weight-bold text-gray-800">
@@ -24,7 +24,7 @@ const ReportCard = ({ title, value, icon, loading }) => {
             </div> */}
 
             <div className="col-auto">
-              <i className={`fas fa-truck fa-2x text-gray-300`} />
+              <i className={`bi bi-truck fs-2 text-color`} />
               {icon}
             </div>
           </div>

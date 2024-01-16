@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../layout/Layout";
 import { useFormik } from "formik";
 import { recipientValidationSchema } from "./schema/validationSchema";
@@ -12,12 +12,15 @@ import {
 } from "../../../redux/global/recipientsSlice";
 import Loading from "../../../utils/Loading";
 import { selectRecipient } from "../../../redux/app/state";
-import { toast } from "react-toastify";
+import FieldConfig from "../vendors/utils/FieldConfig";
+import AutoDismissAlert from "../../../utils/AutoDismissAlert";
 
 const AddRecipient = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading, error } = useSelector(selectRecipient);
+  const { loading } = useSelector(selectRecipient);
+  const [failure, setFailure] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -27,109 +30,51 @@ const AddRecipient = () => {
     validationSchema: recipientValidationSchema,
     onSubmit: async (values) => {
       try {
+        dispatch(addRecipientFailure(false));
+        setFailure(false)
         dispatch(addRecipientStart());
         const response = await axios.post(
           "/api/recipient/add-recipient",
           values
         );
         dispatch(addRecipientSuccess(response.data));
-        toast.success(response.data.message, {
-          theme: "colored",
-          type: "success",
-          autoClose: 8000,
-        });
-
         navigate("/list");
       } catch (error) {
-        console.log(error);
-        const { data } = error.response;
-        dispatch(addRecipientFailure(error.response.data.message));
-        toast.error(data.message, { theme: "colored", autoClose: 5000 });
+        dispatch(addRecipientFailure(false));
+        setFailure(error.response.data.message);
       }
     },
   });
+  const fieldConfig = [
+    { name: "firstName", placeholder: "First Name", type: "text" },
+    { name: "lastName", placeholder: "Last Name", type: "text" },
+    { name: "email", placeholder: "Email Address", type: "email" },
+  ];
   return (
     <Layout>
       <hgroup className="row justify-content-center">
         <div className="col-lg-8 col-xl-6 col-md-10">
-          <div
-            className="card o-hidden border-0 bg-primary shadow-lg my-5"
-            // style={{ background: "  #ddd" }}
-          >
+          <div className="card o-hidden border-0 bg-color shadow-lg my-5">
             <main className="card-body p-0">
               <div className="row">
                 <div className="p-5">
                   <hgroup className="d-flex justify-content-center user-heading">
-                    <h1 className="text-center text-white h3">ADD RECIPIENTS</h1>
+                    <h1 className="text-center text-white h3">
+                      ADD RECIPIENTS
+                    </h1>
                   </hgroup>
-
                   <header className="text-center">
-                    <h1 className="h4 text-gray-900 mb-4">Happy to Mailing</h1>
+                    <h1 className="h4 text-white mb-4">Happy Mailing</h1>
                   </header>
+                  <div className="mx-3">
+                    {failure && (
+                      <AutoDismissAlert message={failure} type={"danger"} />
+                    )}
+                  </div>
                   <form className="user" onSubmit={formik.handleSubmit}>
-                    <div className="form-group p-0">
-                      <input
-                        type="text"
-                        className={`form-control form-control-user ${
-                          formik.touched.firstName && formik.errors.firstName
-                            ? "is-invalid"
-                            : ""
-                        }`}
-                        id="firstName"
-                        placeholder="firstName"
-                        name="firstName"
-                        value={formik.values.firstName}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                      {formik.touched.firstName && formik.errors.firstName && (
-                        <span className="d-block ms-3 text-danger small invalid-feedback">
-                          {formik.errors.firstName}
-                        </span>
-                      )}
-                    </div>
-                    <div className="form-group p-0">
-                      <input
-                        type="text"
-                        className={`form-control form-control-user ${
-                          formik.touched.lastName && formik.errors.lastName
-                            ? "is-invalid"
-                            : ""
-                        }`}
-                        id="lastName"
-                        placeholder="lastName"
-                        name="lastName"
-                        value={formik.values.lastName}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                      {formik.touched.lastName && formik.errors.lastName && (
-                        <span className="d-block ms-3 text-danger small invalid-feedback">
-                          {formik.errors.lastName}
-                        </span>
-                      )}
-                    </div>
-                    <div className="form-group p-0 ">
-                      <input
-                        className={`form-control form-control-user ${
-                          formik.touched.email && formik.errors.email
-                            ? "is-invalid"
-                            : ""
-                        }`}
-                        id="email"
-                        aria-describedby="emailHelp"
-                        placeholder="Enter Email Address..."
-                        name="email"
-                        value={formik.values.email}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                      {formik.touched.email && formik.errors.email && (
-                        <span className="d-block ms-3 text-danger small invalid-feedback">
-                          {formik.errors.email}
-                        </span>
-                      )}
-                    </div>
+                    {fieldConfig.map((field, index) => (
+                      <FieldConfig field={field} formik={formik} key={index} />
+                    ))}
                     <div className="text-center">
                       <button
                         className="btn btn-google btn-user btn-block text-light col-sm-5 col-md-6"

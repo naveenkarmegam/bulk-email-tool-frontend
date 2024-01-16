@@ -14,7 +14,7 @@ import AddRecipient from "./components/core/helpers/AddRecipient";
 import EditRecipient from "./components/core/helpers/EditRecipient";
 import AddTemplate from "./components/core/helpers/AddTemplate";
 import PrivateRoutes from "./components/client/auth/PrivateRoutes";
-import ProfileEdit from "./components/core/vendors/others/ProfileEdit";
+import ProfileEdit from "./components/core/helpers/ProfileEdit";
 import SentHistory from "./components/core/SentHistory";
 function App() {
   return (
@@ -37,7 +37,7 @@ function App() {
           <Route path="/add-recipient" element={<AddRecipient />} />
           <Route path="/update-recipient/:id" element={<EditRecipient />} />
           <Route path="/add-template" element={<AddTemplate />} />
-          <Route path="/edit-profile" element={<ProfileEdit/>} />
+          <Route path="/edit-profile" element={<ProfileEdit />} />
         </Route>
       </Routes>
     </Router>

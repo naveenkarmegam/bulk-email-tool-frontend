@@ -4,7 +4,6 @@ import App from "./App.jsx";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import 'react-toastify/dist/ReactToastify.css';
 import "bootstrap";
 import { Provider } from "react-redux";
 import { persistor, store } from "./redux/app/store.js";

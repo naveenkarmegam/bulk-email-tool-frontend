@@ -46,8 +46,8 @@ export default function LineChartOD() {
           connectNulls
           type="monotone" 
           dataKey="uv"
-          stroke="#357bf5"
-          fill="#357bf5"
+          stroke="var(--bg-color)"
+          fill="var(--bg-color)"
         />
       </LineChart>
       </ResponsiveContainer>

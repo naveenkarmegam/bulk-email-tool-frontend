@@ -15,6 +15,7 @@ export const fetchRecipient = createAsyncThunk(
 const initialState = {
   recipients: [],
   loading: false,
+  success: false,
   error: false,
   recipientsEmail: [],
 };
@@ -26,11 +27,13 @@ const recipientsSlice = createSlice({
       state.loading = true;
     },
     addRecipientSuccess: (state, action) => {
-      state.loading = false;
-      const { recipient } = action.payload;
+      const { recipient, message } = action.payload;
       state.recipients = [...state.recipients, recipient];
+      state.loading = false;
+      state.success = message;
     },
     addRecipientFailure: (state, action) => {
+      console.log(action)
       state.loading = false;
       state.error = action.payload;
     },
@@ -38,7 +41,7 @@ const recipientsSlice = createSlice({
       state.loading = true;
     },
     updateRecipientSuccess: (state, action) => {
-      const { updatedRecipient } = action.payload;
+      const { updatedRecipient,message } = action.payload;
       const index = state.recipients.findIndex(
         (recipient) => recipient._id === updatedRecipient._id
       );
@@ -46,6 +49,7 @@ const recipientsSlice = createSlice({
         state.recipients[index] = updatedRecipient;
       }
       state.loading = false;
+      state.success = message;
     },
     updateRecipientFailure: (state, action) => {
       state.loading = false;
@@ -55,15 +59,16 @@ const recipientsSlice = createSlice({
       state.loading = true;
     },
     deleteRecipientSuccess: (state, action) => {
-      const { deletedRecipient } = action.payload;
-      console.log(action.payload);
+      const { deletedRecipient, message } = action.payload;
       state.recipients = state.recipients.filter(
         (recipient) => recipient._id !== deletedRecipient._id
       );
       state.loading = false;
+      state.success = message;
     },
     deleteRecipientFailure: (state, action) => {
       state.loading = false;
+      state.success = false;
       state.error = action.payload;
     },
     setSelectedRecipientEmail: (state, action) => {
@@ -81,7 +86,7 @@ const recipientsSlice = createSlice({
       })
       .addCase(fetchRecipient.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.payload;
       });
   },
 });

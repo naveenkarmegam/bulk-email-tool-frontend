@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
-import Logo from "../vendors/Icons/Logo";
 import DashIcon from "../vendors/Icons/DashIcon";
 import CampaignIcon from "../vendors/Icons/CampaignIcon";
 import TemplateIcon from "../vendors/Icons/TemplateIcon";
 import ServiceIcon from "../vendors/Icons/ServiceIcon";
 import SettingIcon from "../vendors/Icons/SettingIcon";
-import CommunityIcon from "../vendors/Icons/CommunityIcon";
-import TutoIcon from "../vendors/Icons/TutoIcon";
+
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -22,8 +20,8 @@ const Sidebar = () => {
 
   let sidebarClasses = "";
   sidebarClasses += sideBarToggle
-    ? "navbar-nav sidebar accordion"
-    : "navbar-nav sidebar accordion toggled ";
+    ? "navbar-nav sidebar accordion trans-open "
+    : "navbar-nav sidebar accordion toggled trans-close ";
 
   useEffect(() => {
     const handleResize = () => {
@@ -45,8 +43,6 @@ const Sidebar = () => {
     { path: "/settings", icon: <SettingIcon />, text: "Setting" },
     { path: "/service", icon: <ServiceIcon />, text: "Service" },
 
-    // { path: "/community", icon: <CommunityIcon />, text: "Community" },
-    // { path: "/support", icon: <TutoIcon />, text: "Support" },
   ];
 
   return (
@@ -71,7 +67,7 @@ const Sidebar = () => {
             <li
               key={item.path}
               className={`nav-item m-0 p-0 bg-grey-h p-md-1 py-sm-2 mb-1 ${
-                location.pathname === item.path ? "bg-grey" : ""
+                location.pathname === item.path ? "bg-grey bg-color" : ""
               } ${sideBarToggle ? "" : "mt-4"}`}
             >
               <Link to={item.path} className="nav-link p-0 w-100 p-2">

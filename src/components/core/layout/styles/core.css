@@ -1,10 +1,24 @@
-.border-left-orange {
-  border-left: 4px solid #357bf5 !important;
+
+.bg-color{
+  background-color: var(--bg-color) !important;
+  fill: var(--bg-color);
 }
 
-.form-control-profile {
-  border-radius: 50px !important;
+.text-color{
+  color: var(--bg-color) !important;
 }
+
+.btn-bg-color-1{
+  color: #b01414;
+}
+.btn-text-color-1{
+  color: #b01414;
+}
+
+.border-left-color {
+  border-left: 4px solid var(--bg-color) !important;
+}
+
 
 .profile-img-div span {
   position: relative;
@@ -23,7 +37,12 @@
   border-radius: 50%;
 }
 
-/* Listing.css */
+.trans-close{
+  transition: all .5s ease-in-out;
+}
+.trans-open{
+  transition: all .5s ease-in-out;
+}
 
 .core .custom-table {
   width: 100%;
@@ -37,12 +56,13 @@
 .core .custom-table td {
   padding: 15px;
   text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   
 }
 .core .custom-table thead{
   padding: 15px;
   text-align: center;
-  background-color: #37517e;
+  background-color: var(--bg-color);
 }
 
 .core .custom-table thead {

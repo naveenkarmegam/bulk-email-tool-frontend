@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "./layout/Layout";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import ProfileEditModal from "./vendors/others/ProfileEdit";
+
 import { selectUser } from "../../redux/app/state";
 const Settings = () => {
   const { currentUser } = useSelector(selectUser);
