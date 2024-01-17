@@ -1,9 +1,9 @@
 import React from "react";
 import Layout from "../layout/Layout";
 import { useFormik } from "formik";
-import { templateValidationSchema } from "./schema/validationSchema";
 import FieldConfig from "../vendors/utils/FieldConfig";
 import TextArea from "../vendors/utils/TextArea";
+import { templateValidationSchema } from "./validations/templateValidationSchema";
 
 const AddTemplate = () => {
   const fieldConfig = [
@@ -19,8 +19,10 @@ const AddTemplate = () => {
     validationSchema: templateValidationSchema,
     onSubmit: async (values) => {
       try {
-        console.log();
-      } catch (error) {}
+        
+      } catch (error) {
+        
+      }
     },
   });
   return (

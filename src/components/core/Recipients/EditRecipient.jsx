@@ -11,12 +11,13 @@ import {
   updateRecipientSuccess,
 } from "../../../redux/global/recipientsSlice";
 import Loading from "../../../utils/Loading";
-import { recipientValidationSchema } from "./schema/validationSchema";
+
 import FieldConfig from "../vendors/utils/FieldConfig";
 import AutoDismissAlert from "../../../utils/AutoDismissAlert";
+import { recipientValidationSchema } from "./validations/recipientValidationSchema";
 
 const EditRecipient = () => {
-  const { id } = useParams();
+  const { recipientId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading } = useSelector(selectRecipient);
@@ -32,21 +33,21 @@ const EditRecipient = () => {
     validationSchema: recipientValidationSchema,
     onSubmit: async (values) => {
       try {
-        dispatch(updateRecipientFailure(false));
+        setFailure(false);
         dispatch(updateRecipientStart());
         const response = await axios.patch(
-          `/api/recipient/update-recipient/${id}`,
+          `/api/recipient/update-recipient/${recipientId}`,
           values
         );
         dispatch(updateRecipientSuccess(response.data));
-        navigate("/list");
+        navigate("/recipients");
       } catch (error) {
         dispatch(updateRecipientFailure(false));
         setFailure(error.response.data.message);
       }
     },
   });
-  
+
   const fieldConfig = [
     { name: "firstName", placeholder: "First Name", type: "text" },
     { name: "lastName", placeholder: "Last Name", type: "text" },
@@ -54,15 +55,18 @@ const EditRecipient = () => {
   ];
   const getRecipientById = async () => {
     try {
-      const response = await axios.get(`/api/recipient/get-recipient/${id}`);
+      setFailure(false);
+      const response = await axios.get(
+        `/api/recipient/get-recipient/${recipientId}`
+      );
       formik.setValues(response.data);
     } catch (error) {
-      console.log(error);
+      setFailure(error.response.data.message);
     }
   };
   useEffect(() => {
     getRecipientById();
-  }, [dispatch, id]);
+  }, [dispatch, recipientId]);
   return (
     <Layout>
       <hgroup className="row justify-content-center">
@@ -94,7 +98,7 @@ const EditRecipient = () => {
                         type="submit"
                         disabled={!formik.dirty}
                       >
-                        {loading ? <Loading  /> : "ADD"}
+                        {loading ? <Loading /> : "ADD"}
                       </button>
                     </div>
                   </form>

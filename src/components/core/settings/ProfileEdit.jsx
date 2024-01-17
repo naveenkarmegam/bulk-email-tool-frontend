@@ -9,12 +9,11 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { nanoid } from "@reduxjs/toolkit";
 import {
+  updateProfileFailure,
+  updateProfileStart,
   updateProfileSuccess,
-  setLoading,
-  setError,
 } from "../../../redux/global/userSlice";
 import { app } from "../../client/firebase/firebase";
-import { updateValidationSchema } from "./schema/validationSchema";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import Layout from "../layout/Layout";
@@ -22,6 +21,7 @@ import { selectUser } from "../../../redux/app/state";
 import Loading from "../../../utils/Loading";
 import LeftArrow from "../vendors/Icons/LeftArrow";
 import FieldConfig from "../vendors/utils/FieldConfig";
+import { updateValidationSchema } from "./validation/profileValidationSchema";
 
 const ProfileEdit = () => {
   const fileRef = useRef();
@@ -49,8 +49,7 @@ const ProfileEdit = () => {
     validationSchema: updateValidationSchema,
     onSubmit: async (values) => {
       try {
-        dispatch(setLoading());
-        dispatch(setError());
+        dispatch(updateProfileStart())
         const updatedValues = { ...values, profilePicture: changeImage };
         const response = await axios.patch(
           `/api/user/updateProfile/${currentUser._id}`,
@@ -61,7 +60,7 @@ const ProfileEdit = () => {
           navigate("/settings");
         }
       } catch (error) {
-        dispatch(setError(error.response.data));
+        dispatch(updateProfileFailure(error.response.data))
       }
     },
   });

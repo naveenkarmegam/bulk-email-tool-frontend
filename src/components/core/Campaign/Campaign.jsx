@@ -1,22 +1,22 @@
 import React from "react";
-import Layout from "./layout/Layout";
+import Layout from "../layout/Layout";
 import { useFormik } from "formik";
-import { emailValidationSchema } from "./schema/validationSchema";
 import axios from "axios";
 
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectMail, selectRecipient } from "../../redux/app/state";
-import FieldConfig from "./vendors/utils/FieldConfig";
-import TextArea from "./vendors/utils/TextArea";
+import { selectMail, selectRecipient } from "../../../redux/app/state";
+import FieldConfig from "../vendors/utils/FieldConfig";
+import TextArea from "../vendors/utils/TextArea";
 import {
   sendMailFailure,
   sendMailStart,
   sendMailSuccess,
-} from "../../redux/global/mailSlice";
-import ProgressBar from "../../utils/ProgressBar";
-import AutoDismissAlert from "../../utils/AutoDismissAlert";
-import Loading from "../../utils/Loading";
+} from "../../../redux/global/mailSlice";
+import ProgressBar from "../../../utils/ProgressBar";
+import AutoDismissAlert from "../../../utils/AutoDismissAlert";
+import Loading from "../../../utils/Loading";
+import { emailValidationSchema } from "./validation/emailValidationSchema";
 
 const Campaign = () => {
   const location = useLocation();
@@ -42,7 +42,6 @@ const Campaign = () => {
     validationSchema: emailValidationSchema,
     onSubmit: async (values) => {
       try {
-        dispatch(sendMailFailure(false));
         dispatch(sendMailStart());
         values = { ...values, recipients: values.recipients.trim().split(",") };
         const response = await axios.post("/api/mail/sendBulkMail", values);
@@ -79,7 +78,7 @@ const Campaign = () => {
                           data-bs-toggle="modal"
                           data-bs-target="#exampleModal"
                         >
-                          Launch demo modal
+                          Send 
                         </button>
                         {/* Modal */}
                         <div

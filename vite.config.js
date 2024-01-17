@@ -10,5 +10,8 @@ export default defineConfig({
         target:'http://localhost:3005',
       }
     }
-  }
+  },
+  // optimizeDeps: {
+  //   exclude: ['js-big-decimal']
+  // }
 })

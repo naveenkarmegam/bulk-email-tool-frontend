@@ -4,7 +4,7 @@ export const FunctionalSlice = createSlice({
   name: "functionality",
   initialState: {
     sideBarToggle: true,
-    greetings: "",
+    greetings: null,
   },
   reducers: {
     setSideBarToggle: (state, action) => {

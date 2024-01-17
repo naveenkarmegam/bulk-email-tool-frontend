@@ -3,14 +3,14 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import axios from "axios";
-import { server } from "../../server/server";
 import Loading from "../../utils/Loading";
 import OAuth from "./firebase/OAuth";
 
 const Register = () => {
-  const navigate = useNavigate()
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [showPassword,setShowPassword] = useState(true)
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -22,19 +22,19 @@ const Register = () => {
     validationSchema: registerValidationSchema,
     onSubmit: async (values) => {
       try {
-        setLoading(true)
-        setError(false)
-        const response = await axios.post(`/api/auth/register`,values)
-        setLoading(false)
-        if(response.status === 201){
-          navigate('/login')
-          console.log(response.data)
+        setLoading(true);
+        setError(false);
+        const trimmedValues = Object.fromEntries(
+          Object.entries(values).map(([key, value]) => [key, value.trim()])
+        );
+        const response = await axios.post(`/api/auth/register`, trimmedValues);
+        setLoading(false);
+        if (response.status === 201) {
+          navigate("/login");
         }
-        console.log(response)
       } catch (error) {
-        console.log(error)
-        setLoading(false)
-        setError(true)
+        setLoading(false);
+        setError(error.response.data.message);
       }
     },
   });
@@ -61,11 +61,13 @@ const Register = () => {
                         </h1>
                       </div>
                       <form className="user" onSubmit={formik.handleSubmit}>
-                      {error && (
-                        <div className="alert alert-danger" role="alert">
-                          something went wrong
-                        </div>
-                      )}
+                        {error && (
+                          <div className="alert alert-danger" role="alert">
+                            {
+                              error || "something went wrong"
+                            }
+                          </div>
+                        )}
                         <div className="form-group row">
                           <div className="col-sm-6 mb-3 mb-sm-0">
                             <input
@@ -138,7 +140,7 @@ const Register = () => {
                         <div className="form-group row">
                           <div className="col-sm-6 mb-3 mb-sm-0">
                             <input
-                              type="password"
+                              type={showPassword ? 'password' : 'text'}
                               className={`form-control form-control-user ${
                                 formik.touched.password &&
                                 formik.errors.password
@@ -161,7 +163,7 @@ const Register = () => {
                           </div>
                           <div className="col-sm-6">
                             <input
-                              type="text"
+                              type={showPassword ? 'password' : 'text'}
                               className={`form-control form-control-user ${
                                 formik.touched.cpassword &&
                                 formik.errors.cpassword
@@ -189,6 +191,7 @@ const Register = () => {
                               className="custom-control-input"
                               id="showPassword"
                               name="showPassword"
+                              onClick={()=>setShowPassword(!showPassword)}
                             />
                             <label
                               className="custom-control-label"
@@ -202,12 +205,10 @@ const Register = () => {
                           className="btn btn-primary btn-user btn-block"
                           type="submit"
                         >
-                         {
-                          loading ? <Loading /> : 'Register Account'
-                         } 
+                          {loading ? <Loading /> : "Register Account"}
                         </button>
 
-                       <OAuth />
+                        <OAuth />
                       </form>
                       <hr />
                       <div className="text-center">

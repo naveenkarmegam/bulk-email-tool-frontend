@@ -2,7 +2,7 @@
 import Sidebar from "./Sidebar";
 import TobBar from "./TobBar";
 import "./styles/core.css";
-import SettingIcon from "../vendors/Icons/SettingIcon";
+import "./styles/palette.css";
 import Mode from "../../../utils/Mode";
 import ColorSwitcher from "../../../utils/ColorSwitcher";
 

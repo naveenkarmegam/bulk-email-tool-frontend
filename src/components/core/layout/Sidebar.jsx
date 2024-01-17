@@ -36,7 +36,7 @@ const Sidebar = () => {
 
   const navItems = [
     { path: "/dashboard", icon: <DashIcon />, text: "Dashboard" },
-    { path: "/list", icon: <ListIcon />, text: "Recipients" },
+    { path: "/recipients", icon: <ListIcon />, text: "Recipients" },
     { path: "/campaign", icon: <CampaignIcon />, text: "Campaign" },
     { path: "/sent", icon: <Sent/>, text: "Sent Mails" },
     { path: "/template", icon: <TemplateIcon />, text: "Template" },

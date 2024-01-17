@@ -8,13 +8,13 @@ import "../../assets/css/frame.min.css";
 import "./style/user.css";
 
 import { loginValidationSchema } from "./schema/validationSchema";
-import { server } from "../../server/server";
-import Loading from "../../utils/Loading";
 
+import Loading from "../../utils/Loading";
+import AutoDismissAlert from '../../utils/AutoDismissAlert'
 import {
+  logInFailure,
+  logInStart,
   logInSuccess,
-  setError,
-  setLoading,
 } from "../../redux/global/userSlice";
 import OAuth from "./firebase/OAuth";
 import { selectUser } from "../../redux/app/state";
@@ -32,16 +32,17 @@ const Login = () => {
     validationSchema: loginValidationSchema,
     onSubmit: async (values) => {
       try {
-        dispatch(setLoading());
-        dispatch(setError());
-        const response = await axios.post("/api/auth/login", values);
+        dispatch(logInStart());
+        const trimmedValues = Object.fromEntries(
+          Object.entries(values).map(([key, value]) => [key, value.trim()])
+        );
+        const response = await axios.post("/api/auth/login", trimmedValues);
         if (response.status === 200) {
           dispatch(logInSuccess(response.data));
           navigate("/dashboard");
         }
       } catch (error) {
-        console.log(error);
-        dispatch(setError(error.response.data));
+        dispatch(logInFailure(error.response.data));
       }
     },
   });
@@ -71,13 +72,7 @@ const Login = () => {
                       </h1>
                     </header>
                     <form className="user" onSubmit={formik.handleSubmit}>
-                      {error ? (
-                        <div className="alert alert-danger" role="alert">
-                          {error.message || "something went wrong"}
-                        </div>
-                      ) : (
-                        ""
-                      )}
+                      {error && (<AutoDismissAlert message={error.message} type={'danger'} />)}
                       <div className="form-group p-0 ">
                         <input
                           className={`form-control form-control-user ${

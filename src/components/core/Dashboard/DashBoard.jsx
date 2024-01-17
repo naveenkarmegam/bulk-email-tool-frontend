@@ -1,11 +1,12 @@
 import React from "react";
-import Layout from "./layout/Layout";
+import Layout from "../layout/Layout";
 import { Link } from "react-router-dom";
-import ReportCard from "./helpers/ReportCard";
-import LineChartOD from "./vendors/utils/LineChart";
-import PieChartOD from "./vendors/utils/PieChart";
+import ReportCard from "./ReportCard";
+import LineChartOD from "./utils/LineChart";
+import PieChartOD from "./utils/PieChart";
 import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/app/state";
+import { selectUser } from "../../../redux/app/state";
+
 const DashBoard = () => {
   const {currentUser} =useSelector(selectUser)
   return (

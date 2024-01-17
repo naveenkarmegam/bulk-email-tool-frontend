@@ -28,7 +28,9 @@ const TobBar = () => {
   };
 
   useEffect(() => {
-    updateGreeting();
+    if(!greetings){
+      updateGreeting();
+    }
   }, [dispatch]);
 
   const handleSidebar = () => {};

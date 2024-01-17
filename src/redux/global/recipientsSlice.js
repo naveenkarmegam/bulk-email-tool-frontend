@@ -5,7 +5,7 @@ export const fetchRecipient = createAsyncThunk(
   "recipient/fetchRecipient",
   async () => {
     try {
-      const response = await axios.get("/api/recipient/all-recipients");
+      const response = await axios.get("/api/recipient/get-recipients-by-user");
       return response.data;
     } catch (error) {
       throw error.response.data;
@@ -24,24 +24,26 @@ const recipientsSlice = createSlice({
   initialState,
   reducers: {
     addRecipientStart: (state) => {
+      state.error = false;
       state.loading = true;
     },
     addRecipientSuccess: (state, action) => {
       const { recipient, message } = action.payload;
       state.recipients = [...state.recipients, recipient];
       state.loading = false;
+      state.error = false;
       state.success = message;
     },
     addRecipientFailure: (state, action) => {
-      console.log(action)
       state.loading = false;
       state.error = action.payload;
     },
     updateRecipientStart: (state) => {
       state.loading = true;
+      state.error = false;
     },
     updateRecipientSuccess: (state, action) => {
-      const { updatedRecipient,message } = action.payload;
+      const { updatedRecipient, message } = action.payload;
       const index = state.recipients.findIndex(
         (recipient) => recipient._id === updatedRecipient._id
       );
@@ -49,6 +51,7 @@ const recipientsSlice = createSlice({
         state.recipients[index] = updatedRecipient;
       }
       state.loading = false;
+      state.error = false;
       state.success = message;
     },
     updateRecipientFailure: (state, action) => {
@@ -57,6 +60,7 @@ const recipientsSlice = createSlice({
     },
     deleteRecipientStart: (state) => {
       state.loading = true;
+      state.error = false;
     },
     deleteRecipientSuccess: (state, action) => {
       const { deletedRecipient, message } = action.payload;
@@ -64,6 +68,7 @@ const recipientsSlice = createSlice({
         (recipient) => recipient._id !== deletedRecipient._id
       );
       state.loading = false;
+      state.error = false;
       state.success = message;
     },
     deleteRecipientFailure: (state, action) => {
@@ -78,15 +83,20 @@ const recipientsSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchRecipient.pending, (state) => {
-        state.loading === true;
+        state.loading = true;
+        state.error = false;
       })
       .addCase(fetchRecipient.fulfilled, (state, action) => {
-        state.loading === false;
-        state.recipients = action.payload;
+        state.error = false;
+        state.recipients = action.payload.map((recipient, index) => ({
+          ...recipient,
+          id: index + 1,
+        }));
+        state.loading =false;
       })
       .addCase(fetchRecipient.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.error;
       });
   },
 });

@@ -4,18 +4,18 @@ import Login from "./components/client/Login";
 import Register from "./components/client/Register";
 import ForgotPassword from "./components/client/ForgotPassword";
 import ResetPassword from "./components/client/ResetPassword";
-import DashBoard from "./components/core/DashBoard";
-import Campaign from "./components/core/Campaign";
-import Template from "./components/core/Template";
-import Service from "./components/core/Service";
-import Settings from "./components/core/Settings";
-import Listing from "./components/core/Listing";
-import AddRecipient from "./components/core/helpers/AddRecipient";
-import EditRecipient from "./components/core/helpers/EditRecipient";
-import AddTemplate from "./components/core/helpers/AddTemplate";
+import DashBoard from "./components/core/Dashboard/DashBoard";
+import Campaign from "./components/core/Campaign/Campaign";
+import Template from "./components/core/Template/Template";
+import Service from "./components/core/service/Service";
+import Settings from "./components/core/settings/Settings";
+import Recipients from "./components/core/Recipients/Recipients";
+import AddRecipient from "./components/core/Recipients/AddRecipient";
+import EditRecipient from "./components/core/Recipients/EditRecipient";
+import AddTemplate from "./components/core/Template/AddTemplate";
 import PrivateRoutes from "./components/client/auth/PrivateRoutes";
-import ProfileEdit from "./components/core/helpers/ProfileEdit";
-import SentHistory from "./components/core/SentHistory";
+import ProfileEdit from "./components/core/settings/ProfileEdit";
+import SentHistory from "./components/core/sent/SentHistory";
 function App() {
   return (
     <Router>
@@ -28,14 +28,14 @@ function App() {
 
         <Route element={<PrivateRoutes />}>
           <Route path="/dashboard" element={<DashBoard />} />
-          <Route path="/list" element={<Listing />} />
+          <Route path="/recipients" element={<Recipients />} />
           <Route path="/campaign" element={<Campaign />} />
           <Route path="/sent" element={<SentHistory />} />
           <Route path="/template" element={<Template />} />
           <Route path="/service" element={<Service />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/add-recipient" element={<AddRecipient />} />
-          <Route path="/update-recipient/:id" element={<EditRecipient />} />
+          <Route path="/update-recipient/:recipientId" element={<EditRecipient />} />
           <Route path="/add-template" element={<AddTemplate />} />
           <Route path="/edit-profile" element={<ProfileEdit />} />
         </Route>

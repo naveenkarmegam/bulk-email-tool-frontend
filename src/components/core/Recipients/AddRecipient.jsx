@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../layout/Layout";
 import { useFormik } from "formik";
-import { recipientValidationSchema } from "./schema/validationSchema";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +13,7 @@ import Loading from "../../../utils/Loading";
 import { selectRecipient } from "../../../redux/app/state";
 import FieldConfig from "../vendors/utils/FieldConfig";
 import AutoDismissAlert from "../../../utils/AutoDismissAlert";
+import { recipientValidationSchema } from "./validations/recipientValidationSchema";
 
 const AddRecipient = () => {
   const navigate = useNavigate();
@@ -30,7 +30,6 @@ const AddRecipient = () => {
     validationSchema: recipientValidationSchema,
     onSubmit: async (values) => {
       try {
-        dispatch(addRecipientFailure(false));
         setFailure(false)
         dispatch(addRecipientStart());
         const response = await axios.post(
@@ -38,7 +37,7 @@ const AddRecipient = () => {
           values
         );
         dispatch(addRecipientSuccess(response.data));
-        navigate("/list");
+        navigate("/recipients");
       } catch (error) {
         dispatch(addRecipientFailure(false));
         setFailure(error.response.data.message);

@@ -1,17 +1,30 @@
-import React, { useRef } from "react";
-import Layout from "./layout/Layout";
+import React, { useEffect, useRef } from "react";
+import Layout from "../layout/Layout";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectTemplate } from "../../../redux/app/state";
+import { fetchTemplates } from "../../../redux/global/templateSlice";
 
 const Template = () => {
   const subRef = useRef();
   const contentRef = useRef();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {templates,loading}= useSelector(selectTemplate)
+  console.log(loading)
   const handleClick = () => {
     const subject = subRef.current.innerText.trim();
     const content = contentRef.current.innerText.trim();
     navigate("/campaign", { state: { subject, content } });
     console.log(subject, content);
   };
+
+
+  useEffect(()=>{
+    if(templates.length==0){
+      dispatch(fetchTemplates())
+    }
+  },[dispatch,templates])
   const emailTemplates = [
     {
       title: "Welcome Email",
@@ -89,8 +102,8 @@ const Template = () => {
         </section>
       </article>
       <article className="row px-2">
-        {emailTemplates.map((item, index) => (
-          <main className="col-lg-4 col-md-6 mb-4" key={index}>
+        {templates.map((item, index) => (
+          <main className="col-lg-6 col-xl-4 col-md-6 mb-4" key={index}>
             <div className="card shadow h-100">
               <header className="card-header bg-color text-white text-center py-3">
                 <h6 className="m-0 font-weight-bold">
@@ -109,7 +122,7 @@ const Template = () => {
                   }
                 </div>
               </div>
-                <div className="card-footer d-flex justify-content-around  bg-gray-200">
+                <div className="card-footer d-flex justify-content-around  bg-gray-200 px-0">
                   <Link className="btn btn-primary" onClick={handleClick}>
                     use
                   </Link>

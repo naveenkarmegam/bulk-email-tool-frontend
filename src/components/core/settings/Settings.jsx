@@ -1,9 +1,9 @@
 import React from "react";
-import Layout from "./layout/Layout";
+import Layout from "../layout/Layout";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { selectUser } from "../../redux/app/state";
+import { selectUser } from "../../../redux/app/state";
 const Settings = () => {
   const { currentUser } = useSelector(selectUser);
   return (
