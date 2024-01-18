@@ -48,7 +48,7 @@ const TopBar = () => {
           </li>
           {/* <li><a className="nav-link" href="#team">Team</a></li> */}
           <li>
-            <Link className="getstarted" to={"/login"}>
+            <Link className="getstarted ml-0" to={"/login"}>
               Register
             </Link>
           </li>

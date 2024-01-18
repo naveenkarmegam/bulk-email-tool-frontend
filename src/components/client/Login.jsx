@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -15,6 +15,7 @@ import {
   logInFailure,
   logInStart,
   logInSuccess,
+  clearMessages,
 } from "../../redux/global/userSlice";
 import OAuth from "./firebase/OAuth";
 import { selectUser } from "../../redux/app/state";
@@ -22,6 +23,11 @@ const Login = () => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector(selectUser);
   const [showPassword, setShowPassword] = useState(false);
+
+
+  useEffect(()=>{
+    dispatch(clearMessages())
+  },[])
 
   const navigate = useNavigate();
   const formik = useFormik({

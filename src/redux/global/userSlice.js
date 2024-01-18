@@ -41,6 +41,11 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = false;
     },
+    clearMessages: (state, action) => {
+      state.error = false;
+      state.success = false;
+      state.loading = false;
+    },
   },
 });
 
@@ -52,6 +57,7 @@ export const {
   updateProfileSuccess,
   updateProfileFailure,
   logOutSuccess,
+  clearMessages,
 } = userSlice.actions;
 
 export default userSlice.reducer;

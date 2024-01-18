@@ -1,6 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-const Table = ({recipients,handleDeleteOrder}) => {
+import SelectLimit from "./SelectLimit";
+import Pagination from "./Pagination";
+const Table = ({ recipients, handleDeleteOrder }) => {
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5);
+
+  const getRecipients = (page, limit) => {
+    let array = [];
+    for (let i = (page - 1) * limit; i < page * limit && recipients[i]; i++) {
+      array.push(recipients[i]);
+    }
+    return array;
+  };
+
+  const configuredRecipients = getRecipients(page, limit).map((row, index) => ({
+    ...row,
+    serialNumber: (page - 1) * limit + index + 1,
+  }));;
+
+  const totalPage = Math.ceil(recipients.length / limit);
+  let pageNo;
+  if (page <= totalPage) {
+    pageNo = page;
+  } else {
+    setPage(totalPage);
+    pageNo = page;
+  }
+  const onPageChange = (value) => {
+    if (value === "&laquo;" || value === "... ") {
+      setPage(1);
+    } else if (value === "&lsaquo;") {
+      if (page !== 1) {
+        setPage(page - 1);
+      }
+    } else if (value === "&rsaquo;") {
+      if (page !== totalPage) {
+        setPage(page + 1);
+      }
+    } else if (value === "&raquo;" || value === " ...") {
+      setPage(totalPage);
+    } else {
+      setPage(value);
+    }
+  };
   return (
     <main className="container table-responsive core">
       <table className="custom-table">
@@ -14,21 +57,21 @@ const Table = ({recipients,handleDeleteOrder}) => {
           </tr>
         </thead>
         <tbody>
-          {recipients.map((row, index) => (
+          {configuredRecipients.map((row, index) => (
             <tr key={index}>
-              <th scope="row">{row?.id}</th>
-              <td>{row?.firstName}</td>
-              <td>{row?.lastName}</td>
-              <td>{row?.email}</td>
+              <th scope="row">{row.serialNumber}</th>
+              <td>{row.firstName}</td>
+              <td>{row.lastName}</td>
+              <td>{row.email}</td>
               <td className="action-buttons">
                 <Link
-                  to={`/update-recipient/${row?._id}`}
+                  to={`/update-recipient/${row._id}`}
                   className="btn btn-primary btn-sm"
                 >
                   <i className="bi bi-pencil-square"></i>
                 </Link>
                 <button
-                  onClick={() => handleDeleteOrder(row?._id)}
+                  onClick={() => handleDeleteOrder(row._id)}
                   className="btn btn-danger btn-sm m-1"
                 >
                   <i className="bi bi-trash-fill"></i>
@@ -37,6 +80,22 @@ const Table = ({recipients,handleDeleteOrder}) => {
             </tr>
           ))}
         </tbody>
+        <tfoot className="table-footer">
+          <tr>
+            <td colSpan="5">
+              <div className="d-flex justify-content-end pt-2">
+              <SelectLimit onLimitChange={setLimit} />
+              <Pagination
+                totalPage={totalPage}
+                page={pageNo}
+                limit={limit}
+                siblings={1}
+                onPageChange={onPageChange}
+              />
+              </div>
+            </td>
+          </tr>
+        </tfoot>
       </table>
     </main>
   );

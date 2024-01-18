@@ -18,32 +18,13 @@ import Table from "./Table";
 import Pagination from "./Pagination";
 import SelectLimit from "./SelectLimit";
 
-// const recipients = [
-//   { firstName: 'John', lastName: 'Doe', email: 'john.doe@example.com' },
-//   { firstName: 'Jane', lastName: 'Doe', email: 'jane.doe@example.com' },
-//   { firstName: 'Alice', lastName: 'Smith', email: 'alice.smith@example.com' },
-//   { firstName: 'Bob', lastName: 'Johnson', email: 'bob.johnson@example.com' },
-//   { firstName: 'Eva', lastName: 'Williams', email: 'eva.williams@example.com' },
-//   { firstName: 'Michael', lastName: 'Brown', email: 'michael.brown@example.com' },
-//   { firstName: 'Olivia', lastName: 'Davis', email: 'olivia.davis@example.com' },
-//   { firstName: 'Daniel', lastName: 'Miller', email: 'daniel.miller@example.com' },
-//   { firstName: 'Sophia', lastName: 'Wilson', email: 'sophia.wilson@example.com' },
-//   { firstName: 'Matthew', lastName: 'Moore', email: 'matthew.moore@example.com' },
-// ];
-
-
-
 const Recipients = () => {
   const dispatch = useDispatch();
-
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
   const { recipients, error, success, loading } = useSelector(selectRecipient);
-  // console.log(loading)
   useEffect(() => {
-      if(recipients.length===0){
-        dispatch(fetchRecipient());
-      }
+    if (recipients.length === 0) {
+      dispatch(fetchRecipient());
+    }
   }, [dispatch]);
 
   const handleDeleteOrder = async (recipientId) => {
@@ -61,40 +42,6 @@ const Recipients = () => {
   const handleGetTotalEmails = () => {
     const allEmails = recipients.map((row) => row.email);
     dispatch(setSelectedRecipientEmail(allEmails));
-  };
-
-  const getRecipients = (page, limit) => {
-    let array = [];
-    for (let i = (page - 1) * limit; i < page * limit && recipients[i]; i++) {
-      array.push(recipients[i]);
-    }
-    return array;
-  };
-
-  const totalPage = Math.ceil(recipients.length / limit);
-  let pageNo ;
-  if(page<=totalPage){
-    pageNo = page;
-  }else{
-    setPage(totalPage)
-    pageNo = page;
-  }
-  const onPageChange = (value) => {
-    if (value === "&laquo;" || value === "... ") {
-      setPage(1);
-    } else if (value === "&lsaquo;") {
-      if (page !== 1) {
-        setPage(page - 1);
-      }
-    } else if (value === "&rsaquo;") {
-      if (page !== totalPage) {
-        setPage(page + 1);
-      }
-    } else if (value === "&raquo;" || value === " ...") {
-      setPage(totalPage);
-    } else {
-      setPage(value);
-    }
   };
 
   return (
@@ -131,22 +78,13 @@ const Recipients = () => {
             )}
           </div>
           {loading ? (
-            <Loading />
+            <Loading color={"text-color"} />
           ) : (
-            <>
-              <Table
-                recipients={getRecipients(page, limit)}
-                handleDeleteOrder={handleDeleteOrder}
-              />
-              <SelectLimit onLimitChange={setLimit} />
-              <Pagination
-                totalPage={totalPage}
-                page={pageNo}
-                limit={limit}
-                siblings={1}
-                onPageChange={onPageChange}
-              />
-            </>
+            <Table
+              recipients={recipients}
+              handleDeleteOrder={handleDeleteOrder}
+            />
+
             // console.log(getRecipients)
           )}
         </div>

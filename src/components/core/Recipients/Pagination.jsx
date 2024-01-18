@@ -9,7 +9,7 @@ const Pagination = (props) => {
     props.siblings
   );
   return (
-    <ul className="pagination pagination-md justify-content-end mr-4">
+    <ul className="pagination pagination-md justify-content-end mr-4 custom-pagination">
       <li className="page-item">
         <span
           className="page-link"

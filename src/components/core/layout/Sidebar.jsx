@@ -20,7 +20,7 @@ const Sidebar = () => {
 
   let sidebarClasses = "";
   sidebarClasses += sideBarToggle
-    ? "navbar-nav sidebar accordion trans-open "
+    ? "navbar-nav sidebar accordion"
     : "navbar-nav sidebar accordion toggled trans-close ";
 
   useEffect(() => {
@@ -38,11 +38,10 @@ const Sidebar = () => {
     { path: "/dashboard", icon: <DashIcon />, text: "Dashboard" },
     { path: "/recipients", icon: <ListIcon />, text: "Recipients" },
     { path: "/campaign", icon: <CampaignIcon />, text: "Campaign" },
-    { path: "/sent", icon: <Sent/>, text: "Sent Mails" },
+    { path: "/sent", icon: <Sent />, text: "Sent Mails" },
     { path: "/template", icon: <TemplateIcon />, text: "Template" },
     { path: "/settings", icon: <SettingIcon />, text: "Setting" },
     { path: "/service", icon: <ServiceIcon />, text: "Service" },
-
   ];
 
   return (

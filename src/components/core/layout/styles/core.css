@@ -40,23 +40,24 @@
 .trans-close{
   transition: all .5s ease-in-out;
 }
-.trans-open{
-  transition: all .5s ease-in-out;
-}
+
 
 .core .custom-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
-  border-bottom: 2px solid black;
+  border: 2px solid var(--bg-color);
 }
 
-.core .custom-table th,
-.core .custom-table td {
-  padding: 15px;
+.core .custom-table th{
+  padding: 15px; 
+  border-bottom: 1px solid var(--bg-color);
+}
+.core .custom-table tbody tr td {
+  padding: 10px;
   text-align: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid var(--bg-color);
   
 }
 .core .custom-table thead{
@@ -81,6 +82,35 @@
 .action-buttons button:hover {
   background-color: #b01414;
   color: #fff;
+}
+
+.core .table-footer{
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.7);
+  border-top: 0px solid var(--bg-color);
+  border-bottom: 2px solid var(--bg-color);
+  border-left: 2px solid var(--bg-color);
+  border-right: 2px solid var(--bg-color);
+}
+
+.core .table-footer select{
+  height: 33px;
+}
+.core .table-footer .custom-pagination .page-link {
+  cursor: pointer;
+  color: var(--bg-color);
+  margin: 0px 2px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+.core .table-footer .custom-pagination .page-link:hover {
+  background-color:  #d1d1d1 ;
+}
+
+.core .table-footer .custom-pagination .page-item.active .page-link {
+  background-color: var(--bg-color);
+  color: white;
+  border-color: var(--bg-color);
 }
 
 .card .card-head{
