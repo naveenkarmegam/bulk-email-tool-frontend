@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from "react";
-import { PieChart, Pie, Sector,Cell } from "recharts";
+import { useSelector } from "react-redux";
+import { PieChart, Pie, Sector, Cell } from "recharts";
+import { selectUser } from "../../../../redux/app/state";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 const renderActiveShape = (props) => {
@@ -15,7 +17,7 @@ const renderActiveShape = (props) => {
     fill,
     payload,
     percent,
-    value
+    value,
   } = props;
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);
@@ -63,7 +65,7 @@ const renderActiveShape = (props) => {
         fill="#333"
       >{`PV ${value}`}</text>
       <text
-      className="small"
+        className="small"
         x={ex + (cos >= 0 ? -1 : 1) * 12}
         y={ey}
         dy={18}
@@ -76,15 +78,15 @@ const renderActiveShape = (props) => {
   );
 };
 
-export default function PieChartOD({orders}) {
+export default function PieChartOD({ orders }) {
   const [activeIndex, setActiveIndex] = useState(0);
-
+  const { dashBoardInfo } = useSelector(selectUser);
   const data = [
-    { name: 'Group A', value: 400 },
-    { name: 'Group B', value: 300 },
-    { name: 'Group C', value: 300 },
-  ]
-  
+    { name: "Mails", value: dashBoardInfo?.totalMailCount },
+    { name: "Users", value: dashBoardInfo?.totalUserCount },
+    { name: "Recipients", value: dashBoardInfo?.totalRecipientsCount },
+  ];
+
   const onPieEnter = useCallback(
     (_, index) => {
       setActiveIndex(index);
@@ -102,14 +104,11 @@ export default function PieChartOD({orders}) {
         cy={120}
         innerRadius={60}
         outerRadius={80}
-        fill="#8884d8"
-        className="fill-orange"
+        fill="var(--bg-color)"
+        className="var(--bg-color)"
         dataKey="value"
         onMouseEnter={onPieEnter}
       />
-       {data.map((entry, index) => ( 
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-        ))}
     </PieChart>
   );
 }

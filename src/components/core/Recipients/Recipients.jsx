@@ -3,6 +3,7 @@ import Layout from "../layout/Layout";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearRecipientMessages,
   deleteRecipientFailure,
   deleteRecipientStart,
   deleteRecipientSuccess,
@@ -14,9 +15,8 @@ import axios from "axios";
 import { selectRecipient } from "../../../redux/app/state";
 import AutoDismissAlert from "../../../utils/AutoDismissAlert";
 import Loading from "../../../utils/Loading";
-import Table from "./Table";
-import Pagination from "./Pagination";
-import SelectLimit from "./SelectLimit";
+import RecipientTable from "./RecipientTable";
+import { decreaseRecipientCount } from "../../../redux/global/userSlice";
 
 const Recipients = () => {
   const dispatch = useDispatch();
@@ -27,6 +27,16 @@ const Recipients = () => {
     }
   }, [dispatch]);
 
+useEffect(() => {
+  const timeoutId = setTimeout(() => {
+    dispatch(clearRecipientMessages());
+  }, 1500);
+
+  return () => {
+    clearTimeout(timeoutId); 
+  };
+}, [error, success, loading]);
+
   const handleDeleteOrder = async (recipientId) => {
     try {
       dispatch(deleteRecipientStart());
@@ -34,6 +44,7 @@ const Recipients = () => {
         `/api/recipient/delete-recipient/${recipientId}`
       );
       dispatch(deleteRecipientSuccess(response.data));
+      dispatch(decreaseRecipientCount())
     } catch (error) {
       dispatch(deleteRecipientFailure(error.response.data));
     }
@@ -72,7 +83,7 @@ const Recipients = () => {
       <div className="row justify-content-center">
         <div className="col-lg-10 col-xl-9 col-md-12">
           <div className="mx-3">
-            {success && <AutoDismissAlert message={success} type={"success"} />}
+            {success && (<AutoDismissAlert message={success} type={"success"} />)}
             {error && (
               <AutoDismissAlert message={error.message} type={"danger"} />
             )}
@@ -80,12 +91,10 @@ const Recipients = () => {
           {loading ? (
             <Loading color={"text-color"} />
           ) : (
-            <Table
+            <RecipientTable
               recipients={recipients}
               handleDeleteOrder={handleDeleteOrder}
             />
-
-            // console.log(getRecipients)
           )}
         </div>
       </div>

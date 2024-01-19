@@ -4,6 +4,7 @@ import CampaignIcon from "../vendors/Icons/CampaignIcon";
 import TemplateIcon from "../vendors/Icons/TemplateIcon";
 import ServiceIcon from "../vendors/Icons/ServiceIcon";
 import SettingIcon from "../vendors/Icons/SettingIcon";
+import CustomerService from "../vendors/Icons/CustomerService";
 
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -42,6 +43,7 @@ const Sidebar = () => {
     { path: "/template", icon: <TemplateIcon />, text: "Template" },
     { path: "/settings", icon: <SettingIcon />, text: "Setting" },
     { path: "/service", icon: <ServiceIcon />, text: "Service" },
+    { path: "/contact", icon: <CustomerService />, text: "Contact" },
   ];
 
   return (

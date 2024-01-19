@@ -3,7 +3,7 @@ import Layout from "../layout/Layout";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectTemplate } from "../../../redux/app/state";
-import { fetchTemplates } from "../../../redux/global/templateSlice";
+import { clearTemplateMessages, fetchTemplates } from "../../../redux/global/templateSlice";
 import TemplateCard from "./TemplateCard";
 import AutoDismissAlert from "../../../utils/AutoDismissAlert";
 import Loading from "../../../utils/Loading";
@@ -12,12 +12,21 @@ import { emailTemplates } from "./js/exampleTemplates";
 const Template = () => {
   const dispatch = useDispatch();
   const { templates, loading, error, success } = useSelector(selectTemplate);
-  console.log(templates);
   useEffect(() => {
     if (templates.length === 0) {
       dispatch(fetchTemplates());
     }
   }, [dispatch]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      dispatch(clearTemplateMessages());
+    }, 1500);
+  
+    return () => {
+      clearTimeout(timeoutId); 
+    };
+  }, [error, success, loading]);
 
   return (
     <Layout>

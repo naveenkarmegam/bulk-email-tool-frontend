@@ -1,5 +1,4 @@
 import React from "react";
-import heroImage from "../../../assets/img/hero-img.png";
 const Hero = () => {
   return (
     <section id="hero" className="d-flex align-items-center">
@@ -26,7 +25,7 @@ const Hero = () => {
           </div>
           <div className="col-lg-6 order-1 order-lg-2 hero-img">
             <img
-              src={heroImage}
+              src="https://firebasestorage.googleapis.com/v0/b/bulk-mailer-90741.appspot.com/o/client%2Fhero-img.png?alt=media&token=7e538fc9-0411-422c-9e77-959a4f3533b6"
               className="img-fluid animated"
               alt="hero-image"
             />

@@ -1,5 +1,9 @@
 :root{
     --bg-color:pink;
+    --mode-color:white;
+}
+body,.themeMode{
+    background-color: var(--mode-color) !important;
 }
 .App .color-switcher{
     width: 10rem;

@@ -1,22 +1,23 @@
 import React, { useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   deleteTemplateFailure,
   deleteTemplateStart,
   deleteTemplateSuccess,
+  setSelectedTemplate,
 } from "../../../redux/global/templateSlice";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 const TemplateCard = ({ templates, isCustom }) => {
   const dispatch = useDispatch();
-  const subRef = useRef();
-  const contentRef = useRef();
-  const handleClick = () => {
-    const subject = subRef.current.innerText.trim();
-    const content = contentRef.current.innerText.trim();
-    navigate("/campaign", { state: { subject, content } });
-    console.log(subject, content);
+  const navigate = useNavigate();
+
+  const handleUseTemplate = (template) => {
+    dispatch(setSelectedTemplate(template));
+    navigate('/campaign')
   };
+
+
   const handleDeleteOrder = async (templateId) => {
     try {
       dispatch(deleteTemplateStart());
@@ -25,6 +26,7 @@ const TemplateCard = ({ templates, isCustom }) => {
       );
       dispatch(deleteTemplateSuccess(response.data));
     } catch (error) {
+      console.log(error)
       dispatch(deleteTemplateFailure(error.response.data));
     }
   };
@@ -41,17 +43,17 @@ const TemplateCard = ({ templates, isCustom }) => {
               <div className="card-body ddd">
                 <div className="border-bottom py-2 px-1">
                   <strong>Subject:</strong>
-                  <span ref={subRef}>&nbsp; {template.subject}</span>
+                  <span >&nbsp; {template.subject}</span>
                 </div>
-                <div ref={contentRef}>
+                <div >
                   <strong>Content:</strong> &nbsp;
-                  {template.content}
+                  <span > {template.content}</span>
                 </div>
               </div>
               <div className="card-footer d-flex justify-content-around  bg-gray-200 px-0">
-                <Link className={`btn btn-primary`} disabled={isCustom}>
+                <button  className={`btn btn-primary`} onClick={()=>handleUseTemplate(template)} >
                   use
-                </Link>
+                </button>
                 <Link
                   className={`btn btn-info ${isCustom ? "disabled" : ""}`}
                   disabled={isCustom}

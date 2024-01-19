@@ -17,6 +17,8 @@ import PrivateRoutes from "./components/client/auth/PrivateRoutes";
 import ProfileEdit from "./components/core/settings/ProfileEdit";
 import SentHistory from "./components/core/sent/SentHistory";
 import EditTemplate from "./components/core/Template/EditTemplate";
+import ViewMail from "./components/core/sent/ViewMail";
+import Contact from "./components/core/service/Contact";
 function App() {
   return (
     <Router>
@@ -29,17 +31,24 @@ function App() {
 
         <Route element={<PrivateRoutes />}>
           <Route path="/dashboard" element={<DashBoard />} />
+
           <Route path="/recipients" element={<Recipients />} />
-          <Route path="/campaign" element={<Campaign />} />
-          <Route path="/sent" element={<SentHistory />} />
-          <Route path="/template" element={<Template />} />
-          <Route path="/service" element={<Service />} />
-          <Route path="/settings" element={<Settings />} />
           <Route path="/add-recipient" element={<AddRecipient />} />
           <Route path="/update-recipient/:recipientId" element={<EditRecipient />} />
+
+          <Route path="/campaign" element={<Campaign />} />
+          <Route path="/sent" element={<SentHistory />} />
+          <Route path="/view-mail/:mailId" element={<ViewMail />} />
+
+          <Route path="/template" element={<Template />} />
           <Route path="/add-template" element={<AddTemplate />} />
           <Route path="/update-template/:templateId" element={<EditTemplate />} />
+
+          <Route path="/settings" element={<Settings />} />
           <Route path="/edit-profile" element={<ProfileEdit />} />
+
+          <Route path="/service" element={<Service />} />
+          <Route path="/contact" element={<Contact />} />
         </Route>
       </Routes>
     </Router>

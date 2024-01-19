@@ -1,32 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../layout/Layout";
 import { useFormik } from "formik";
 import axios from "axios";
 
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectMail, selectRecipient } from "../../../redux/app/state";
+import {
+  selectRecipient,
+  selectTemplate,
+} from "../../../redux/app/state";
 import FieldConfig from "../vendors/utils/FieldConfig";
 import TextArea from "../vendors/utils/TextArea";
-import {
-  sendMailFailure,
-  sendMailStart,
-  sendMailSuccess,
-} from "../../../redux/global/mailSlice";
-import ProgressBar from "../../../utils/ProgressBar";
+
 import AutoDismissAlert from "../../../utils/AutoDismissAlert";
 import Loading from "../../../utils/Loading";
 import { emailValidationSchema } from "./validation/emailValidationSchema";
+import { increaseMailCount } from "../../../redux/global/userSlice";
+import { fetchMails } from "../../../redux/global/mailSlice";
 
 const Campaign = () => {
-  const location = useLocation();
+
   const dispatch = useDispatch();
   const { recipientsEmail } = useSelector(selectRecipient);
-  const { loading, success, error } = useSelector(selectMail);
+  const { setTemplate } = useSelector(selectTemplate);
+  const [loading,setLoading] = useState(false)
+  const [failure, setFailure] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const initialRecipients = recipientsEmail.join(",") || "";
-  const initialSubject = location.state?.subject || "";
-  const initialContent = location.state?.content || "";
+  const initialSubject = setTemplate.subject || "";
+  const initialContent = setTemplate.content || "";
 
   const fieldConfig = [
     { name: "recipients", placeholder: "recipients", type: "text" },
@@ -35,19 +38,26 @@ const Campaign = () => {
 
   const formik = useFormik({
     initialValues: {
-      content: initialSubject,
+      content: initialContent,
       recipients: initialRecipients,
-      subject: initialContent,
+      subject: initialSubject,
     },
     validationSchema: emailValidationSchema,
     onSubmit: async (values) => {
       try {
-        dispatch(sendMailStart());
+        setFailure(false)
+        setLoading(true)
         values = { ...values, recipients: values.recipients.trim().split(",") };
         const response = await axios.post("/api/mail/sendBulkMail", values);
-        dispatch(sendMailSuccess(response.data));
+        formik.resetForm()
+        setSuccess(response.data.message)
+        setLoading(false)
+        dispatch(increaseMailCount());
+        dispatch(fetchMails())
+
       } catch (error) {
-        dispatch(sendMailFailure(error.response.data.message));
+        setFailure(error.response.data.message)
+        setLoading(false)
       }
     },
   });
@@ -64,6 +74,14 @@ const Campaign = () => {
                       Happy recipients Mailing
                     </h1>
                   </header>
+                  <div className="mx-3">
+                    {failure && (
+                      <AutoDismissAlert message={failure} type={"danger"} />
+                    )}
+                    {success && (
+                      <AutoDismissAlert message={success} type={"success"} />
+                    )}
+                  </div>
                   <form className="user" onSubmit={formik.handleSubmit}>
                     {fieldConfig.map((field, index) => (
                       <FieldConfig field={field} formik={formik} key={index} />
@@ -75,33 +93,9 @@ const Campaign = () => {
                         <button
                           type="submit"
                           className="btn btn-primary btn-user btn-block col-sm-5 col-md-6"
-                          data-bs-toggle="modal"
-                          data-bs-target="#exampleModal"
                         >
-                          Send 
+                          {loading ? <Loading /> : "Send"}
                         </button>
-                        {/* Modal */}
-                        <div
-                          className="modal fade"
-                          id="exampleModal"
-                          tabIndex={-1}
-                          aria-labelledby="exampleModalLabel"
-                          aria-hidden="true"
-                        >
-                          <div className="modal-dialog modal-dialog-centered">
-                            <div className="modal-content bg-color">
-                              <div className="modal-body text-white">
-                                {loading ? (
-                                  <Loading />
-                                ) : error ? (
-                                  <AutoDismissAlert />
-                                ) : (
-                                  success
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </form>

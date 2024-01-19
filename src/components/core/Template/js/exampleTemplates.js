@@ -3,7 +3,7 @@ export const emailTemplates = [
     title: "Welcome Email",
     subject: "Welcome to Our Community!",
     content:
-      "Dear [Name],\n\nWe are thrilled to welcome you to our community! Thank you for joining us on this journey.\n\nBest Regards,\nThe [Your Company Name] Team",
+      `Dear [Name]&nbsp;&nbsp;We are thrilled to welcome you to our community! Thank you for joining us on this journey.\n\nBest Regards,\nThe [Your Company Name] Team`,
   },
   {
     title: "Event Invitation",

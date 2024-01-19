@@ -33,7 +33,6 @@ const TobBar = () => {
     }
   }, [dispatch]);
 
-  const handleSidebar = () => {};
 
   const handleLogout = async () => {
     try {

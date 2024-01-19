@@ -7,7 +7,7 @@ import About from "../components/About";
 import WhySection from "../components/WhySection";
 import Frequently from "../components/Frequently";
 import Cta from "../components/Cta";
-import Contact from "../components/Contact";
+import ContactForm from "../components/ContactForm";
 import CopyRight from "../components/CopyRight";
 import FooterBar from "../components/FooterBar";
 import Subscription from "../components/Subscription";
@@ -67,7 +67,7 @@ const LandLayout = () => {
         <WhySection />
         <Cta />
         <Frequently />
-        <Contact />
+        <ContactForm />
       </main>
 
       <footer id="footer">

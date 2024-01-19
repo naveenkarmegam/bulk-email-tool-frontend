@@ -6,7 +6,6 @@ export const fetchRecipient = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get("/api/recipient/get-recipients-by-user");
-      console.log(response);
       return response.data;
     } catch (error) {
       throw error.response.data;
@@ -27,6 +26,7 @@ const recipientsSlice = createSlice({
     addRecipientStart: (state) => {
       state.error = false;
       state.loading = true;
+      state.success = false;
     },
     addRecipientSuccess: (state, action) => {
       const { recipient, message } = action.payload;
@@ -36,10 +36,12 @@ const recipientsSlice = createSlice({
     },
     addRecipientFailure: (state, action) => {
       state.loading = false;
+      state.success = false;
       state.error = action.payload;
     },
     updateRecipientStart: (state) => {
       state.loading = true;
+      state.success = false;
       state.error = false;
     },
     updateRecipientSuccess: (state, action) => {
@@ -55,10 +57,12 @@ const recipientsSlice = createSlice({
     },
     updateRecipientFailure: (state, action) => {
       state.loading = false;
+      state.success = false;
       state.error = action.payload;
     },
     deleteRecipientStart: (state) => {
       state.loading = true;
+      state.success = false;
       state.error = false;
     },
     deleteRecipientSuccess: (state, action) => {
@@ -77,7 +81,7 @@ const recipientsSlice = createSlice({
     setSelectedRecipientEmail: (state, action) => {
       state.recipientsEmail = action.payload;
     },
-    clearMessages: (state) => {
+    clearRecipientMessages: (state) => {
       state.error = false;
       state.success = false;
       state.loading = false;
@@ -88,6 +92,7 @@ const recipientsSlice = createSlice({
       .addCase(fetchRecipient.pending, (state) => {
         state.loading = true;
         state.error = false;
+        state.success = false;
       })
       .addCase(fetchRecipient.fulfilled, (state, action) => {
         state.error = false;
@@ -112,6 +117,6 @@ export const {
   deleteRecipientStart,
   deleteRecipientSuccess,
   setSelectedRecipientEmail,
-  clearMessages,
+  clearRecipientMessages,
 } = recipientsSlice.actions;
 export default recipientsSlice.reducer;

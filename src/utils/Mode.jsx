@@ -4,14 +4,16 @@ import ModeIcon from "../components/core/vendors/Icons/ModeIcon";
 
 const Mode = () => {
   const themes = [
-    { value: "light", label: "Light", icon: "#sun-fill" },
-    { value: "dark", label: "Dark", icon: "#moon-stars-fill" },
-    { value: "auto", label: "Auto", icon: "#circle-half" },
+    { value: "#fff", label: "Light", icon: "#sun-fill" },
+    { value: "#000", label: "Dark", icon: "#moon-stars-fill" },
+    // { value: "auto", label: "Auto", icon: "#circle-half" },
   ];
   const [selectedTheme, setSelectedTheme] = useState("auto");
 
   const handleThemeChange = (newTheme) => {
-    setSelectedTheme(newTheme);
+    // setSelectedTheme(newTheme);
+    document.documentElement.style.setProperty("--mode-color", newTheme);
+
   };
   return (
     <div>
@@ -23,14 +25,16 @@ const Mode = () => {
           aria-labelledby="bd-theme-text"
         >
           {themes.map((theme) => (
-            <li key={theme.value}>
+            <li key={theme.value} style={{
+              "--mode-color" : theme.value
+            }}>
               <button
                 type="button"
                 className={`dropdown-item d-flex align-items-center ${
                   theme.value === selectedTheme ? "active" : ""
                 }`}
                 onClick={() => handleThemeChange(theme.value)}
-                aria-pressed={theme.value === selectedTheme ? "true" : "false"}
+                // aria-pressed={theme.value === selectedTheme ? "true" : "false"}
               >
                 <svg
                   className="bi me-2 opacity-50 theme-icon"

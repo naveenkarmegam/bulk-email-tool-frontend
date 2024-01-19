@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SelectLimit from "./SelectLimit";
 import Pagination from "./Pagination";
-const Table = ({ recipients, handleDeleteOrder }) => {
+const RecipientTable = ({ recipients, handleDeleteOrder }) => {
+  const pageLimits = [5, 15, 20]
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(pageLimits[0]);
 
   const getRecipients = (page, limit) => {
     let array = [];
@@ -17,7 +18,7 @@ const Table = ({ recipients, handleDeleteOrder }) => {
   const configuredRecipients = getRecipients(page, limit).map((row, index) => ({
     ...row,
     serialNumber: (page - 1) * limit + index + 1,
-  }));;
+  }));
 
   const totalPage = Math.ceil(recipients.length / limit);
   let pageNo;
@@ -84,14 +85,17 @@ const Table = ({ recipients, handleDeleteOrder }) => {
           <tr>
             <td colSpan="5">
               <div className="d-flex justify-content-end pt-2">
-              <SelectLimit onLimitChange={setLimit} />
-              <Pagination
-                totalPage={totalPage}
-                page={pageNo}
-                limit={limit}
-                siblings={1}
-                onPageChange={onPageChange}
-              />
+                <SelectLimit
+                  onLimitChange={setLimit}
+                  pageLimits={pageLimits}
+                />
+                <Pagination
+                  totalPage={totalPage}
+                  page={pageNo}
+                  limit={limit}
+                  siblings={1}
+                  onPageChange={onPageChange}
+                />
               </div>
             </td>
           </tr>
@@ -101,4 +105,4 @@ const Table = ({ recipients, handleDeleteOrder }) => {
   );
 };
 
-export default Table;
+export default RecipientTable;

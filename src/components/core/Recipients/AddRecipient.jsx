@@ -14,6 +14,7 @@ import { selectRecipient } from "../../../redux/app/state";
 import FieldConfig from "../vendors/utils/FieldConfig";
 import AutoDismissAlert from "../../../utils/AutoDismissAlert";
 import { recipientValidationSchema } from "./validations/recipientValidationSchema";
+import { fetchDashboard, increaseRecipientCount } from "../../../redux/global/userSlice";
 
 const AddRecipient = () => {
   const navigate = useNavigate();
@@ -32,11 +33,16 @@ const AddRecipient = () => {
       try {
         setFailure(false)
         dispatch(addRecipientStart());
+        const trimmedValues = Object.fromEntries(
+          Object.entries(values).map(([key, value]) => [key, value.trim()])
+        );
         const response = await axios.post(
           "/api/recipient/add-recipient",
-          values
+          trimmedValues
         );
         dispatch(addRecipientSuccess(response.data));
+        dispatch(increaseRecipientCount());
+        // dispatch(fetchDashboard());
         navigate("/recipients");
       } catch (error) {
         dispatch(addRecipientFailure(false));

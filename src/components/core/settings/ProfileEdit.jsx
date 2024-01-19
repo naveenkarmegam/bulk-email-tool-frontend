@@ -41,15 +41,15 @@ const ProfileEdit = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: currentUser.email,
-      firstName: currentUser.firstName,
-      lastName: currentUser.lastName,
-      profilePicture: currentUser.profilePicture,
+      email: currentUser.email || "",
+      firstName: currentUser.firstName || "",
+      lastName: currentUser.lastName || "",
+      profilePicture: currentUser.profilePicture || "",
     },
     validationSchema: updateValidationSchema,
     onSubmit: async (values) => {
       try {
-        dispatch(updateProfileStart())
+        dispatch(updateProfileStart());
         const updatedValues = { ...values, profilePicture: changeImage };
         const response = await axios.patch(
           `/api/user/updateProfile/${currentUser._id}`,
@@ -60,7 +60,7 @@ const ProfileEdit = () => {
           navigate("/settings");
         }
       } catch (error) {
-        dispatch(updateProfileFailure(error.response.data))
+        dispatch(updateProfileFailure(error.response.data));
       }
     },
   });

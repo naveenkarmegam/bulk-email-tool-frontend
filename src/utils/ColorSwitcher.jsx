@@ -23,7 +23,6 @@ const ColorSwitcher = () => {
     const currentColor = event.target.style.getPropertyValue("--bg-color");
     setTheme(currentColor);
     localStorage.setItem("color", currentColor);
-    console.log(currentColor)
   };
 
   return (

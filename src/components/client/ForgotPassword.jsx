@@ -15,7 +15,10 @@ const ForgotPassword = () => {
     }),
     onSubmit: async (values) => {
       try {
-      } catch (error) {}
+        
+      } catch (error) {
+
+      }
     },
   });
   return (
