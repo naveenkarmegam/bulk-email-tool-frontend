@@ -76,7 +76,7 @@ const Campaign = () => {
     return () => {
       clearTimeout(timeoutId); 
     };
-  }, [failure]);
+  }, [failure,success]);
   return (
     <Layout>
       <hgroup className="row justify-content-center">
