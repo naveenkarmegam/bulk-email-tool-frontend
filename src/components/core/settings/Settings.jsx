@@ -14,18 +14,18 @@ const Settings = () => {
       <div className="row py-2 justify-content-center">
         <div className="col-lg-6">
           <article className="card shadow mb-4">
-            <header className="card-header py-3 mb-1">
-              <h6 className="m-0 font-weight-bold text-orange text-center">
-                Your User Data
+            <header className="card-header bg-color py-3 mb-1">
+              <h6 className="m-0 font-weight-bold text-white text-center">
+                Your Data
               </h6>
             </header>
-            <main className="card-body ">
+            <main className="card-body ddd ">
               <div className="row py-2 justify-content-center">
                 <div className="col-lg-6 text-center border-bottom border-dark mb-4">
                   <img
                     src={currentUser.profilePicture}
                     alt="profile picture"
-                    className="card-img-top img-responsive  rounded-circle pb-4"
+                    className="card-img-top img-responsive pb-4"
                     style={{ width: "10rem" }}
                   />
                 </div>
@@ -55,7 +55,7 @@ const Settings = () => {
                     </div>
                   </div>
                   <div className="d-gird text-center">
-                    <Link to={'/edit-profile'} className="btn btn-primary col-sm-6">
+                    <Link to={'/edit-profile'} className="btn rounded-5 btn-primary col-sm-6">
                       Edit
                     </Link>
                   </div>

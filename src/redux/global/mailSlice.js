@@ -34,7 +34,6 @@ const mailSlice = createSlice({
       state.error = action.payload;
     },
     deleteMailStart: (state) => {
-      state.loading = true;
       state.error = false;
       state.success = false;
     },

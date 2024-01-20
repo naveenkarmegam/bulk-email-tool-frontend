@@ -16,7 +16,7 @@ const ViewMail = () => {
   const { mailId } = useParams();
   const dispatch = useDispatch();
   const { selectEmail, loading } = useSelector(selectMail);
-  console.log(selectEmail)
+  console.log(selectEmail);
   const [failure, setFailure] = useState(false);
 
   const getMailById = async () => {
@@ -32,48 +32,48 @@ const ViewMail = () => {
   };
 
   useEffect(() => {
-    getMailById()
+    getMailById();
   }, [dispatch, mailId]);
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
-    const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
+    const formattedDate = new Date(dateString).toLocaleDateString(
+      undefined,
+      options
+    );
     return formattedDate;
   };
   return (
     <Layout>
-      <Link to={"/settings"}>
+      <Link to={"/sent"}>
         <LeftArrow width={29} />
       </Link>
       <article className="row justify-content-center">
         <div className="col-lg-10 col-xl-8 col-md-10">
-          <div className="card shadow mb-4 " >
-            {
-                loading ? (
-                    <Loading color={"text-color"} />
-
-                ) :
-            
-            <main className="card-body">
-              <div className="d-flex">
-                <div>
-                  <img
-                    src="https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg"
-                    alt="img"
-                    width={100}
-                  />
+          {loading ? (
+            <Loading color={"text-color"} />
+          ) : (
+            <div className="card shadow mb-4 ">
+              <main className="card-body">
+                <div className="d-flex">
+                  <div>
+                    <img
+                      src="https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg"
+                      alt="img"
+                      width={100}
+                    />
+                  </div>
+                  <div className="flex-grow-1 mt-3">
+                    <h3>{selectEmail?.subject}</h3>
+                    <small>{formatDate(selectEmail?.createdAt)}</small>
+                  </div>
                 </div>
-                <div className="flex-grow-1 mt-3">
-                  <h3>{selectEmail?.subject}</h3>
-                  <small>{formatDate(selectEmail?.createdAt)}</small>
+                <div className="view-message-content">
+                  <p>{selectEmail?.content}</p>
                 </div>
-              </div>
-              <div className="view-message-content">
-                <p>{selectEmail?.content}</p>
-              </div>
-            </main>
-}
-          </div>
+              </main>
+            </div>
+          )}
         </div>
       </article>
     </Layout>

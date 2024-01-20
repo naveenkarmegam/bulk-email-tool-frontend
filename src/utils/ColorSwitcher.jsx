@@ -5,10 +5,10 @@ const ColorSwitcher = () => {
   const colors = [
     "#2d3436",
     "#4834d4",
-    "#3be2ed",
-    "#f9ca24",
+    "#006f3c",
+    "#FA8E05",
     "#6ab04c",
-    "#30336b",
+    "#b00000",
   ];
   const setTheme = (color) => {
     document.documentElement.style.setProperty("--bg-color", color);

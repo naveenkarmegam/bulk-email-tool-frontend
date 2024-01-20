@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../layout/Layout";
 import Loading from "../../../utils/Loading";
 import TableInbox from "./TableInbox";
@@ -16,6 +16,7 @@ import axios from "axios";
 const SentHistory = () => {
   const dispatch = useDispatch();
   const { mails, loading, error, success } = useSelector(selectMail);
+  const [process, setProcess] = useState(false);
   // console.log(mails)
   useEffect(() => {
     if (mails.length === 0) {
@@ -35,12 +36,15 @@ const SentHistory = () => {
 
   const handleDeleteOrder = async (mailId) => {
     try {
+      setProcess(true);
       dispatch(deleteMailStart());
       const response = await axios.delete(
         `/api/mail/deleteInboxMail/${mailId}`
       );
+      setProcess(false);
       dispatch(deleteMailSuccess(response.data));
     } catch (error) {
+      setProcess(false);
       dispatch(deleteMailFailure(error.response.data));
     }
   };
@@ -62,7 +66,11 @@ const SentHistory = () => {
           {loading ? (
             <Loading color={"text-color"} />
           ) : (
-            <TableInbox mails={mails} handleDeleteOrder={handleDeleteOrder} />
+            <TableInbox
+              mails={mails}
+              handleDeleteOrder={handleDeleteOrder}
+              process={process}
+            />
           )}
         </div>
       </div>

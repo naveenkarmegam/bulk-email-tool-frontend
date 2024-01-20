@@ -1,16 +1,18 @@
 import { registerValidationSchema } from "./schema/validationSchema";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import axios from "axios";
 import Loading from "../../utils/Loading";
 import OAuth from "./firebase/OAuth";
 import { setSuccess } from "../../redux/global/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../../redux/app/state";
 
 const Register = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const {currentUser}=useSelector(selectUser)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [showPassword,setShowPassword] = useState(true)
@@ -42,6 +44,12 @@ const Register = () => {
       }
     },
   });
+
+  useEffect(()=>{
+    if(currentUser){
+      navigate('/dashboard')
+    }
+  },[navigate])
 
   return (
     <div className="m-0 p-0  user-body">

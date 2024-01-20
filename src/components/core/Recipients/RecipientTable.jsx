@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SelectLimit from "./SelectLimit";
 import Pagination from "./Pagination";
-const RecipientTable = ({ recipients, handleDeleteOrder }) => {
-  const pageLimits = [5, 15, 20]
+import Loading from "../../../utils/Loading";
+const RecipientTable = ({ recipients, handleDeleteOrder, process }) => {
+  const pageLimits = [5, 15, 20];
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(pageLimits[0]);
-
+  const [deletingRecipientId, setDeletingRecipientId] = useState(null);
   const getRecipients = (page, limit) => {
     let array = [];
     for (let i = (page - 1) * limit; i < page * limit && recipients[i]; i++) {
@@ -58,37 +59,49 @@ const RecipientTable = ({ recipients, handleDeleteOrder }) => {
           </tr>
         </thead>
         <tbody>
-          {configuredRecipients.map((row, index) => (
-            <tr key={index}>
-              <th scope="row">{row.serialNumber}</th>
-              <td>{row.firstName}</td>
-              <td>{row.lastName}</td>
-              <td>{row.email}</td>
-              <td className="action-buttons">
-                <Link
-                  to={`/update-recipient/${row._id}`}
-                  className="btn btn-primary btn-sm"
-                >
-                  <i className="bi bi-pencil-square"></i>
-                </Link>
-                <button
-                  onClick={() => handleDeleteOrder(row._id)}
-                  className="btn btn-danger btn-sm m-1"
-                >
-                  <i className="bi bi-trash-fill"></i>
-                </button>
+          {configuredRecipients.length === 0 ? (
+            <tr className="text-center">
+              <td colSpan={5} className="p-5 h3">
+                No recipients you have
               </td>
             </tr>
-          ))}
+          ) : (
+            configuredRecipients.map((row, index) => (
+              <tr key={index}>
+                <th scope="row">{row?.serialNumber}</th>
+                <td>{row?.firstName}</td>
+                <td>{row?.lastName}</td>
+                <td>{row?.email}</td>
+                <td className="action-buttons">
+                  <Link
+                    to={`/update-recipient/${row?._id}`}
+                    className="btn btn-primary btn-sm"
+                  >
+                    <i className="bi bi-pencil-square"></i>
+                  </Link>
+                  <button
+                     onClick={() => {
+                      setDeletingRecipientId(row?._id);
+                      handleDeleteOrder(row?._id);
+                    }}
+                    className="btn btn-danger btn-sm m-1"
+                  >
+                    {deletingRecipientId === row?._id && process ? (
+                      <Loading color={'danger spinner-border-sm my-1'} />
+                    ) : (
+                      <i className="bi bi-trash-fill"></i>
+                    )}
+                  </button>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
         <tfoot className="table-footer">
           <tr>
             <td colSpan="5">
               <div className="d-flex justify-content-end pt-2">
-                <SelectLimit
-                  onLimitChange={setLimit}
-                  pageLimits={pageLimits}
-                />
+                <SelectLimit onLimitChange={setLimit} pageLimits={pageLimits} />
                 <Pagination
                   totalPage={totalPage}
                   page={pageNo}

@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SelectLimit from "../Recipients/SelectLimit";
 import Pagination from "../Recipients/Pagination";
-const InboxTable = ({ mails, handleDeleteOrder }) => {
+import Loading from "../../../utils/Loading";
+const InboxTable = ({ mails, handleDeleteOrder,process }) => {
   const pageLimits = [10, 15, 20];
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(pageLimits[0]);
+  const [deletedMailId, setDeletedMailId] = useState(null);
 
   const getMails = (page, limit) => {
     let array = [];
@@ -58,7 +60,7 @@ const InboxTable = ({ mails, handleDeleteOrder }) => {
           {configuredMails.length === 0 ? (
             <tr className="text-center">
               <td colSpan={2} className="p-5 h3">
-                No Data you have
+                No mails you have
               </td>
             </tr>
           ) : (
@@ -82,10 +84,17 @@ const InboxTable = ({ mails, handleDeleteOrder }) => {
                     <i className="bi bi-eye-fill"></i>
                   </Link>
                   <button
-                    onClick={() => handleDeleteOrder(row._id)}
+                    onClick={() => {
+                      setDeletedMailId(row?._id);
+                      handleDeleteOrder(row?._id);
+                    }}
                     className="btn btn-danger btn-sm m-1"
                   >
-                    <i className="bi bi-trash-fill"></i>
+                    {deletedMailId === row?._id && process ? (
+                      <Loading color={'danger spinner-border-sm my-1'} />
+                    ) : (
+                      <i className="bi bi-trash-fill"></i>
+                    )}
                   </button>
                 </td>
               </tr>

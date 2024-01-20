@@ -61,7 +61,6 @@ const templateSlice = createSlice({
       state.error = action.payload;
     },
     deleteTemplateStart: (state) => {
-      state.loading = true;
       state.success = false;
       state.error = false;
     },
@@ -80,6 +79,9 @@ const templateSlice = createSlice({
     },
     setSelectedTemplate: (state, action) => {
       state.setTemplate = action.payload;
+    },
+    clearSelectedTemplate:(state)=>{
+      state.setTemplate = []
     },
     clearTemplateMessages: (state) => {
       state.error = false;
@@ -116,6 +118,7 @@ export const {
   deleteTemplateSuccess,
   deleteTemplateFailure,
   setSelectedTemplate,
+  clearSelectedTemplate,
   clearTemplateMessages,
 } = templateSlice.actions;
 export default templateSlice.reducer;

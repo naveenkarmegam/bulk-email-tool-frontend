@@ -21,7 +21,7 @@ import OAuth from "./firebase/OAuth";
 import { selectUser } from "../../redux/app/state";
 const Login = () => {
   const dispatch = useDispatch();
-  const { loading, error, success } = useSelector(selectUser);
+  const { loading, error, success,currentUser } = useSelector(selectUser);
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
@@ -57,6 +57,12 @@ const Login = () => {
       }
     },
   });
+
+  useEffect(()=>{
+    if(currentUser){
+      navigate('/dashboard')
+    }
+  },[navigate])
 
   return (
     <div className="m-0 p-0  user-body ">

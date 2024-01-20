@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../layout/Layout";
 import { useFormik } from "formik";
 import axios from "axios";
@@ -55,6 +55,16 @@ const AddRecipient = () => {
     { name: "lastName", placeholder: "Last Name", type: "text" },
     { name: "email", placeholder: "Email Address", type: "email" },
   ];
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setFailure(false)
+    }, 1500);
+  
+    return () => {
+      clearTimeout(timeoutId); 
+    };
+  }, [failure]);
   return (
     <Layout>
       <hgroup className="row justify-content-center">

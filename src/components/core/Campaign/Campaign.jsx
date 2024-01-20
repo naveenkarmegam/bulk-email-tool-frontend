@@ -1,14 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../layout/Layout";
 import { useFormik } from "formik";
 import axios from "axios";
 
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectRecipient,
-  selectTemplate,
-} from "../../../redux/app/state";
+import { selectRecipient, selectTemplate } from "../../../redux/app/state";
 import FieldConfig from "../vendors/utils/FieldConfig";
 import TextArea from "../vendors/utils/TextArea";
 
@@ -17,20 +14,21 @@ import Loading from "../../../utils/Loading";
 import { emailValidationSchema } from "./validation/emailValidationSchema";
 import { increaseMailCount } from "../../../redux/global/userSlice";
 import { fetchMails } from "../../../redux/global/mailSlice";
+import { clearSelectedRecipientEmail } from "../../../redux/global/recipientsSlice";
+import { clearSelectedTemplate } from "../../../redux/global/templateSlice";
 
 const Campaign = () => {
-
   const dispatch = useDispatch();
   const { recipientsEmail } = useSelector(selectRecipient);
   const { setTemplate } = useSelector(selectTemplate);
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [failure, setFailure] = useState(false);
   const [success, setSuccess] = useState(false);
 
   const initialRecipients = recipientsEmail.join(",") || "";
   const initialSubject = setTemplate.subject || "";
   const initialContent = setTemplate.content || "";
-
+console.log('checking',initialSubject,initialContent,initialRecipients)
   const fieldConfig = [
     { name: "recipients", placeholder: "recipients", type: "text" },
     { name: "subject", placeholder: "subject", type: "text" },
@@ -45,22 +43,35 @@ const Campaign = () => {
     validationSchema: emailValidationSchema,
     onSubmit: async (values) => {
       try {
-        setFailure(false)
-        setLoading(true)
+        setFailure(false);
+        setSuccess(false);
+        setLoading(true);
         values = { ...values, recipients: values.recipients.trim().split(",") };
         const response = await axios.post("/api/mail/sendBulkMail", values);
-        formik.resetForm()
-        setSuccess(response.data.message)
-        setLoading(false)
+        dispatch(clearSelectedRecipientEmail());
+        dispatch(clearSelectedTemplate());
+        setSuccess(response.data.message);
+        setLoading(false);
         dispatch(increaseMailCount());
-        dispatch(fetchMails())
-
+        dispatch(fetchMails());
       } catch (error) {
-        setFailure(error.response.data.message)
-        setLoading(false)
+        setSuccess(false);
+        setFailure(error.response.data.message);
+        setLoading(false);
       }
     },
   });
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setFailure(false);
+      setSuccess(false);
+    }, 1500);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [failure]);
   return (
     <Layout>
       <hgroup className="row justify-content-center">
@@ -82,7 +93,11 @@ const Campaign = () => {
                       <AutoDismissAlert message={success} type={"success"} />
                     )}
                   </div>
-                  <form className="user" onSubmit={formik.handleSubmit}>
+                  <form
+                    className="user"
+                    key={JSON.stringify(formik.values)}
+                    onSubmit={formik.handleSubmit}
+                  >
                     {fieldConfig.map((field, index) => (
                       <FieldConfig field={field} formik={formik} key={index} />
                     ))}

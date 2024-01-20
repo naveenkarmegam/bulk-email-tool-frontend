@@ -24,6 +24,13 @@
   position: relative;
   bottom: 20px;
   margin: 0 auto;
+  cursor: pointer;
+}
+.profile-img-div img {
+  width: 200px !important;
+  height: 200px !important;
+
+  cursor: pointer;
 }
 .img-responsive {
   margin: 0 auto;

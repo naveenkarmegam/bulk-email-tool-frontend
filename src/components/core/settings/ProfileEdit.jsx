@@ -36,7 +36,7 @@ const ProfileEdit = () => {
   const fieldConfig = [
     { name: "firstName", placeholder: "First Name", type: "text" },
     { name: "lastName", placeholder: "Last Name", type: "text" },
-    { name: "email", placeholder: "Email Address", type: "email" },
+    // { name: "email", placeholder: "Email Address", type: "email" },
   ];
 
   const formik = useFormik({
@@ -109,7 +109,7 @@ const ProfileEdit = () => {
                 <div className="px-5 py-4">
                   <form className="user" onSubmit={formik.handleSubmit}>
                     <div className="text-center border-bottom border-dark mb-4">
-                      <div className="profile-img-div">
+                      <div className="profile-img-div" >
                         <img
                           src={
                             changeImage
@@ -117,7 +117,7 @@ const ProfileEdit = () => {
                               : currentUser.profilePicture
                           }
                           alt="profile picture"
-                          className="card-img-top img-responsive rounded-circle pb-4 mx-auto d-block"
+                          className="card-img-top img-responsive mx-auto d-block"
                           style={{ width: "10rem" }}
                           onClick={() => fileRef.current.click()}
                         />
@@ -147,7 +147,7 @@ const ProfileEdit = () => {
                           uploadingPercentage < 100 ? (
                           <span className="text-warning">{`uploading ${uploadingPercentage}%`}</span>
                         ) : uploadingPercentage === 100 ? (
-                          <span className="text-success">
+                          <span className="text-white">
                             uploaded successfully
                           </span>
                         ) : (

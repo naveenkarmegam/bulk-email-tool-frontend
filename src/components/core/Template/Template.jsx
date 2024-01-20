@@ -65,6 +65,8 @@ const Template = () => {
         ) : (
           <TemplateCard templates={templates} isCustom={false} />
         )}
+      </article>
+      <article className="row px-2 justify-content-center mt-5">
         <TemplateCard templates={emailTemplates} isCustom={true} />
       </article>
     </Layout>

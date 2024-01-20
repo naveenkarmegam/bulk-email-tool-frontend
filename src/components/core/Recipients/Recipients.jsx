@@ -21,6 +21,7 @@ import { decreaseRecipientCount } from "../../../redux/global/userSlice";
 const Recipients = () => {
   const dispatch = useDispatch();
   const { recipients, error, success, loading } = useSelector(selectRecipient);
+  const [process, setProcess] = useState(false)
   useEffect(() => {
     if (recipients.length === 0) {
       dispatch(fetchRecipient());
@@ -39,14 +40,17 @@ useEffect(() => {
 
   const handleDeleteOrder = async (recipientId) => {
     try {
+      setProcess(true)
       dispatch(deleteRecipientStart());
       const response = await axios.delete(
         `/api/recipient/delete-recipient/${recipientId}`
       );
       dispatch(deleteRecipientSuccess(response.data));
       dispatch(decreaseRecipientCount())
+      setProcess(false)
     } catch (error) {
       dispatch(deleteRecipientFailure(error.response.data));
+      setProcess(false)
     }
   };
 
@@ -94,6 +98,7 @@ useEffect(() => {
             <RecipientTable
               recipients={recipients}
               handleDeleteOrder={handleDeleteOrder}
+              process={process}
             />
           )}
         </div>

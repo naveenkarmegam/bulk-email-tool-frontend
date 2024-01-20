@@ -5,7 +5,10 @@ import ContactForm from "../../landing/components/ContactForm";
 const Contact = () => {
   return (
     <Layout>
+      <span className="core">
+
       <ContactForm />
+      </span>
     </Layout>
   );
 };

@@ -34,7 +34,7 @@ const Layout = ({ children }) => {
         </article>
       </header>
       <ColorSwitcher />
-      <Mode />
+      {/* <Mode /> */}
     </main>
   );
 };

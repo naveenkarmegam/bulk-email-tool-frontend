@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   deleteTemplateFailure,
@@ -8,25 +8,29 @@ import {
 } from "../../../redux/global/templateSlice";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import Loading from "../../../utils/Loading";
 const TemplateCard = ({ templates, isCustom }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [process, setProcess] = useState(false);
+  const [deletedTemplateId, setDeletedTemplateId] = useState(null);
   const handleUseTemplate = (template) => {
     dispatch(setSelectedTemplate(template));
-    navigate('/campaign')
+    navigate("/campaign");
   };
-
 
   const handleDeleteOrder = async (templateId) => {
     try {
+      setProcess(true);
       dispatch(deleteTemplateStart());
       const response = await axios.delete(
         `/api/template/delete-template/${templateId}`
       );
+      setProcess(false);
       dispatch(deleteTemplateSuccess(response.data));
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      setProcess(false);
       dispatch(deleteTemplateFailure(error.response.data));
     }
   };
@@ -43,26 +47,31 @@ const TemplateCard = ({ templates, isCustom }) => {
               <div className="card-body ddd">
                 <div className="border-bottom py-2 px-1">
                   <strong>Subject:</strong>
-                  <span >&nbsp; {template?.subject}</span>
+                  <span>&nbsp; {template?.subject}</span>
                 </div>
-                <div >
+                <div>
                   <strong>Content:</strong> &nbsp;
-                  <span > {template?.content}</span>
+                  <span> {template?.content}</span>
                 </div>
               </div>
-              <div className="card-footer d-flex justify-content-around  bg-gray-200 px-0">
-                <button  className={`btn btn-primary`} onClick={()=>handleUseTemplate(template)} >
+              <div className="card-footer d-flex justify-content-center  bg-gray-200 px-0">
+                <button
+                  className={`btn btn-primary`}
+                  onClick={() => handleUseTemplate(template)}
+                >
                   use
                 </button>
-                <Link
+                {/* <Link
                   className={`btn btn-info ${isCustom ? "disabled" : ""}`}
                   disabled={isCustom}
                 >
                   copy
-                </Link>
+                </Link> */}
                 <Link
                   to={`/update-template/${template?._id}`}
-                  className={`btn btn-warning ${isCustom ? "disabled" : ""}`}
+                  className={`btn btn-warning mx-4 ${
+                    isCustom ? "disabled" : ""
+                  }`}
                   disabled={isCustom}
                 >
                   edit
@@ -70,9 +79,16 @@ const TemplateCard = ({ templates, isCustom }) => {
                 <button
                   className={`btn btn-danger ${isCustom ? "disabled" : ""}`}
                   disabled={isCustom}
-                  onClick={() => handleDeleteOrder(template?._id)}
+                  onClick={() => {
+                    setDeletedTemplateId(template?._id);
+                    handleDeleteOrder(template?._id);
+                  }}
                 >
-                  delete
+                  {deletedTemplateId === template?._id && process ? (
+                    <Loading color={"danger spinner-border-sm my-1"} />
+                  ) : (
+                    "Delete"
+                  )}
                 </button>
               </div>
             </div>

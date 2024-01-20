@@ -61,7 +61,6 @@ const recipientsSlice = createSlice({
       state.error = action.payload;
     },
     deleteRecipientStart: (state) => {
-      state.loading = true;
       state.success = false;
       state.error = false;
     },
@@ -80,6 +79,9 @@ const recipientsSlice = createSlice({
     },
     setSelectedRecipientEmail: (state, action) => {
       state.recipientsEmail = action.payload;
+    },
+    clearSelectedRecipientEmail:(state)=>{
+      state.recipientsEmail = []
     },
     clearRecipientMessages: (state) => {
       state.error = false;
@@ -117,6 +119,7 @@ export const {
   deleteRecipientStart,
   deleteRecipientSuccess,
   setSelectedRecipientEmail,
+  clearSelectedRecipientEmail,
   clearRecipientMessages,
 } = recipientsSlice.actions;
 export default recipientsSlice.reducer;
