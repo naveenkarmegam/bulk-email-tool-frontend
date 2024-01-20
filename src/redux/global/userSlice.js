@@ -61,7 +61,6 @@ const userSlice = createSlice({
       state.error = false;
     },
     setSuccess: (state, action) => {
-      console.log(action.payload)
       state.success = action.payload;
     },
     clearMessages: (state) => {

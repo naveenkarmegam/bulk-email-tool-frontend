@@ -5,16 +5,17 @@ import { useFormik } from "formik";
 import axios from "axios";
 import Loading from "../../utils/Loading";
 import OAuth from "./firebase/OAuth";
-import { setSuccess } from "../../redux/global/userSlice";
+import { clearMessages, setSuccess } from "../../redux/global/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/app/state";
+import AutoDismissAlert from "../../utils/AutoDismissAlert";
 
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {currentUser}=useSelector(selectUser)
+  const {currentUser,error}=useSelector(selectUser)
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [failure, setFailure] = useState(false);
   const [showPassword,setShowPassword] = useState(true)
   const formik = useFormik({
     initialValues: {
@@ -28,7 +29,7 @@ const Register = () => {
     onSubmit: async (values) => {
       try {
         setLoading(true);
-        setError(false);
+        setFailure(false);
         const trimmedValues = Object.fromEntries(
           Object.entries(values).map(([key, value]) => [key, value.trim()])
         );
@@ -40,7 +41,7 @@ const Register = () => {
         }
       } catch (error) {
         setLoading(false);
-        setError(error.response.data.message);
+        setFailure(error.response.data.message);
       }
     },
   });
@@ -50,6 +51,16 @@ const Register = () => {
       navigate('/dashboard')
     }
   },[navigate])
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      dispatch(clearMessages());
+      setFailure(false)
+    }, 2000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [error,failure]);
 
   return (
     <div className="m-0 p-0  user-body">
@@ -73,13 +84,19 @@ const Register = () => {
                         </h1>
                       </div>
                       <form className="user" onSubmit={formik.handleSubmit}>
-                        {error && (
+                        {failure && (
                           <div className="alert alert-danger" role="alert">
                             {
-                              error || "something went wrong"
+                              failure || "something went wrong"
                             }
                           </div>
                         )}
+                        {error && (
+                        <AutoDismissAlert
+                          message={error.message}
+                          type={"danger"}
+                        />
+                      )}
                         <div className="form-group row">
                           <div className="col-sm-6 mb-3 mb-sm-0">
                             <input

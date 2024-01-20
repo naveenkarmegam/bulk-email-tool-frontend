@@ -21,16 +21,16 @@ import OAuth from "./firebase/OAuth";
 import { selectUser } from "../../redux/app/state";
 const Login = () => {
   const dispatch = useDispatch();
-  const { loading, error, success,currentUser } = useSelector(selectUser);
+  const { loading, error, success, currentUser } = useSelector(selectUser);
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       dispatch(clearMessages());
     }, 2000);
-  
+
     return () => {
-      clearTimeout(timeoutId); 
+      clearTimeout(timeoutId);
     };
   }, [error, success, loading]);
 
@@ -58,16 +58,16 @@ const Login = () => {
     },
   });
 
-  useEffect(()=>{
-    if(currentUser){
-      navigate('/dashboard')
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/dashboard");
     }
-  },[navigate])
+  }, [navigate]);
 
   return (
     <div className="m-0 p-0  user-body ">
       <article className="container py-4">
-        <hgroup className="row justify-content-center mt-1">
+        <hgroup className="row justify-content-center vh-100">
           <div className="col-xl-10 col-lg-12 col-md-9">
             <div
               className="card o-hidden border-0 shadow-lg my-5"
