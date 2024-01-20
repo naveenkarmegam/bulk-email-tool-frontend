@@ -1,3 +1,3 @@
 export const server = {
-    api: 'http://localhost:3005'
+    api: 'http://localhost:3005/api'
 }

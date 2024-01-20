@@ -5,9 +5,13 @@ import "./styles/core.css";
 import "./styles/palette.css";
 import Mode from "../../../utils/Mode";
 import ColorSwitcher from "../../../utils/ColorSwitcher";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { selectUser } from "../../../redux/app/state";
 
 const Layout = ({ children }) => {
-
+  const {currentUser} = useSelector(selectUser)
+  axios.defaults.headers.common['Authorization'] = currentUser?.token;
   return (
     <main id="page-top">
       <header id="wrapper" className="overflow-hidden"

@@ -10,7 +10,7 @@ import "./style/user.css";
 import { loginValidationSchema } from "./schema/validationSchema";
 
 import Loading from "../../utils/Loading";
-import AutoDismissAlert from '../../utils/AutoDismissAlert'
+import AutoDismissAlert from "../../utils/AutoDismissAlert";
 import {
   logInFailure,
   logInStart,
@@ -21,13 +21,18 @@ import OAuth from "./firebase/OAuth";
 import { selectUser } from "../../redux/app/state";
 const Login = () => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector(selectUser);
+  const { loading, error, success } = useSelector(selectUser);
   const [showPassword, setShowPassword] = useState(false);
 
-
-  useEffect(()=>{
-    dispatch(clearMessages())
-  },[])
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      dispatch(clearMessages());
+    }, 2000);
+  
+    return () => {
+      clearTimeout(timeoutId); 
+    };
+  }, [error, success, loading]);
 
   const navigate = useNavigate();
   const formik = useFormik({
@@ -56,7 +61,7 @@ const Login = () => {
   return (
     <div className="m-0 p-0  user-body ">
       <article className="container py-4">
-        <hgroup className="row justify-content-center">
+        <hgroup className="row justify-content-center mt-1">
           <div className="col-xl-10 col-lg-12 col-md-9">
             <div
               className="card o-hidden border-0 shadow-lg my-5"
@@ -78,7 +83,15 @@ const Login = () => {
                       </h1>
                     </header>
                     <form className="user" onSubmit={formik.handleSubmit}>
-                      {error && (<AutoDismissAlert message={error.message} type={'danger'} />)}
+                      {error && (
+                        <AutoDismissAlert
+                          message={error.message}
+                          type={"danger"}
+                        />
+                      )}
+                      {success && (
+                        <AutoDismissAlert message={success} type={"success"} />
+                      )}
                       <div className="form-group p-0 ">
                         <input
                           className={`form-control form-control-user ${
@@ -175,11 +188,6 @@ const Login = () => {
                     <div className="text-center">
                       <Link className="small" to={"/register"}>
                         Create an Account!
-                      </Link>
-                    </div>
-                    <div className="text-center">
-                      <Link className="small" to={"/reset-password"}>
-                        reset-password
                       </Link>
                     </div>
                   </div>

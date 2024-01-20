@@ -1,23 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setSuccess } from "../../redux/global/userSlice";
+import Loading from "../../utils/Loading";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       email: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Invalid email address").required("Required"),
+      email: Yup.string()
+        .transform((value) => (value ? value.trim() : value))
+        .email("Invalid email address")
+        .required("Required"),
     }),
     onSubmit: async (values) => {
       try {
-        
+        setError(false);
+        setLoading(true);
+        const response = await axios.post(
+          `/api/auth/forgot-password`,values
+        );
+        dispatch(setSuccess(response.data.message));
+        setLoading(false);
+        navigate('/login')
       } catch (error) {
-
+        setLoading(false);
+        console.log(error);
+        setError(error.response.data.message);
       }
     },
   });
@@ -48,9 +66,9 @@ const ForgotPassword = () => {
                       </p>
                     </header>
                     <form className="user" onSubmit={formik.handleSubmit}>
-                      {formik.errors.general && (
+                      {error && (
                         <section className="alert alert-danger" role="alert">
-                          {formik.errors.general}
+                          {error}
                         </section>
                       )}
                       <fieldset className="form-group">
@@ -79,7 +97,9 @@ const ForgotPassword = () => {
                         type="submit"
                         className="btn btn-primary btn-user btn-block"
                       >
-                        Reset Password
+                        {
+                          loading ? <Loading /> : 'Reset Password'
+                        }
                       </button>
                     </form>
                     <hr />
@@ -93,11 +113,7 @@ const ForgotPassword = () => {
                         Create an Account!
                       </Link>
                     </div>
-                    <div className="text-center">
-                      <Link className="small" to={"/reset-password"}>
-                        reset-password
-                      </Link>
-                    </div>
+
                   </section>
                 </div>
               </section>

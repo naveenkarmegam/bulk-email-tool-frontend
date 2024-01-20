@@ -24,22 +24,22 @@ const DashBoard = () => {
   const reportCardData = [
     {
       title: "Total Emails Sent by You",
-      value: dashBoardInfo?.userMailCount,
+      value: dashBoardInfo?.userMailCount || 0,
       icon : <MailCheck  width={26} height={26} />
     },
     {
       title: "Your Total Recipients",
-      value: dashBoardInfo?.recipientCount,
+      value: dashBoardInfo?.recipientCount || 0,
       icon: <UserPassIcon width={28} height={28} />
     },
     {
       title: "Total Users in Our Application",
-      value: dashBoardInfo?.totalUserCount,
+      value: dashBoardInfo?.totalUserCount  || 0,
       icon: <UserCheck width={28} height={28} />
     },
     {
       title: "Total Emails Sent by Our Application",
-      value: dashBoardInfo?.totalMailCount,
+      value: dashBoardInfo?.totalMailCount || 0,
       icon: <StackIcon width={26} height={26} />
     },
   ];

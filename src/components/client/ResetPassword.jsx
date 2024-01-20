@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import Loading from "../../utils/Loading";
+import { setSuccess } from "../../redux/global/userSlice";
 
 const ResetPassword = () => {
   const params = useParams();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(true);
 
   const formik = useFormik({
     initialValues: {
@@ -14,14 +22,32 @@ const ResetPassword = () => {
       confirmPassword: "",
     },
     validationSchema: Yup.object({
-      password: Yup.string().required("Required"),
+      password: Yup.string()
+        .transform((value) => (value ? value.trim() : value))
+        .required("Required"),
       confirmPassword: Yup.string()
+        .transform((value) => (value ? value.trim() : value))
         .oneOf([Yup.ref("password"), null], "Passwords must match")
         .required("Required"),
     }),
     onSubmit: async (values) => {
       try {
-      } catch (error) {}
+        setError(false);
+        setLoading(true);
+        console.log(values)
+        const response = await axios.post(
+          `/api/auth/reset-password/${params.token}`,
+          values
+        );
+        console.log(response.data)
+        dispatch(setSuccess(response.data.message));
+        setLoading(false);
+        navigate("/login");
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+        setError(error.response.data.message);
+      }
     },
   });
 
@@ -41,7 +67,7 @@ const ResetPassword = () => {
                   <figure className="col-lg-6 d-none d-lg-block bg-password-image m-0"></figure>
                   <section className="col-lg-6 p-5">
                     <hgroup className="d-flex justify-content-center user-heading">
-                      <h1 className="text-center h1">ADUDU</h1>
+                      <h1 className="text-center h1">BULK MAILER</h1>
                     </hgroup>
                     <header className="text-center">
                       <h1 className="h4 text-gray-900 mb-2">
@@ -49,22 +75,21 @@ const ResetPassword = () => {
                       </h1>
                     </header>
                     <form className="user" onSubmit={formik.handleSubmit}>
-                      {formik.errors.general && (
+                      {error && (
                         <section className="alert alert-danger" role="alert">
-                          {formik.errors.general.message}
+                          {error}
                         </section>
                       )}
                       <fieldset className="form-group">
                         <input
-                          type="text"
+                          type={showPassword ? "password" : "text"}
                           className={`form-control form-control-user ${
                             formik.touched.password && formik.errors.password
                               ? "is-invalid"
                               : ""
                           }`}
-                          id="exampleInputpassword"
-                          aria-describedby="passwordHelp"
-                          placeholder="Enter password"
+                          id="password"
+                          placeholder="password"
                           name="password"
                           value={formik.values.password}
                           onChange={formik.handleChange}
@@ -78,16 +103,14 @@ const ResetPassword = () => {
                       </fieldset>
                       <fieldset className="form-group">
                         <input
-                          type="text"
+                          type={showPassword ? "password" : "text"}
                           className={`form-control form-control-user ${
-                            formik.touched.confirmPassword &&
-                            formik.errors.confirmPassword
+                            formik.touched.confirmPassword && formik.errors.confirmPassword
                               ? "is-invalid"
                               : ""
                           }`}
                           id="confirmPassword"
-                          aria-describedby="passwordHelp"
-                          placeholder="Confirm Password"
+                          placeholder="password"
                           name="confirmPassword"
                           value={formik.values.confirmPassword}
                           onChange={formik.handleChange}
@@ -106,6 +129,7 @@ const ResetPassword = () => {
                           className="custom-control-input"
                           id="showPassword"
                           name="showPassword"
+                          onClick={() => setShowPassword(!showPassword)}
                         />
                         <label
                           className="custom-control-label"
@@ -118,7 +142,7 @@ const ResetPassword = () => {
                         type="submit"
                         className="btn btn-primary btn-user btn-block"
                       >
-                        Reset Your Password
+                        {loading ? <Loading /> : "Reset Your Password"}
                       </button>
                     </form>
                     <div className="text-center">
@@ -129,11 +153,6 @@ const ResetPassword = () => {
                     <div className="text-center">
                       <Link className="small" to={"/register"}>
                         Create an Account!
-                      </Link>
-                    </div>
-                    <div className="text-center">
-                      <Link className="small" to={"/reset-password"}>
-                        reset-password
                       </Link>
                     </div>
                   </section>

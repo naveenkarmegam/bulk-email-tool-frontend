@@ -5,9 +5,12 @@ import { useFormik } from "formik";
 import axios from "axios";
 import Loading from "../../utils/Loading";
 import OAuth from "./firebase/OAuth";
+import { setSuccess } from "../../redux/global/userSlice";
+import { useDispatch } from "react-redux";
 
 const Register = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [showPassword,setShowPassword] = useState(true)
@@ -30,6 +33,7 @@ const Register = () => {
         const response = await axios.post(`/api/auth/register`, trimmedValues);
         setLoading(false);
         if (response.status === 201) {
+          dispatch(setSuccess(response.data.message))
           navigate("/login");
         }
       } catch (error) {

@@ -5,17 +5,22 @@ export const fetchDashboard = createAsyncThunk(
   "dashBoardInfo/fetchDashboard",
   async () => {
     try {
-      const response = await axios.get("/api/user/dashBoardInfo");
+      const response = await axios.get("/api/user/dashBoardInfo",{
+        // headers:{
+        //   Authorization:
+        // }
+      });
       return response.data;
     } catch (error) {
       throw error.response.data;
     }
   }
 );
-
+// console.log(localStorage.getItem('persist:user'))
 const initialState = {
   currentUser: null,
   loading: false,
+  success: false,
   error: false,
   dashBoardInfo: null,
 };
@@ -54,6 +59,10 @@ const userSlice = createSlice({
       state.currentUser = null;
       state.loading = false;
       state.error = false;
+    },
+    setSuccess: (state, action) => {
+      console.log(action.payload)
+      state.success = action.payload;
     },
     clearMessages: (state) => {
       state.error = false;
@@ -148,6 +157,7 @@ export const {
   updateProfileSuccess,
   updateProfileFailure,
   logOutSuccess,
+  setSuccess,
   clearMessages,
   increaseRecipientCount,
   decreaseRecipientCount,
