@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import SelectLimit from "../Recipients/SelectLimit";
 import Pagination from "../Recipients/Pagination";
 import Loading from "../../../utils/Loading";
-const InboxTable = ({ mails, handleDeleteOrder,process }) => {
+const InboxTable = ({ mails, handleDeleteOrder, process }) => {
   const pageLimits = [10, 15, 20];
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(pageLimits[0]);
@@ -48,11 +48,13 @@ const InboxTable = ({ mails, handleDeleteOrder,process }) => {
     }
   };
   return (
-    <main className="container table-responsive core-inbox">
+    <main className="container d-flex justify-content-center table-responsive core-inbox">
       <table className="custom-table">
         <thead>
           <tr>
-            <th scope="col">Your Mails</th>
+            <th scope="col">
+              Your Mails
+            </th>
             <th scope="col">Actions</th>
           </tr>
         </thead>
@@ -66,16 +68,12 @@ const InboxTable = ({ mails, handleDeleteOrder,process }) => {
           ) : (
             configuredMails.map((row, index) => (
               <tr key={index}>
-                {/* {console.log(row)} */}
-                <td className="px-2 content-span">
-                  <span className="fs-6 m-0 text-capitalize fw-semibold">
+                <td className="pl-3">
+                  {/* <span className="fs-6 m-0 text-capitalize fw-semibold"> */}
                     {row.subject}
-                  </span>{" "}
-                  <br className="p-0 m-0" />
-                  <small className="small m-0" title={row.content}>
-                    {row.content.slice(0, 80)}....
-                  </small>
+                  {/* </span>{" "} */}
                 </td>
+  
                 <td className="action-buttons text-center">
                   <Link
                     to={`/view-mail/${row._id}`}
@@ -91,7 +89,7 @@ const InboxTable = ({ mails, handleDeleteOrder,process }) => {
                     className="btn btn-danger btn-sm m-1"
                   >
                     {deletedMailId === row?._id && process ? (
-                      <Loading color={'danger spinner-border-sm my-1'} />
+                      <Loading color={"danger spinner-border-sm my-1"} />
                     ) : (
                       <i className="bi bi-trash-fill"></i>
                     )}
@@ -101,7 +99,7 @@ const InboxTable = ({ mails, handleDeleteOrder,process }) => {
             ))
           )}
         </tbody>
-        <tfoot className="table-footer">
+        <tfoot className="table-footer bg-white">
           <tr>
             <td colSpan="5">
               <div className="d-flex justify-content-end pt-2">

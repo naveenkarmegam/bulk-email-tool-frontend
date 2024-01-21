@@ -21,7 +21,7 @@ const Layout = ({ children }) => {
           id="content-wrapper"
           className="d-flex flex-column overflow-hidden"
           >
-          <section id="content" className="p-0 "
+          <section id="content" className="p-0 ddd"
             // style={{ backgroundColor: "var(--bg-color)" }}
           >
             <TobBar />

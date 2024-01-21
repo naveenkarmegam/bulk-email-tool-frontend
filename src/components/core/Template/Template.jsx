@@ -44,7 +44,7 @@ const Template = () => {
         <div className="col-md-4 text-end">
           <Link
             to={"/add-template"}
-            className="p-0 px-2 py-1 m-0  btn bg-blue text-white shadow-sm"
+            className="p-0 px-5 py-2 m-0 rounded-5  btn bg-primary text-white shadow-sm"
           >
             <i className="bi bi-bi-plus p-0 m-0" />
             Add Template

@@ -39,8 +39,8 @@ const Sidebar = () => {
     { path: "/dashboard", icon: <DashIcon />, text: "Dashboard" },
     { path: "/recipients", icon: <ListIcon />, text: "Recipients" },
     { path: "/campaign", icon: <CampaignIcon />, text: "Campaign" },
-    { path: "/sent", icon: <Sent />, text: "Sent Mails" },
     { path: "/template", icon: <TemplateIcon />, text: "Template" },
+    { path: "/sent", icon: <Sent />, text: "Sent Mails" },
     { path: "/settings", icon: <SettingIcon />, text: "Setting" },
     { path: "/service", icon: <ServiceIcon />, text: "Service" },
     { path: "/contact", icon: <CustomerService />, text: "Contact" },
@@ -51,7 +51,7 @@ const Sidebar = () => {
       className={sidebarClasses}
       id="accordionSidebar"
       style={{
-        backgroundColor: "#ddd",
+        backgroundColor: " rgb(235, 235, 235)",
       }}
     >
       <hgroup className="sidebar-brand d-flex align-items-center justify-content-around">

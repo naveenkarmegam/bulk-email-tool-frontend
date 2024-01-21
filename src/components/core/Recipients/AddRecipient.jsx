@@ -14,7 +14,10 @@ import { selectRecipient } from "../../../redux/app/state";
 import FieldConfig from "../vendors/utils/FieldConfig";
 import AutoDismissAlert from "../../../utils/AutoDismissAlert";
 import { recipientValidationSchema } from "./validations/recipientValidationSchema";
-import { fetchDashboard, increaseRecipientCount } from "../../../redux/global/userSlice";
+import {
+  fetchDashboard,
+  increaseRecipientCount,
+} from "../../../redux/global/userSlice";
 
 const AddRecipient = () => {
   const navigate = useNavigate();
@@ -31,7 +34,7 @@ const AddRecipient = () => {
     validationSchema: recipientValidationSchema,
     onSubmit: async (values) => {
       try {
-        setFailure(false)
+        setFailure(false);
         dispatch(addRecipientStart());
         const trimmedValues = Object.fromEntries(
           Object.entries(values).map(([key, value]) => [key, value.trim()])
@@ -58,11 +61,11 @@ const AddRecipient = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      setFailure(false)
+      setFailure(false);
     }, 1500);
-  
+
     return () => {
-      clearTimeout(timeoutId); 
+      clearTimeout(timeoutId);
     };
   }, [failure]);
   return (
@@ -92,8 +95,13 @@ const AddRecipient = () => {
                     ))}
                     <div className="text-center">
                       <button
-                        className="btn btn-google btn-user btn-block text-light col-sm-5 col-md-6"
+                        className="btn bg-gradient-primary btn-user btn-block text-light col-sm-5 col-md-6"
                         type="submit"
+                        disabled={
+                          !formik.values.firstName ||
+                          !formik.values.lastName ||
+                          !formik.values.email
+                        }
                       >
                         {loading ? <Loading isLoading={loading} /> : "ADD"}
                       </button>

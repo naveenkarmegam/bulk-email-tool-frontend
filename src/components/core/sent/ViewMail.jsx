@@ -65,11 +65,15 @@ const ViewMail = () => {
                   </div>
                   <div className="flex-grow-1 mt-3">
                     <h3>{selectEmail?.subject}</h3>
-                    <small>{formatDate(selectEmail?.createdAt)}</small>
+                    {/* <small className=" text-break">{selectEmail?.recipients.join(';')}</small> */}
+                    {
+                      console.log(selectEmail)
+                    }
+                    <small className="d-block">{formatDate(selectEmail?.createdAt)}</small>
                   </div>
                 </div>
                 <div className="view-message-content">
-                  <p>{selectEmail?.content}</p>
+                  <p dangerouslySetInnerHTML={{__html:selectEmail?.content}}></p>
                 </div>
               </main>
             </div>

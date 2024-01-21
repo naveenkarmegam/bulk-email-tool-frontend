@@ -200,7 +200,7 @@ const Register = () => {
                                   : ""
                               }`}
                               id="cpassword"
-                              placeholder="password"
+                              placeholder="confirm password"
                               name="cpassword"
                               value={formik.values.cpassword}
                               onChange={formik.handleChange}

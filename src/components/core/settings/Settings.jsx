@@ -19,7 +19,7 @@ const Settings = () => {
                 Your Data
               </h6>
             </header>
-            <main className="card-body ddd ">
+            <main className="card-body  ">
               <div className="row py-2 justify-content-center">
                 <div className="col-lg-6 text-center border-bottom border-dark mb-4">
                   <img
@@ -55,7 +55,7 @@ const Settings = () => {
                     </div>
                   </div>
                   <div className="d-gird text-center">
-                    <Link to={'/edit-profile'} className="btn rounded-5 btn-primary col-sm-6">
+                    <Link to={'/edit-profile'} className="btn rounded-5 btn-primary py-2 col-sm-6">
                       Edit
                     </Link>
                   </div>

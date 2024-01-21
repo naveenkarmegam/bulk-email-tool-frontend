@@ -29,7 +29,7 @@ export const registerValidationSchema = Yup.object().shape({
     .required("Password cannot be empty"),
   cpassword: Yup.string()
     .transform((value) => (value ? value.trim() : value))
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .oneOf([Yup.ref("password"), null], "confirm Passwords must match")
     .required("Password cannot be empty"),
 });
 
@@ -37,7 +37,7 @@ export const loginValidationSchema = Yup.object().shape({
   email: Yup.string()
     .transform((value) => (value ? value.trim() : value))
     .email()
-    .required("First name cannot be empty")
+    .required("Email cannot be empty")
     .matches(
       /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/,
       "Invalid email format, e.g., example@email.co"

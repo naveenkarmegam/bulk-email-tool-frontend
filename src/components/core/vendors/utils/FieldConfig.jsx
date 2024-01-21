@@ -18,7 +18,7 @@ const FieldConfig = ({formik,field}) => {
         onBlur={formik.handleBlur}
       />
       {formik.touched[field.name] && formik.errors[field.name] && (
-        <span className="d-block ms-3 text-white small invalid-feedback">
+        <span className="d-block ms-3 text-white fw-medium invalid-feedback">
           {formik.errors[field.name]}
         </span>
       )}

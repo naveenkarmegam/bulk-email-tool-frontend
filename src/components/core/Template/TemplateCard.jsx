@@ -44,14 +44,16 @@ const TemplateCard = ({ templates, isCustom }) => {
               <header className="card-header bg-color text-white text-center py-3">
                 <h6 className="m-0 font-weight-bold">{template?.title}</h6>
               </header>
-              <div className="card-body ddd">
+              <div className="card-body">
                 <div className="border-bottom py-2 px-1">
                   <strong>Subject:</strong>
                   <span>&nbsp; {template?.subject}</span>
                 </div>
                 <div>
-                  <strong>Content:</strong> &nbsp;
-                  <span> {template?.content}</span>
+                  <strong>Body of The mail:</strong> &nbsp;
+                  <div
+                    dangerouslySetInnerHTML={{ __html: template?.content }}
+                  />
                 </div>
               </div>
               <div className="card-footer d-flex justify-content-center  bg-gray-200 px-0">

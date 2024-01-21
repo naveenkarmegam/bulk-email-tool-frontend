@@ -97,7 +97,7 @@ const RecipientTable = ({ recipients, handleDeleteOrder, process }) => {
             ))
           )}
         </tbody>
-        <tfoot className="table-footer">
+        <tfoot className="table-footer bg-white">
           <tr>
             <td colSpan="5">
               <div className="d-flex justify-content-end pt-2">
