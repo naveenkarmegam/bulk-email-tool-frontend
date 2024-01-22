@@ -66,8 +66,8 @@ const Login = () => {
 
   return (
     <div className="m-0 p-0  user-body ">
-      <article className="container py-4">
-        <hgroup className="row justify-content-center vh-100">
+      <article className="container py-4 min-vh-100">
+        <hgroup className="row justify-content-center">
           <div className="col-xl-10 col-lg-12 col-md-9">
             <div
               className="card o-hidden border-0 shadow-lg my-5"

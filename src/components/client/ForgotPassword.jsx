@@ -41,7 +41,7 @@ const ForgotPassword = () => {
   });
   return (
     <div className="m-0 p-0  user-body">
-      <main className="container pb-5">
+      <main className="container pb-5 min-vh-100">
         <hgroup className="row justify-content-center">
           <section className="col-xl-10 col-lg-12 col-md-9">
             <div
@@ -104,9 +104,9 @@ const ForgotPassword = () => {
                     </form>
                     <hr />
                     <div className="text-center">
-                      <Link className="small" to={"/forgot-password"}>
-                        Forgot Password?
-                      </Link>
+                    <Link className="small" to={"/login"}>
+                          Already have an account? Login!
+                        </Link>
                     </div>
                     <div className="text-center">
                       <Link className="small" to={"/register"}>

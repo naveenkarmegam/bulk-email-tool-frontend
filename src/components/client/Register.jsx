@@ -64,7 +64,7 @@ const Register = () => {
 
   return (
     <div className="m-0 p-0  user-body">
-      <article className="container ">
+      <article className="container min-vh-100 ">
         <hgroup className="row justify-content-center">
           <div className="col-xl-10 col-lg-12 col-md-9">
             <div

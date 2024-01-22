@@ -38,8 +38,8 @@ const Sidebar = () => {
   const navItems = [
     { path: "/dashboard", icon: <DashIcon />, text: "Dashboard" },
     { path: "/recipients", icon: <ListIcon />, text: "Recipients" },
-    { path: "/campaign", icon: <CampaignIcon />, text: "Campaign" },
     { path: "/template", icon: <TemplateIcon />, text: "Template" },
+    { path: "/campaign", icon: <CampaignIcon />, text: "Campaign" },
     { path: "/sent", icon: <Sent />, text: "Sent Mails" },
     { path: "/settings", icon: <SettingIcon />, text: "Setting" },
     { path: "/service", icon: <ServiceIcon />, text: "Service" },

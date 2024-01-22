@@ -14,9 +14,11 @@ import { fetchMails } from "../../../redux/global/mailSlice";
 import { clearSelectedRecipientEmail } from "../../../redux/global/recipientsSlice";
 import { clearSelectedTemplate } from "../../../redux/global/templateSlice";
 import { emailValidationSchema } from "./validation/emailValidationSchema";
+import { useNavigate } from "react-router-dom";
 
 const Campaign = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { recipientsEmail } = useSelector(selectRecipient);
   const { setTemplate } = useSelector(selectTemplate);
   const [loading, setLoading] = useState(false);
@@ -51,6 +53,9 @@ const Campaign = () => {
         setLoading(false);
         dispatch(increaseMailCount());
         dispatch(fetchMails());
+        setTimeout(()=>{
+          navigate('/sent')
+        },1500)
       } catch (error) {
         setSuccess(false);
         setFailure(error.response.data.message);
@@ -88,7 +93,7 @@ const Campaign = () => {
               </div>
               <form className="user" onSubmit={formik.handleSubmit}>
                 <div className="col-lg-12 p-0 pb-4">
-                <input
+                  <input
                     type="text"
                     className={`form-control py-4  ${
                       formik.touched.recipients && formik.errors.recipients
@@ -108,7 +113,7 @@ const Campaign = () => {
                   )}
                 </div>
                 <div className="col-lg-12 p-0 pb-4">
-                <input
+                  <input
                     type="text"
                     className={`form-control py-4  ${
                       formik.touched.subject && formik.errors.subject
@@ -140,7 +145,7 @@ const Campaign = () => {
                     className="h-75 border-0"
                     value={formik.values.content}
                     onChange={(content) => {
-                      formik.handleChange("content")(content); 
+                      formik.handleChange("content")(content);
                     }}
                     onBlur={() => formik.setFieldTouched("content", true)}
                   />
@@ -156,7 +161,7 @@ const Campaign = () => {
                     className="btn btn-primary btn-user btn-block col-sm-5 col-md-6 "
                     disabled={
                       !formik.values.subject ||
-                      !formik.values.content||
+                      !formik.values.content ||
                       !formik.values.recipients
                     }
                   >

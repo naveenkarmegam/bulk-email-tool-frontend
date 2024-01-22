@@ -53,7 +53,7 @@ const ResetPassword = () => {
 
   return (
     <div className="m-0 p-0  user-body">
-      <main className="container pb-5">
+      <main className="container pb-5 min-vh-100">
         {/* Outer Row */}
         <hgroup className="row justify-content-center">
           <section className="col-xl-10 col-lg-12 col-md-9">
