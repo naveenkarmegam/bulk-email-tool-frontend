@@ -32,19 +32,19 @@ const Template = () => {
     <Layout>
       <article className="d-sm-flex align-items-center justify-content-between my-4">
         <div className="col-md-4">
-          <h1 className="h3 mb-0 text-gray-800">Templates</h1>
+          {/* <input
+          type="search"
+          className="form-control flex-fill"
+          placeholder="Search here"
+          /> */}
         </div>
         <div className="col-md-4">
-          <input
-            type="search"
-            className="form-control flex-fill"
-            placeholder="Search here"
-          />
+          <h1 className="h3 mb-md-0 mb-sm-3 text-center text-gray-800">Templates</h1>
         </div>
-        <div className="col-md-4 text-end">
+        <div className="col-md-4 text-lg-end text-center">
           <Link
             to={"/add-template"}
-            className="p-0 px-5 py-2 m-0 rounded-5  btn bg-primary text-white shadow-sm"
+            className="p-0 px-5 py-2 m-0 rounded-5  btn bg-primary  text-white shadow-sm"
           >
             <i className="bi bi-bi-plus p-0 m-0" />
             Add Template
